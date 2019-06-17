@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#289086</color>
+    <color name="colorPrimaryDark">#289086</color>
+    <color name="colorAccent">#289086</color>
+    <color name="bgcolor">#EEEEEE</color>
+    <color name="gridcolor">#EEF3F7</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#111111</color>
+    <color name="greyblack">#999999</color>
+    <color name="background_light">#74e4e8</color>
+    <color name="background_grid">#0070c5</color>
+    <color name="textcolor">#02172c</color>
+    <color name="green">#308666</color>
+    <color name="red">#d42424</color>
+    <color name="grey">#d3d3d3</color>
+    <color name="lightgrey">#d0d0d0</color>
+    <color name="listbackground">#eef3f7</color>
+    <color name="fragmentcolor">#2d444a</color>
+    <color name="tab_color">#647d9c</color>
+    <color name="button_color">#20736b</color>
+    <color name="forHeading">#096A75</color>
+    <color name="gribackground">#e9f2f1</color>
+    <color name="transparent">#00000000</color>
+</resources>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:card_view="http://schemas.android.com/apk/res-auto"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@drawable/background_card"
+android:layout_marginLeft="6dp"
+android:layout_marginRight="6dp"
+android:layout_marginTop="6dp"
+android:layout_marginBottom="6dp">
+<!--popupbackground-->
+<android.support.v7.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="7dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp">
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="10dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/title_icon"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/numberD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Configuration wise detail"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/opensans_bold"
+                    android:textSize="12dp"
+                    android:textColor="#096a75"
+                    android:inputType="textCapSentences"/>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#096a75"
+                android:layout_margin="8dp"/>
+
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="2dp">
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight=".1"
+                    android:layout_marginLeft="05dp">
+
+                    <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:layout_width="12dp"-->
+                    <!--android:layout_height="12dp"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--android:background="@drawable/hand_icon"/>-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="Configuration   :"
+                        android:textColor="@color/forHeading"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensans_light"
+                        android:editable="false"
+                        android:textStyle="bold"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_remainingqty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rice"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/opensans_light"
+                        android:textSize="10dp"
+                        android:textStyle="bold"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight=".1"
+                    android:gravity="start">
+
+                    <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:layout_width="13dp"-->
+                    <!--android:layout_height="13dp"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--android:background="@drawable/hand_icon"/>-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="Batch no.          :"
+                        android:textColor="@color/forHeading"
+                        android:textSize="12sp"
+                        android:layout_marginLeft="05dp"
+                        android:fontFamily="@font/opensans_light"
+                        android:editable="false"
+                        android:textStyle="bold"/>
+
+                    <!--map_icon-->
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/nameArabicD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0041521"
+                        android:textAlignment="viewStart"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/opensans_light"
+                        android:textSize="10dp"
+                        android:textStyle="bold"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="2dp">
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight=".1"
+                    android:layout_marginLeft="05dp">
+
+                    <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:layout_width="12dp"-->
+                    <!--android:layout_height="12dp"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--android:background="@drawable/hand_icon"/>-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="Expiry date       :"
+                        android:textColor="@color/forHeading"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensans_light"
+                        android:editable="false"
+                        android:textStyle="bold"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/onHandD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20/01/2014"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/opensans_light"
+                        android:textSize="10dp"
+                        android:textStyle="bold"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight=".1"
+                    android:gravity="start">
+
+                    <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:layout_width="13dp"-->
+                    <!--android:layout_height="13dp"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--android:background="@drawable/hand_icon"/>-->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="Picked qty         :"
+                        android:layout_marginLeft="05dp"
+                        android:textColor="@color/forHeading"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensans_light"
+                        android:editable="false"
+                        android:textStyle="bold"/>
+
+                    <!--map_icon-->
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/differenceD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="20 kg"
+                        android:textAlignment="viewStart"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/opensans_light"
+                        android:textSize="10dp"
+                        android:textStyle="bold"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <!-- <android.support.v7.widget.AppCompatButton
+             android:id="@+id/detailing"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_marginTop="08dp"
+             android:background="@color/transparent"/>-->
+
+    </FrameLayout>
+
+    <!--<View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#d3d3d3"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>-->
+
+</android.support.v7.widget.LinearLayoutCompat>
+
+
+
+</RelativeLayout>

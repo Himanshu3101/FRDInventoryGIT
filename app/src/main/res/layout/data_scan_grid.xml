@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#f7f7f7">
+
+    <RelativeLayout
+        android:id="@+id/mainheader"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tools:ignore="MissingConstraints"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/colorPrimary">
+        <!--<ImageView-->
+        <!--android:id="@+id/swtch_View"-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_marginLeft="7dp"-->
+        <!--android:padding="3dp"-->
+        <!--android:layout_marginBottom="5dp"/>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Scan Items"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/img_logout"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="7dp"-->
+            <!--android:padding="3dp"-->
+            <!--android:layout_marginBottom="5dp"-->
+            <!--android:src="@mipmap/logout_icon"/>-->
+    </RelativeLayout>
+
+    <!--<android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="10dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Item No."
+            android:textColor="#096a75"
+            android:layout_weight=".1"
+            android:textSize="13dp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Name"
+            android:textColor="#096a75"
+            android:layout_weight=".1"
+            android:layout_marginRight="15dp"
+            android:textAlignment="center"
+            android:textSize="13dp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Name in Arabic"
+            android:textColor="#096a75"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".1"
+            android:textAlignment="center"
+            android:textSize="13dp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:text="On Hand"
+            android:textColor="#096a75"
+            android:textAlignment="center"
+            android:layout_weight=".1"
+            android:textSize="13dp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:text="Ware House"
+            android:textColor="#096a75"
+            android:textAlignment="center"
+            android:layout_weight=".1"
+            android:textSize="13dp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:text="Counting"
+            android:textColor="#096a75"
+            android:textAlignment="center"
+            android:layout_weight=".1"
+            android:textSize="13dp"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:text="Difference"
+            android:textColor="#096a75"
+            android:textAlignment="center"
+            android:layout_weight=".1"
+            android:textSize="13dp"/>
+    </android.support.v7.widget.LinearLayoutCompat>-->
+
+    <View
+        android:id="@+id/headerSeperater"
+        android:layout_below="@+id/mainheader"
+        android:background="#096a75"
+        android:layout_height="2dp"
+        android:layout_width="fill_parent"/>
+
+    <LinearLayout
+        android:id="@+id/universalDetails"
+        android:layout_below="@+id/headerSeperater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight=".30"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight=".1"
+                    android:gravity="start"
+                    android:padding="3dp"
+                    android:text="Journal name:"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/opensans_light"
+                    android:editable="false"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:gravity="right"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="Main Course"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/opensans_light"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight=".1"
+                    android:gravity="start"
+                    android:padding="3dp"
+                    android:text="Warehouse:"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/opensans_light"
+                    android:editable="false"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/textView_branchName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:gravity="right"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="Noida"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/opensans_light"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textView_preparedBy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight=".1"
+                    android:gravity="start"
+                    android:padding="3dp"
+                    android:text="Created by:"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/opensans_light"
+                    android:editable="false"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textVuew_preparedBy_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:gravity="right"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="ABCDEFG"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/opensans_light"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight=".1"
+                    android:gravity="start"
+                    android:padding="3dp"
+                    android:text="Date:"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/opensans_light"
+                    android:editable="false"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/textView_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:gravity="right"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="15/04/2019"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/opensans_light"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_below="@+id/universalDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="50dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="5dp"
+            android:id="@+id/detailsScannigItems"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.yoeki.kalpnay.frdinventry.custom_control.Custom_Button
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@color/colorPrimary"
+            android:textAlignment="center"
+            android:text="Submit"
+            android:textSize="15sp"
+            android:textColor="#fff"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

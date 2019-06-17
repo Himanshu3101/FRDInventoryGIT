@@ -1,0 +1,59 @@
+package com.yoeki.kalpnay.frdinventry.Api;
+
+import com.yoeki.kalpnay.frdinventry.CountResposeBocy;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.GetRequisitionPending;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.InventoryPendingModel;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.ParticularRequisitionDetails;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.UserIDModel;
+import com.yoeki.kalpnay.frdinventry.MRN.Model.MrnNumberDetailResponse;
+import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonRequest;
+import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonResponse;
+import com.yoeki.kalpnay.frdinventry.MRN.Model.mrnNumberDetailsRequest;
+import com.yoeki.kalpnay.frdinventry.Model.ChangePaswd;
+import com.yoeki.kalpnay.frdinventry.Model.LoginUser;
+import com.yoeki.kalpnay.frdinventry.Model.MRN.GetMRNModels;
+import com.yoeki.kalpnay.frdinventry.Model.changePswdResponse;
+import com.yoeki.kalpnay.frdinventry.Model.login.LoginResponse;
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
+public interface ApiInterface {
+
+   @POST("FRD/Login")
+   Call<LoginResponse> login(@Body LoginUser user);
+
+   @POST("FRD/GetCountData")
+   Call<CountResposeBocy> inventoryCounting(@Body UserIDModel userIDModel);
+
+   @POST("FRD/ChangePassword")
+   Call<changePswdResponse>changePassword(@Body ChangePaswd user);
+
+   @POST("FRD/GetMrn")
+   Call<GetMRNModels>getMRNDataModels();
+
+   @POST("FRD/GetMrnDetails")
+   Call<MrnNumberDetailResponse>getMRNDetails(@Body mrnNumberDetailsRequest user);
+
+   @POST("FRD/PackingSlip")
+   Call<PostingJsonResponse> mrnPosting(@Body PostingJsonRequest postingJsonRequest);
+
+   @POST("FRD/GetRequestNo")
+   Call<GetRequisitionPending> requisitionPending(@Body UserIDModel userIDModel);
+
+   @POST("FRD/RequestControlPending")
+   Call<InventoryPendingModel> inventoryPicker(@Body ParticularRequisitionDetails userIDModel);
+
+   @POST("FRD/RequestControlcomplete")
+   Call<InventoryPendingModel> inventoryComplete(@Body UserIDModel userIDModel);
+
+   /*@POST("service1.svc/UploadImage")
+   Call<GetImagedata> uploadimage(@Body InsertImagedata uploadimagedata);
+
+   @POST("service1.svc/UploadImage")
+   Call<GetImagedata> uploadimageno(@Body Uploadwvalidation uploadimagedata);
+
+   @POST("service1.svc/InsertDataNon")
+   Call<Getreferncedata> refdata(@Body Insertreferenceno insertrefrence);*/
+}

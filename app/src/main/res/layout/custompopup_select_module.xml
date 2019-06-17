@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical"
+    android:padding="5dp">
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_below="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-23dp"
+        android:layout_marginLeft="98dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+         <android.support.v7.widget.LinearLayoutCompat
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_marginTop="30dp"
+             android:layout_marginBottom="30dp"
+           android:orientation="vertical">
+
+       <android.support.v7.widget.LinearLayoutCompat
+           android:id="@+id/inventoryCountBtn"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+           android:layout_centerHorizontal="true"
+           android:orientation="horizontal">
+
+           <android.support.v7.widget.AppCompatImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="15dp"
+               android:contentDescription="@null"
+               android:padding="8dp"
+               android:src="@mipmap/item_counting" />
+
+           <android.support.v7.widget.AppCompatTextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:editable="false"
+               android:fontFamily="@font/opensans_light"
+               android:text="Inventory Counting"
+               android:textColor="@color/colorPrimary"
+
+               android:textSize="13sp"
+               android:textStyle="bold" />
+
+       </android.support.v7.widget.LinearLayoutCompat>
+
+       <android.support.v7.widget.LinearLayoutCompat
+           android:id="@+id/itemRequisitionBtn"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+           android:layout_centerHorizontal="true"
+           android:orientation="horizontal">
+
+           <android.support.v7.widget.AppCompatImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="15dp"
+               android:contentDescription="@null"
+               android:padding="8dp"
+               android:src="@mipmap/item_requisition" />
+
+           <android.support.v7.widget.AppCompatTextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:editable="false"
+               android:fontFamily="@font/opensans_light"
+               android:text="Item Requisition"
+               android:textColor="@color/colorPrimary"
+
+               android:textSize="13sp"
+               android:textStyle="bold" />
+
+       </android.support.v7.widget.LinearLayoutCompat>
+
+       <android.support.v7.widget.LinearLayoutCompat
+           android:id="@+id/itemReceivingBtn"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_alignParentTop="true"
+           android:layout_centerHorizontal="true"
+           android:orientation="horizontal">
+
+           <android.support.v7.widget.AppCompatImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="15dp"
+               android:contentDescription="@null"
+               android:padding="8dp"
+               android:src="@mipmap/item_receiving" />
+
+           <android.support.v7.widget.AppCompatTextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:editable="false"
+               android:fontFamily="@font/opensans_light"
+               android:text="Item Receiving"
+               android:textColor="@color/colorPrimary"
+
+               android:textSize="13sp"
+               android:textStyle="bold" />
+
+       </android.support.v7.widget.LinearLayoutCompat>
+
+
+   </android.support.v7.widget.LinearLayoutCompat>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/layout"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:background="@drawable/header_layout"
+        android:orientation="vertical">
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:editable="false"
+            android:fontFamily="@font/opensans_light"
+            android:gravity="center_horizontal"
+            android:text="Select a Module"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@null"
+        android:padding="8dp"
+        android:src="@mipmap/popup_header" />
+
+    <!--  <android.support.v7.widget.AppCompatButton
+          android:id="@+id/angry_btn"
+
+          android:layout_below="@+id/layout"
+          android:text="OK"
+          android:textColor="#FFFFFF"
+          android:textSize="15sp"
+          android:layout_width="138dp"
+          android:layout_height="25dp"
+          android:layout_marginTop="-13dp"
+          android:background="@drawable/buttonshapes_selection"
+          android:layout_centerHorizontal="true"
+          />-->
+
+</RelativeLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gribackground">
+    <TextView
+        android:id="@+id/tv_spinnertext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:gravity="left"
+        android:text="20kg"
+        android:textSize="11dp"
+        android:textColor="@color/textcolor"
+        android:padding="4dp"
+        tools:ignore="MissingConstraints"/>
+</LinearLayout>
