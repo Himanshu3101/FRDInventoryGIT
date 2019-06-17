@@ -82,6 +82,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
         mrnDetailsDashboardData();
 //        scanQR();
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -96,7 +97,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String tempSeq = scanQRMRD.getText().toString();
+                String tempSeq;
 //                if(tempSeq.equals("QR-000001171")){
 ////                    for (int i = 0; i < listMRNDetailsList.size(); i++) {
 ////
