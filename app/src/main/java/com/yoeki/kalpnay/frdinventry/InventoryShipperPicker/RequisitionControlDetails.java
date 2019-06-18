@@ -34,12 +34,14 @@ import android.widget.Toast;
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
+import com.yoeki.kalpnay.frdinventry.HomeWatcher;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.InventoryPendingModel;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.ParticularRequisitionDetails;
 import com.yoeki.kalpnay.frdinventry.Items.ItemsModel;
 import com.yoeki.kalpnay.frdinventry.Items.RequestedItemsFragment;
 import com.yoeki.kalpnay.frdinventry.Items.SelectedItemsFragment;
 import com.yoeki.kalpnay.frdinventry.Items.requestControlDetailList;
+import com.yoeki.kalpnay.frdinventry.OnHomePressedListener;
 import com.yoeki.kalpnay.frdinventry.R;
 import com.yoeki.kalpnay.frdinventry.dashboardInventoryRequisition;
 
@@ -50,20 +52,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RequisitionControlDetails extends AppCompatActivity implements View.OnClickListener{
+public class RequisitionControlDetails extends AppCompatActivity implements View.OnClickListener {
 
     RecyclerView rcy_items;
     ImageView img_back;
-    Button btn_accept,btn_reject;
+    Button btn_accept, btn_reject;
     LinearLayout linearLayoutView;
     private Activity activity;
     CardView cardView;
     LinearLayout frameLayout;
     CheckBox checkBox;
-    ImageView img_cross,img_generate,img_ungenerate;
+    ImageView img_cross, img_generate, img_ungenerate;
     TabLayout tabs_requesttab;
     ViewPager viewpager_requestepager;
-    ArrayList<ItemsModel>arraylist;
+    ArrayList<ItemsModel> arraylist;
     AppCompatButton shipBtn;
     AppCompatAutoCompleteTextView scanQR;
 
@@ -75,7 +77,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
 
         setupWindowAnimations();
 
-        arraylist=new ArrayList<>();
+        arraylist = new ArrayList<>();
 
         Initialize();
 
@@ -87,50 +89,69 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
                 String qr = scanQR.getText().toString();
 
-                if(qr.equals("123456789")) {
+                if (qr.equals("123456789")) {
                     invalidItemDialog();
                 }
             }
         };
         scanQR.addTextChangedListener(textWatcher);
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+//        HomeWatcher mHomeWatcher = new HomeWatcher(this);
+//
+//        mHomeWatcher.setOnHomePressedListener(new OnHomePressedListener() {
+//            @Override
+//            public void onHomePressed() {
+//                Toast.makeText(getApplicationContext(), "Home Clicked", Toast.LENGTH_SHORT).show();
+//            }
+//            @Override
+//            public void onHomeLongPressed() {
+//            }
+//        });
+//        mHomeWatcher.startWatch();
+
         /*img_cross.setOnClickListener(this);
         img_generate.setOnClickListener(this);
         img_ungenerate.setOnClickListener(this);*/
         //Tabcolorchange();
-         }
-    public void Initialize(){
+    }
+
+    public void Initialize() {
 //        img_cross=findViewById(R.id.img_cross);
         scanQR = findViewById(R.id.scanQR);
         shipBtn = findViewById(R.id.shipBtn);
         img_back = findViewById(R.id.img_back);
-        rcy_items=findViewById(R.id.rcy_items);
+        rcy_items = findViewById(R.id.rcy_items);
 //        img_generate = findViewById(R.id.img_generate);
 //        img_ungenerate = findViewById(R.id.img_ungenerate);
         // viewpager_requestepager=findViewById(R.id.viewpager_requestepager);
     }
 
-    public void Tabcolorchange(){
+    public void Tabcolorchange() {
         tabs_requesttab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 //tabs_requesttab.setBackgroundColor(getResources().getColor(R.color.red));
-               // tabs_requesttab.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.red)));
+                // tabs_requesttab.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.red)));
                 tabs_requesttab.setSelectedTabIndicatorColor(Color.parseColor("#289086"));
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 //tabs_requesttab.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-               // tabs_requesttab.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+                // tabs_requesttab.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.white)));
                 tabs_requesttab.setSelectedTabIndicatorColor(Color.parseColor("#289086"));
             }
 
@@ -162,39 +183,39 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
        });*/
     }
 
-     private void setupWindowAnimations(){
+    private void setupWindowAnimations() {
         Fade fade = new Fade();
         fade.setDuration(2000);
         getWindow().setEnterTransition(fade);
-         }
+    }
 
     @Override
     public void onClick(View v) {
-           switch (v.getId()){
-               case R.id.img_back:
-                   Intent intent = new Intent(getApplicationContext(), InventoryPending.class);
-                   startActivity(intent);
-                   finish();
-                   break;
+        switch (v.getId()) {
+            case R.id.img_back:
+                Intent intent = new Intent(getApplicationContext(), InventoryPending.class);
+                startActivity(intent);
+                finish();
+                break;
 
-               case R.id.shipBtn:
-                   transferOrderDialog();
-                   break;
+            case R.id.shipBtn:
+                transferOrderDialog();
+                break;
 //
 //               case R.id.img_generate:
 //                   Intent intent = new Intent(RequisitionControlDetails.this, GenerateList.class);
 //                   startActivity(intent);
 //                   img_ungenerate.setVisibility(View.GONE);
 //                   break;
-           }
+        }
     }
 
-    private void rejectDialog(){
-        final Dialog dialog=new Dialog(this);
+    private void rejectDialog() {
+        final Dialog dialog = new Dialog(this);
         dialog.setCancelable(true);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.reject_dialog_layout);
-       // dialog.getWindow().getAttributes().windowAnimations=dialogAnimation;
+        // dialog.getWindow().getAttributes().windowAnimations=dialogAnimation;
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
 
@@ -203,15 +224,15 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         lp.gravity = Gravity.CENTER;
 
         dialog.getWindow().setAttributes(lp);
-        Button no=dialog.findViewById(R.id.button_no);
+        Button no = dialog.findViewById(R.id.button_no);
         Button yes = dialog.findViewById(R.id.button_yes);
 
-         no.setOnClickListener(new View.OnClickListener() {
+        no.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 dialog.dismiss();
             }
-          });
+        });
 
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +243,8 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             }
         });
         dialog.show();
-      }
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new RequestedItemsFragment(), "Requested Items");
@@ -239,25 +261,29 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
+
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);
         }
+
         @Override
         public int getCount() {
             return mFragmentList.size();
         }
+
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
+
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
     }
 
-    public  void addlistdata(){
+    public void addlistdata() {
         final ProgressDialog progressDialog = new ProgressDialog(RequisitionControlDetails.this);
         progressDialog.setMessage("Please Wait"); // set message
         progressDialog.show(); // show progress dialog
@@ -267,7 +293,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         String userId = Preference.getInstance(getApplicationContext()).getUserId();
         String requisition = getIntent().getStringExtra("RequisitionNo");
 
-        ParticularRequisitionDetails userIDModeParticularRequisitionDetailsl = new ParticularRequisitionDetails(userId,requisition);
+        ParticularRequisitionDetails userIDModeParticularRequisitionDetailsl = new ParticularRequisitionDetails(userId, requisition);
         Call<InventoryPendingModel> call = apiInterface.inventoryPicker(userIDModeParticularRequisitionDetailsl);
         call.enqueue(new Callback<InventoryPendingModel>() {
             @Override
@@ -276,7 +302,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                 if (response.body().getStatus().equals("Success")) {
                     rcy_items.setLayoutManager(new LinearLayoutManager(RequisitionControlDetails.this, LinearLayoutManager.VERTICAL, false));
                     rcy_items.setItemAnimator(new DefaultItemAnimator());
-                    requestControlDetailList adapter=new requestControlDetailList(RequisitionControlDetails.this,response.body().getDataList());
+                    requestControlDetailList adapter = new requestControlDetailList(RequisitionControlDetails.this, response.body().getDataList());
                     rcy_items.setAdapter(adapter);
                 } else {
                     Toast.makeText(RequisitionControlDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -291,7 +317,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         });
     }
 
-    public void transferOrderDialog(){
+    public void transferOrderDialog() {
         Dialog dialog = new Dialog(RequisitionControlDetails.this);
         dialog.setCancelable(true);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -305,7 +331,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         dialog.show();
     }
 
-    public void invalidItemDialog(){
+    public void invalidItemDialog() {
         final Dialog dialog = new Dialog(RequisitionControlDetails.this);
         dialog.setCancelable(true);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -335,4 +361,6 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         startActivity(intent);
         finish();
     }
+
+
 }

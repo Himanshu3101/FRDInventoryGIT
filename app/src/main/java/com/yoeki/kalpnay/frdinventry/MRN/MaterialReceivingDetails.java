@@ -151,6 +151,11 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
 
                                         listMRNDetailsList.get(i).setScanQty(numQty + "");
 
+                                        MRNDetailsList tempMrnDetail = new MRNDetailsList();
+                                        tempMrnDetail = listMRNDetailsList.get(i);
+                                        listMRNDetailsList.remove(i);
+                                        listMRNDetailsList.add(0, tempMrnDetail);
+
                                         adapter.notifyDataSetChanged();
                                         scanQRMRD.setText("");
 //                                    if (isRecQtyScanQtyMatched()) {
