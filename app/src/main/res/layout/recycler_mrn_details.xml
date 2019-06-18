@@ -68,18 +68,18 @@
                                 android:gravity="center"
                                 android:padding="3dp"
                                 android:textColor="@color/white"/>
-                            <!--  <TextView
-                                  android:id="@+id/tv_itemname"
-                                  android:layout_width="match_parent"
-                                  android:layout_height="wrap_content"
-                                  android:text="Rice"
-                                  android:textSize="12sp"
-                                  android:textStyle="bold"
-                                  android:layout_weight="1"
-                                  android:padding="3dp"
-                                  android:gravity="left"
-                                  android:layout_gravity="center"
-                                  android:textColor="@color/white"/>-->
+                            <!-- <TextView
+                            android:id="@+id/tv_itemname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Rice"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            android:padding="3dp"
+                            android:gravity="left"
+                            android:layout_gravity="center"
+                            android:textColor="@color/white"/>-->
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_nameMRN"
                                 android:layout_width="0dp"
@@ -121,15 +121,15 @@
                             android:padding="5dp"
                             android:orientation="horizontal">
                             <!-- <LinearLayout
-                                 android:layout_width="match_parent"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"
-                                 android:orientation="horizontal">-->
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">-->
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Batch No.:"
-                                android:textSize="12dp"
+                                android:textSize="12sp"
                                 android:layout_weight=".1"
                                 android:textColor="@color/textcolor"/>
                             <android.support.v7.widget.AppCompatTextView
@@ -141,25 +141,25 @@
                                 android:layout_weight=".1"
                                 android:gravity="start"
                                 android:text="201"
-                                android:textSize="10dp"
+                                android:textSize="10sp"
                                 android:textColor="@color/textcolor"/>
                             <!-- </LinearLayout>
-                             <LinearLayout
-                                 android:layout_width="match_parent"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"
-                                 android:gravity="right"
-                                 android:layout_gravity="right"
-                                 android:orientation="horizontal">-->
+                            <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:layout_gravity="right"
+                            android:orientation="horizontal">-->
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Received qty:"
-                                android:textSize="12dp"
+                                android:textSize="12sp"
                                 android:gravity="start"
-
                                 android:layout_weight=".1"
                                 android:textColor="@color/textcolor"/>
+
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_receivedqty"
                                 android:layout_width="match_parent"
@@ -169,7 +169,7 @@
                                 android:paddingLeft="05dp"
                                 android:gravity="start"
                                 android:text="20"
-                                android:textSize="10dp"
+                                android:textSize="10sp"
                                 android:textColor="@color/textcolor"/>
 
 
@@ -183,10 +183,10 @@
                             android:layout_marginBottom="05dp"
                             android:orientation="horizontal">
                             <!-- <LinearLayout
-                                 android:layout_width="match_parent"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"
-                                 android:orientation="horizontal">-->
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">-->
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -210,7 +210,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Scan Qty.:"
-                                android:textSize="12dp"
+                                android:textSize="12sp"
                                 android:layout_weight=".1"
                                 android:layout_marginTop="02dp"
                                 android:textColor="@color/textcolor"/>
@@ -237,10 +237,10 @@
                             android:layout_marginBottom="05dp"
                             android:orientation="horizontal">
                             <!-- <LinearLayout
-                                 android:layout_width="match_parent"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"
-                                 android:orientation="horizontal">-->
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">-->
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -264,42 +264,42 @@
 
                         </LinearLayout>
 
-                      <!--  <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:layout_marginBottom="05dp"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Configuration:"
-                                android:textSize="12sp"
-                                android:layout_weight=".25"
-                                android:textColor="@color/textcolor"/>
+                        <!-- <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:layout_marginBottom="05dp"
+                        android:orientation="horizontal">
+                        <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Configuration:"
+                        android:textSize="12sp"
+                        android:layout_weight=".25"
+                        android:textColor="@color/textcolor"/>
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_configurationMRN"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".1"
-                                android:gravity="start"
-                                android:text="201"
-                                android:textSize="10sp"
-                                android:textColor="@color/textcolor"/>
+                        <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_configurationMRN"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".1"
+                        android:gravity="start"
+                        android:text="201"
+                        android:textSize="10sp"
+                        android:textColor="@color/textcolor"/>
 
 
 
-                            &lt;!&ndash;<android.support.v7.widget.AppCompatTextView&ndash;&gt;
-                                &lt;!&ndash;android:id="@+id/tv_configurationMRN"&ndash;&gt;
-                                &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
-                                &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
-                                &lt;!&ndash;android:layout_weight=".1"&ndash;&gt;
-                                &lt;!&ndash;android:gravity="start"&ndash;&gt;
-                                &lt;!&ndash;android:text="201"&ndash;&gt;
-                                &lt;!&ndash;android:textSize="10sp"&ndash;&gt;
-                                &lt;!&ndash;android:textColor="@color/textcolor"/>&ndash;&gt;
+                        &lt;!&ndash;<android.support.v7.widget.AppCompatTextView&ndash;&gt;
+                        &lt;!&ndash;android:id="@+id/tv_configurationMRN"&ndash;&gt;
+                        &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+                        &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+                        &lt;!&ndash;android:layout_weight=".1"&ndash;&gt;
+                        &lt;!&ndash;android:gravity="start"&ndash;&gt;
+                        &lt;!&ndash;android:text="201"&ndash;&gt;
+                        &lt;!&ndash;android:textSize="10sp"&ndash;&gt;
+                        &lt;!&ndash;android:textColor="@color/textcolor"/>&ndash;&gt;
 
                         </LinearLayout>-->
 

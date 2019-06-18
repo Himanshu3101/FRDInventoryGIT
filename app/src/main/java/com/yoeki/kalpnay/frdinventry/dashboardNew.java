@@ -32,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class dashboardNew extends AppCompatActivity implements View.OnClickListener {
-    LinearLayout linearLayoutMaterialReciving, linearLayoutInventoryShipperPicker, linearLayoutBranchInventoryReciving, linearLayoutInventoryCounting;
+    LinearLayout linearLayoutMaterialReciving, linearLayoutInventoryShipperPicker, linearLayoutBranchInventoryReciving, linearLayoutInventoryCounting, linearLayoutGlobalQrScan;
     AppCompatButton logOut;
     TextView MRNCount, shipperCount, birCount, inventoryCount;
     @Override
@@ -45,6 +45,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         linearLayoutInventoryShipperPicker.setOnClickListener(this);
         linearLayoutBranchInventoryReciving.setOnClickListener(this);
         linearLayoutInventoryCounting.setOnClickListener(this);
+        linearLayoutGlobalQrScan.setOnClickListener(this);
         logOut.setOnClickListener(this);
         countungSet();
     }
@@ -54,6 +55,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         linearLayoutInventoryShipperPicker = findViewById(R.id.linearLayoutInventoryShipperPicker);
         linearLayoutBranchInventoryReciving = findViewById(R.id.linearLayoutBranchInventoryReciving);
         linearLayoutInventoryCounting = findViewById(R.id.linearLayoutInventoryCounting);
+        linearLayoutGlobalQrScan = findViewById(R.id.linearLayoutGlobalQrScan);
         logOut = findViewById(R.id.logOut);
         MRNCount = findViewById(R.id.MRNCount);
         shipperCount = findViewById(R.id.shipperCount);
@@ -114,6 +116,10 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.linearLayoutInventoryCounting:
 
+                break;
+            case R.id.linearLayoutGlobalQrScan:
+                startActivity(new Intent(dashboardNew.this, QrDetailActivity.class));
+                finish();
                 break;
             case R.id.logOut:
                 openLogOutDialog(R.style.DialogAnimation,"");
