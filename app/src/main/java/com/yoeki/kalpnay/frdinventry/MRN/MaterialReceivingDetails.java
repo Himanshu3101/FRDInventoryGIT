@@ -40,6 +40,8 @@ import com.yoeki.kalpnay.frdinventry.ScannigQR;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class MaterialReceivingDetails extends AppCompatActivity implements View.OnClickListener {
-
 
     ArrayList<MRNDetailsModel> modelMRNDetails;
     AppCompatAutoCompleteTextView scanQRMRD;
@@ -149,14 +149,16 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
 
                                         float numQty = Float.parseFloat(qty) + Float.parseFloat(newQty);
 
-                                        listMRNDetailsList.get(i).setScanQty(numQty + "");
+                                        listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
 
                                         MRNDetailsList tempMrnDetail = new MRNDetailsList();
                                         tempMrnDetail = listMRNDetailsList.get(i);
                                         listMRNDetailsList.remove(i);
+                                        adapter.notifyItemRemoved(i);
                                         listMRNDetailsList.add(0, tempMrnDetail);
+                                        adapter.notifyItemInserted(0);
+                                        rcy_itemsMRD.smoothScrollToPosition(0);
 
-                                        adapter.notifyDataSetChanged();
                                         scanQRMRD.setText("");
 //                                    if (isRecQtyScanQtyMatched()) {
 //                                        postingBtn.setEnabled(true);
@@ -195,12 +197,9 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
 //                    }
             }
 
-
 //                }
         };
         scanQRMRD.addTextChangedListener(textWatcher);
-
-
     }
 
     public void initialize() {
@@ -477,5 +476,13 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
 
         dialog.getWindow().setAttributes(lp);
         dialog.show();
+    }
+
+    private static BigDecimal roundToPlaces(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd;
     }
 }
