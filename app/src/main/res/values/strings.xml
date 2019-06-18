@@ -25,6 +25,7 @@
     <string name="branch_Inve_reciving">Branch Inventory Receiving</string>
     <string name="inventory_counting">Inventory Counting</string>
     <string name="material_reciving">Material Receiving</string>
+    <string name="qr_details">QR Details</string>
     <string name="scan_pick">Scan/Pick</string>
     <string name="packed_qty">Packed Qty:</string>
     <string name="update_qty">Update</string>
