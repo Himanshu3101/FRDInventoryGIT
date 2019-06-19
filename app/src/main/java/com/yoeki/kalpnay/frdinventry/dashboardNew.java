@@ -21,6 +21,8 @@ import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.UserIDModel;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.dashboardInventoryShipperPicker;
 import com.yoeki.kalpnay.frdinventry.Login.LoginActivity;
 import com.yoeki.kalpnay.frdinventry.MRN.MRN_Dashboard;
+import com.yoeki.kalpnay.frdinventry.QRDetails.QrDetailActivity;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;

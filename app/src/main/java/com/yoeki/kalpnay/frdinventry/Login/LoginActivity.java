@@ -144,37 +144,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 onForgotPasswordInClick();
                 break;
             case R.id.buttonLogin:
-//                final int selection = 0;
-                String userPin = edt_userId.getText().toString();
-                String pwd = edt_password.getText().toString();
-                if (userPin.equals("")) {
-                    edt_userId.setError("Fill required field");
-                } else if (pwd.equals("")) {
-                    edt_password.setError("Fill required field");
-                } else {
-                    final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-                    progressDialog.setMessage("Please Wait"); // set message
-                    progressDialog.show(); // show progress dialog
-                    progressDialog.setCancelable(false); // set cancelable to false
-                    ApiInterface apiInterface = Api.getClient().create(ApiInterface.class);
+                loginWork();
+                break;
+        }
+    }
+    
+    public void loginWork(){
+        String userPin=edt_userId.getText().toString();
+        String pwd=edt_password.getText().toString();
+        if(userPin.equals("")){
+            edt_userId.setError("Fill required field");
+        }else if(pwd.equals("")){
+            edt_password.setError("Fill required field");
+        }else{
+            final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.setMessage("Please Wait"); // set message
+            progressDialog.show(); // show progress dialog
+            progressDialog.setCancelable(false); // set cancelable to false
+            ApiInterface apiInterface = Api.getClient().create(ApiInterface.class);
 
-                    LoginUser userDetails = new LoginUser(userPin, pwd);
+            LoginUser userDetails = new LoginUser(userPin, pwd);
 
-                    Call<LoginResponse> call = apiInterface.login(userDetails);
-                    call.enqueue(new Callback<LoginResponse>() {
-                        @Override
-                        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            Call<LoginResponse> call = apiInterface.login(userDetails);
+            call.enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    try {
+                        progressDialog.dismiss();
+                        LoginResponse responseLogin = response.body();
+
+                        List<UserLoginResponse> responseUserId = responseLogin.getUserLoginResponse();
+                        String userID = responseUserId.get(0).getUserId();
+                        String message = responseLogin.getMessage();
+                        String status = responseLogin.getStatus();
+
+                        if (status.equals("success")) {
                             progressDialog.dismiss();
-                            LoginResponse responseLogin = response.body();
+                            Preference.getInstance(getApplicationContext()).saveuserId(userID);
 
-                            List<UserLoginResponse> responseUserId = responseLogin.getUserLoginResponse();
-                            String userID = responseUserId.get(0).getUserId();
-                            String message = responseLogin.getMessage();
-                            String status = responseLogin.getStatus();
-
-                            if (status.equals("success")) {
-                                progressDialog.dismiss();
-                                Preference.getInstance(getApplicationContext()).saveuserId(userID);
 //                                String pswdChangeValue = Preference.getInstance(getApplicationContext()).getPswrdChange();
 //                                if(pswdChangeValue.equals("1")){
 ////                                    Preference.getInstance(getApplicationContext()).setPswrdChange("2");
@@ -191,16 +198,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             } else {
                                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
                             }
-                        }
-
-                        @Override
-                        public void onFailure(Call<LoginResponse> call, Throwable t) {
-                            progressDialog.dismiss();
-                            Toast.makeText(LoginActivity.this, "Something problem occurred", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    }catch(Exception e){
+                        e.printStackTrace();
+                        Toast.makeText(LoginActivity.this, "Service Unavailable.", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                break;
+
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "Something problem occurred", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
@@ -339,7 +348,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 } else {
                                     Toast.makeText(LoginActivity.this, description, Toast.LENGTH_SHORT).show();
                                 }
-                            } catch (Exception e) {
+                            }catch (Exception e){
                                 e.printStackTrace();
                             }
                         }
