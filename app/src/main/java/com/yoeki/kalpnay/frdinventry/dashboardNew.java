@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -21,11 +20,7 @@ import com.yoeki.kalpnay.frdinventry.Api.Preference;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.UserIDModel;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.dashboardInventoryShipperPicker;
 import com.yoeki.kalpnay.frdinventry.Login.LoginActivity;
-import com.yoeki.kalpnay.frdinventry.MRN.Adapter.MRN_Dashboard_AdapterDetails;
 import com.yoeki.kalpnay.frdinventry.MRN.MRN_Dashboard;
-import com.yoeki.kalpnay.frdinventry.MRN.MaterialReceivingDetails;
-import com.yoeki.kalpnay.frdinventry.MRN.Model.MrnNumberDetailResponse;
-import com.yoeki.kalpnay.frdinventry.MRN.Model.mrnNumberDetailsRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +42,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         linearLayoutInventoryCounting.setOnClickListener(this);
         linearLayoutGlobalQrScan.setOnClickListener(this);
         logOut.setOnClickListener(this);
-        countungSet();
+        countingSet();
     }
 
     public  void initialize(){
@@ -63,7 +58,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         inventoryCount = findViewById(R.id.inventoryCount);
     }
 
-    public void countungSet(){
+    public void countingSet(){
         final ProgressDialog progressDialog = new ProgressDialog(dashboardNew.this);
         progressDialog.setMessage("Please Wait"); // set message
         progressDialog.show(); // show progress dialog
