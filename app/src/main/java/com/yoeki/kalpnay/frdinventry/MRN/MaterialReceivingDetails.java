@@ -26,6 +26,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
+import com.yoeki.kalpnay.frdinventry.HomeWatcher;
 import com.yoeki.kalpnay.frdinventry.MRN.Adapter.MRN_Dashboard_AdapterDetails;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.MRNDetailsList;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.MRNDetailsModel;
@@ -34,6 +35,7 @@ import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonRequest;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonResponse;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.StickerSeq;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.mrnNumberDetailsRequest;
+import com.yoeki.kalpnay.frdinventry.OnHomePressedListener;
 import com.yoeki.kalpnay.frdinventry.R;
 import com.yoeki.kalpnay.frdinventry.ScannigQR;
 
@@ -80,6 +82,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
         mrnNumber = getIntent().getStringExtra("MRNNumber");
         activityNo = getIntent().getStringExtra("activityNo");
         mrnDetailsDashboardData();
+
 //        scanQR();
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -115,79 +118,82 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                 tempSeq = scanQRMRD.getText().toString();
                 String qty, newQty;
                 boolean isQrFound = false;
+                if (tempSeq.length() < 12) {
 
-                if (listMRNDetailsList.size() > 0) {
-                    for (int i = 0; i < listMRNDetailsList.size(); i++) {
-                        boolean breakFlag = false;
-                        boolean isSeqExistsInTempList = false;
+                } else {
+                    if (listMRNDetailsList.size() > 0) {
+                        for (int i = 0; i < listMRNDetailsList.size(); i++) {
+                            boolean breakFlag = false;
+                            boolean isSeqExistsInTempList = false;
 //                        int size = listMRNDetailsList.size();
 //                        Log.d("aaaa",size+"" );
 
-                        if (listMRNDetailsList.get(i).getStickerSeq() == null) {
+                            if (listMRNDetailsList.get(i).getStickerSeq() == null) {
 //                                    Toast.makeText(MaterialReceivingDetails.this, "Sticker Sequence is empty", Toast.LENGTH_SHORT).show();
-                        } else {
-                            for (int j = 0; j < listMRNDetailsList.get(i).getStickerSeq().size(); j++) {
+                            } else {
+                                for (int j = 0; j < listMRNDetailsList.get(i).getStickerSeq().size(); j++) {
 //                            String a = listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerSequence();
 //                            Log.d("aaaa",a );
 //                            int sizea = listMRNDetailsList.get(i).getStickerSeq().size();
 //                            Log.d("aaaa",sizea+"" );
-                                if (listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerSequence().equals(tempSeq)) {
-                                    breakFlag = true;
-                                    for (int k = 0; k < tempSeqList.size(); k++) {
-                                        if (tempSeqList.get(k).getStickerSequence().equals(tempSeq)) {
-                                            isSeqExistsInTempList = true;
+                                    if (listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerSequence().equals(tempSeq)) {
+                                        breakFlag = true;
+                                        for (int k = 0; k < tempSeqList.size(); k++) {
+                                            if (tempSeqList.get(k).getStickerSequence().equals(tempSeq)) {
+                                                isSeqExistsInTempList = true;
+                                            }
                                         }
-                                    }
-                                    if (!isSeqExistsInTempList) {
-                                        tempSeqList.add(listMRNDetailsList.get(i).getStickerSeq().get(j));
+                                        if (!isSeqExistsInTempList) {
+                                            tempSeqList.add(listMRNDetailsList.get(i).getStickerSeq().get(j));
 
-                                        newQty = listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerQty();
-                                        if (listMRNDetailsList.get(i).getScanQty() == null) {
-                                            listMRNDetailsList.get(i).setScanQty("0");
-                                        }
-                                        qty = listMRNDetailsList.get(i).getScanQty();
+                                            newQty = listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerQty();
+                                            if (listMRNDetailsList.get(i).getScanQty() == null) {
+                                                listMRNDetailsList.get(i).setScanQty("0");
+                                            }
+                                            qty = listMRNDetailsList.get(i).getScanQty();
 
-                                        float numQty = Float.parseFloat(qty) + Float.parseFloat(newQty);
+                                            float numQty = Float.parseFloat(qty) + Float.parseFloat(newQty);
 
-                                        listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
+                                            listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
 
-                                        MRNDetailsList tempMrnDetail = new MRNDetailsList();
-                                        tempMrnDetail = listMRNDetailsList.get(i);
-                                        listMRNDetailsList.remove(i);
-                                        adapter.notifyItemRemoved(i);
-                                        listMRNDetailsList.add(0, tempMrnDetail);
-                                        adapter.notifyItemInserted(0);
-                                        rcy_itemsMRD.smoothScrollToPosition(0);
+                                            MRNDetailsList tempMrnDetail = new MRNDetailsList();
+                                            tempMrnDetail = listMRNDetailsList.get(i);
+                                            listMRNDetailsList.remove(i);
+                                            adapter.notifyItemRemoved(i);
+                                            listMRNDetailsList.add(0, tempMrnDetail);
+                                            adapter.notifyItemInserted(0);
+                                            rcy_itemsMRD.smoothScrollToPosition(0);
 
-                                        scanQRMRD.setText("");
+                                            scanQRMRD.setText("");
 //                                    if (isRecQtyScanQtyMatched()) {
 //                                        postingBtn.setEnabled(true);
 //                                    } else {
 //                                        postingBtn.setEnabled(false);
 //                                    }
 
+                                        } else {
+                                            Toast.makeText(MaterialReceivingDetails.this, "QR already scanned!", Toast.LENGTH_SHORT).show();
+                                            scanQRMRD.setText("");
+                                        }
+                                        isQrFound = true;
+                                        break;
                                     } else {
-                                        Toast.makeText(MaterialReceivingDetails.this, "QR already scanned!", Toast.LENGTH_SHORT).show();
-                                        scanQRMRD.setText("");
+                                        isQrFound = false;
                                     }
-                                    isQrFound = true;
-                                    break;
-                                } else {
-                                    isQrFound = false;
                                 }
                             }
-                        }
 
-                        if (breakFlag) {
-                            break;
+                            if (breakFlag) {
+                                break;
+                            }
                         }
                     }
-                }
-                if (!isQrFound) {
-                    if (scanQRMRD.getText().toString().equals("")) {
-                        //nothing do it
-                    } else {
-                        invalidItemDialog();
+                    if (!isQrFound) {
+                        if (scanQRMRD.getText().toString().equals("")) {
+                            //nothing do it
+                        } else {
+                            invalidItemDialog();
+                        }
                     }
                 }
 //                    }catch(Exception e){
@@ -200,6 +206,22 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
 //                }
         };
         scanQRMRD.addTextChangedListener(textWatcher);
+
+//        HomeWatcher homeWatcher = new HomeWatcher(this);
+//        homeWatcher.setOnHomePressedListener(new OnHomePressedListener() {
+//            @Override
+//            public void onHomePressed() {
+//                Toast.makeText(MaterialReceivingDetails.this, "Home Pressed", Toast.LENGTH_SHORT).show();
+//                onBackDialog();
+//            }
+//
+//            @Override
+//            public void onHomeLongPressed() {
+//
+//            }
+//        });
+//        homeWatcher.startWatch();
+
     }
 
     public void initialize() {
@@ -234,7 +256,11 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                 qrScan.initiateScan();
                 break;
             case R.id.postingBtn:
-                postingBtnClick();
+                try {
+                    postingBtnClick();
+                } catch (Exception e) {
+                    Toast.makeText(this, "Service Unavailable", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.saveTempBtn:
 

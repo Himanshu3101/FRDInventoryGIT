@@ -23,6 +23,7 @@ import com.yoeki.kalpnay.frdinventry.Login.LoginActivity;
 import com.yoeki.kalpnay.frdinventry.MRN.MRN_Dashboard;
 import com.yoeki.kalpnay.frdinventry.QRDetails.QrDetailActivity;
 
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,7 +44,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         linearLayoutInventoryCounting.setOnClickListener(this);
         linearLayoutGlobalQrScan.setOnClickListener(this);
         logOut.setOnClickListener(this);
-        countungSet();
+        countingSet();
     }
 
     public  void initialize(){
@@ -59,7 +60,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         inventoryCount = findViewById(R.id.inventoryCount);
     }
 
-    public void countungSet(){
+    public void countingSet(){
         final ProgressDialog progressDialog = new ProgressDialog(dashboardNew.this);
         progressDialog.setMessage("Please Wait"); // set message
         progressDialog.show(); // show progress dialog
