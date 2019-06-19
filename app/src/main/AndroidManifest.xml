@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".QrDetailActivity"
+            android:name=".QRDetails.QrDetailActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
