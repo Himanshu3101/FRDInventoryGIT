@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QRDetails.QrDetailActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/img_backQrDetails"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="08dp"
+                    android:background="@mipmap/back"
+                    android:scaleType="fitXY" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="QR Detail"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/ly_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_top"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="05dp"
+            android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:text="@string/scan"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/edt_scanQR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/qrDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="vertical"-->
+                <!--android:paddingLeft="5dp"-->
+                <!--android:paddingRight="5dp"-->
+                <!--tools:ignore="MissingConstraints">-->
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:elevation="3dp"
+                    android:focusableInTouchMode="true"
+                    card_view:cardBackgroundColor="@color/white"
+                    card_view:cardCornerRadius="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_card"
+                            android:orientation="vertical">
+
+                            <!--<RelativeLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorPrimary"
+                                android:orientation="horizontal"
+                                android:padding="2dp">
+
+                                <View
+                                    android:id="@+id/strut"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_centerHorizontal="true" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/tv_itemnoMRN"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignRight="@id/strut"
+                                    android:layout_alignParentLeft="true"
+                                    android:gravity="center"
+                                    android:padding="3dp"
+                                    android:text="Item no"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/tv_nameMRNArabic"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignLeft="@id/strut"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:padding="3dp"
+                                    android:text="Item Arabic"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>-->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Vendor No.:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_VendorNo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="201"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Vendor Name:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_VendorName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="Dheeraj"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="P.O. No.:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_po_no"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="PO-1001"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Item No.:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_ItemnoMRN"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="RM-000000"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Item Name:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_NameMRN"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="Item English"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Item Name (A):"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_NameMRNArabic"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="Item Arabic"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Configuration:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_ConfigurationMRN"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="201"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Batch No.:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_BatchNoMRN"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="201"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Quantity:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_Receivedqty"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="20"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Expiry Date:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/detail_ExpiryDateMRN"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="201"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                </android.support.v7.widget.CardView>
+            <!--</LinearLayout>-->
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

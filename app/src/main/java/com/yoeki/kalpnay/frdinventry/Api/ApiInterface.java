@@ -14,6 +14,8 @@ import com.yoeki.kalpnay.frdinventry.Model.LoginUser;
 import com.yoeki.kalpnay.frdinventry.Model.MRN.GetMRNModels;
 import com.yoeki.kalpnay.frdinventry.Model.changePswdResponse;
 import com.yoeki.kalpnay.frdinventry.Model.login.LoginResponse;
+import com.yoeki.kalpnay.frdinventry.QRDetails.RequestBodyQRDetails;
+import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -48,6 +50,8 @@ public interface ApiInterface {
    @POST("FRD/RequestControlcomplete")
    Call<InventoryPendingModel> inventoryComplete(@Body UserIDModel userIDModel);
 
+   @POST("FRD/GetdataQRWise")
+   Call<ResponseBodyQRDetails> QRWiseData(@Body RequestBodyQRDetails requestBodyQRDetails);
    /*@POST("service1.svc/UploadImage")
    Call<GetImagedata> uploadimage(@Body InsertImagedata uploadimagedata);
 
