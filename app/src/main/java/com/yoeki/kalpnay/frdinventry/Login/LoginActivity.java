@@ -16,8 +16,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.Html;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -42,12 +45,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
-    LinearLayout linearLayoutSignIn,linearLayoutForgotPassword;
-    TextView  textViewSignIn,textViewForgotPassword;
+    LinearLayout linearLayoutSignIn, linearLayoutForgotPassword;
+    TextView textViewSignIn, textViewForgotPassword;
     String signInCLicked = "1";
     private boolean mIsBackVisible = false;
     Button buttonLogin;
@@ -55,63 +58,64 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Activity activity;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-             setContentView(R.layout.activity_login);
-                activity = new Activity();
-               initialize();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_login);
+        hideKeyboard(findViewById(R.id.login_container));
+        activity = new Activity();
+        initialize();
 
-              overridePendingTransition(0, 0);
+        overridePendingTransition(0, 0);
 
-         textViewSignIn.setText(Html.fromHtml("<u>"+ getString(R.string.sign_in) + "</u>"));
-         textViewSignIn.setPaintFlags(textViewSignIn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-         //getSupportActionBar().hide();
-         loadAnimations();
-         changeCameraDistance(linearLayoutSignIn,linearLayoutForgotPassword);
+        textViewSignIn.setText(Html.fromHtml("<u>" + getString(R.string.sign_in) + "</u>"));
+        textViewSignIn.setPaintFlags(textViewSignIn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        //getSupportActionBar().hide();
+        loadAnimations();
+        changeCameraDistance(linearLayoutSignIn, linearLayoutForgotPassword);
 
-         linearLayoutForgotPassword.setAlpha(0);
-         linearLayoutForgotPassword.setVisibility(View.GONE);
+        linearLayoutForgotPassword.setAlpha(0);
+        linearLayoutForgotPassword.setVisibility(View.GONE);
 
-         textViewSignIn.setOnClickListener(this);
-         textViewForgotPassword.setOnClickListener(this);
-         buttonLogin.setOnClickListener(this);
-        }
+        textViewSignIn.setOnClickListener(this);
+        textViewForgotPassword.setOnClickListener(this);
+        buttonLogin.setOnClickListener(this);
+    }
 
-     private void changeCameraDistance(View linearLayoutSignIn, View linearLayoutForgotPassword) {
+    private void changeCameraDistance(View linearLayoutSignIn, View linearLayoutForgotPassword) {
         int distance = 8000;
-        float scale = getResources().getDisplayMetrics().density*distance;
+        float scale = getResources().getDisplayMetrics().density * distance;
         linearLayoutSignIn.setCameraDistance(scale);
         linearLayoutForgotPassword.setCameraDistance(scale);
-     }
+    }
 
-    private void loadAnimations(){
+    private void loadAnimations() {
 
         mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.out_animation);
         mSetRightOut.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationEnd(Animator animation){
+            public void onAnimationEnd(Animator animation) {
 
             }
-         });
+        });
         mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.in_animation);
 
-        }
+    }
 
-     public  void initialize(){
-        linearLayoutSignIn=findViewById(R.id.linearLayoutSignIn);
-        linearLayoutForgotPassword=findViewById(R.id.linearLayoutForgotPassword);
-        textViewSignIn=findViewById(R.id.textViewSignIn);
-        textViewForgotPassword=findViewById(R.id.textViewForgotPassword);
-        buttonLogin=findViewById(R.id.buttonLogin);
+    public void initialize() {
+        linearLayoutSignIn = findViewById(R.id.linearLayoutSignIn);
+        linearLayoutForgotPassword = findViewById(R.id.linearLayoutForgotPassword);
+        textViewSignIn = findViewById(R.id.textViewSignIn);
+        textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
+        buttonLogin = findViewById(R.id.buttonLogin);
         edt_userId = findViewById(R.id.editTextUserPin);
         edt_password = findViewById(R.id.editTextUserPassword);
 
-         buttonLogin.requestFocus();
-      }
+        buttonLogin.requestFocus();
+    }
 
-    public void flipCard(){
+    public void flipCard() {
 
         if (!mIsBackVisible) {
             linearLayoutForgotPassword.setVisibility(View.VISIBLE);
@@ -132,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.textViewSignIn:
                 onSignInClick();
                 break;
@@ -177,6 +181,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (status.equals("success")) {
                             progressDialog.dismiss();
                             Preference.getInstance(getApplicationContext()).saveuserId(userID);
+
 //                                String pswdChangeValue = Preference.getInstance(getApplicationContext()).getPswrdChange();
 //                                if(pswdChangeValue.equals("1")){
 ////                                    Preference.getInstance(getApplicationContext()).setPswrdChange("2");
@@ -186,13 +191,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                                        e.printStackTrace();
 //                                    }
 //                                }else{
-                            Intent intent = new Intent(getApplicationContext(), dashboardNew.class);
-                            startActivity(intent);
-                            finish();
+                                Intent intent = new Intent(getApplicationContext(), dashboardNew.class);
+                                startActivity(intent);
+                                finish();
 //                                }
-                        } else {
-                            Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-                        }
+                            } else {
+                                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                            }
                     }catch(Exception e){
                         e.printStackTrace();
                         Toast.makeText(LoginActivity.this, "Service Unavailable.", Toast.LENGTH_SHORT).show();
@@ -235,9 +240,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         dialog.show();
     }*/
 
-    public void onSignInClick(){
+    public void onSignInClick() {
 
-        if (!signInCLicked.equals("1")){
+        if (!signInCLicked.equals("1")) {
             textViewSignIn.setText(Html.fromHtml("<u>" + getString(R.string.sign_in) + "</u>"));
             textViewSignIn.setPaintFlags(textViewSignIn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             textViewForgotPassword.setText(getString(R.string.forgotPassword));
@@ -248,7 +253,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             signInCLicked = "1";
         }
     }
-    public void onForgotPasswordInClick(){
+
+    public void onForgotPasswordInClick() {
         if (signInCLicked.equals("1")) {
             textViewSignIn.setText(getString(R.string.sign_in));
             textViewSignIn.setPaintFlags(0);
@@ -261,20 +267,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void moduleSelection(){
+    public void moduleSelection() {
         TextView txtclose;
         Button btnFollow;
         Dialog myDialog = new Dialog(LoginActivity.this);
         myDialog.setContentView(R.layout.custompopup_select_module);
 
-        LinearLayoutCompat inventoryCountBtn = (LinearLayoutCompat)myDialog.findViewById(R.id.inventoryCountBtn);
-        LinearLayoutCompat itemRequisitionBtn = (LinearLayoutCompat)myDialog.findViewById(R.id.itemRequisitionBtn);
-        LinearLayoutCompat itemReceivingBtn = (LinearLayoutCompat)myDialog.findViewById(R.id.itemReceivingBtn);
+        LinearLayoutCompat inventoryCountBtn = (LinearLayoutCompat) myDialog.findViewById(R.id.inventoryCountBtn);
+        LinearLayoutCompat itemRequisitionBtn = (LinearLayoutCompat) myDialog.findViewById(R.id.itemRequisitionBtn);
+        LinearLayoutCompat itemReceivingBtn = (LinearLayoutCompat) myDialog.findViewById(R.id.itemReceivingBtn);
 
         inventoryCountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), dashboardInventoryCount.class);
+                Intent intent = new Intent(getApplicationContext(), dashboardInventoryCount.class);
                 startActivity(intent);
                 finish();
             }
@@ -283,7 +289,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         itemRequisitionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1=new Intent(getApplicationContext(), com.yoeki.kalpnay.frdinventry.dashboardInventoryRequisition.class);
+                Intent intent1 = new Intent(getApplicationContext(), com.yoeki.kalpnay.frdinventry.dashboardInventoryRequisition.class);
                 startActivity(intent1);
                 finish();
             }
@@ -300,23 +306,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         myDialog.show();
     }
 
-    public void dialogPasswordChange(){
+    public void dialogPasswordChange() {
         final EditText confpass;
         AppCompatButton submit;
         Dialog myDialog = new Dialog(LoginActivity.this);
         myDialog.setContentView(R.layout.change_password);
 
 
-        confpass = (EditText)myDialog.findViewById(R.id.confpass);
-        submit = (AppCompatButton)myDialog.findViewById(R.id.submit);
+        confpass = (EditText) myDialog.findViewById(R.id.confpass);
+        submit = (AppCompatButton) myDialog.findViewById(R.id.submit);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String newPass = confpass.getText().toString();
-                if (newPass.equals("")){
+                if (newPass.equals("")) {
                     Toast.makeText(activity, "Please fill Confirm Password.", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
                     progressDialog.setMessage("Please Wait"); // set message
                     progressDialog.show(); // show progress dialog
@@ -336,14 +342,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 String pin = String.valueOf(changePaswordResponse.getUserPin());
                                 String description = changePaswordResponse.getResDescription();
                                 String status = changePaswordResponse.getStatus();
-                                if(status.equals("success")){
+                                if (status.equals("success")) {
                                     progressDialog.dismiss();
                                     moduleSelection();
-                                }else{
+                                } else {
                                     Toast.makeText(LoginActivity.this, description, Toast.LENGTH_SHORT).show();
                                 }
                             }catch (Exception e){
-                                
                                 e.printStackTrace();
                             }
                         }
@@ -361,4 +366,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
     }
+
+    public void hideKeyboard(View parentView) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(parentView instanceof EditText)) {
+            parentView.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) LoginActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(LoginActivity.this.getCurrentFocus().getWindowToken(), 0);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (parentView instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) parentView).getChildCount(); i++) {
+                View innerView = ((ViewGroup) parentView).getChildAt(i);
+                hideKeyboard(innerView);
+            }
+        }
+    }
+
 }
