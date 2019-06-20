@@ -45,7 +45,7 @@ public class DAshboardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
         itemViewHolder.requisition.setText(stringArrayList.get(position).getRequisitionNo());
-        itemViewHolder.location.setText(stringArrayList.get(position).getLocation());
+        itemViewHolder.location.setText(stringArrayList.get(position).getwareHouseName());
 
 
         itemViewHolder.linearLayoutRequisition.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +53,7 @@ public class DAshboardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             public void onClick(View v) {
                 Intent intent=new Intent(activity, RequisitionControlDetails.class);
                 intent.putExtra("RequisitionNo",(stringArrayList.get(position).getRequisitionNo()));
+                intent.putExtra("wareHouse",(stringArrayList.get(position).getwareHouseName()));
                 activity.startActivity(intent);
             }
         });
