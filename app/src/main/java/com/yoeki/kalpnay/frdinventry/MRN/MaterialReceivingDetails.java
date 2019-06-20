@@ -26,7 +26,6 @@ import com.google.zxing.integration.android.IntentResult;
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
-import com.yoeki.kalpnay.frdinventry.HomeWatcher;
 import com.yoeki.kalpnay.frdinventry.MRN.Adapter.MRN_Dashboard_AdapterDetails;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.MRNDetailsList;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.MRNDetailsModel;
@@ -35,7 +34,6 @@ import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonRequest;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonResponse;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.StickerSeq;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.mrnNumberDetailsRequest;
-import com.yoeki.kalpnay.frdinventry.OnHomePressedListener;
 import com.yoeki.kalpnay.frdinventry.R;
 import com.yoeki.kalpnay.frdinventry.ScannigQR;
 

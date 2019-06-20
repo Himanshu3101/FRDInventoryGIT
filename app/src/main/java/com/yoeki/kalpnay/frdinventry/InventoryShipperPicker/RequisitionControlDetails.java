@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,37 +54,33 @@ import retrofit2.Response;
 public class RequisitionControlDetails extends AppCompatActivity implements View.OnClickListener {
 
     RecyclerView rcy_items;
-    ImageView img_back;
-    Button btn_accept, btn_reject;
-    LinearLayout linearLayoutView;
-    private Activity activity;
-    CardView cardView;
-    LinearLayout frameLayout;
-    CheckBox checkBox;
-    ImageView img_cross, img_generate, img_ungenerate;
-    TabLayout tabs_requesttab;
-    ViewPager viewpager_requestepager;
+    AppCompatTextView reqNo, rcd_Date, branchName_RCD;
     ArrayList<ItemsModel> arraylist;
-    AppCompatButton shipBtn;
+    AppCompatButton shipBtn, languageChangeRCD, img_back;
+    String wareHouse;
     AppCompatAutoCompleteTextView scanQR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.request_control_detail);
+
+
+
 
         setupWindowAnimations();
 
         arraylist = new ArrayList<>();
 
         Initialize();
-
+        String reqNmbr = getIntent().getStringExtra("RequisitionNo");
+        wareHouse = getIntent().getStringExtra("wareHouse");
+        reqNo.setText(reqNmbr);
         addlistdata();
-        //setupViewPager(viewpager_requestepager);
-        //tabs_requesttab.setupWithViewPager(viewpager_requestepager);
+
         img_back.setOnClickListener(this);
         shipBtn.setOnClickListener(this);
+        languageChangeRCD.setOnClickListener(this);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -97,7 +94,6 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             @Override
             public void afterTextChanged(Editable editable) {
                 String qr = scanQR.getText().toString();
-
                 if (qr.equals("123456789")) {
                     invalidItemDialog();
                 }
@@ -106,79 +102,17 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         scanQR.addTextChangedListener(textWatcher);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-//        HomeWatcher mHomeWatcher = new HomeWatcher(this);
-//
-//        mHomeWatcher.setOnHomePressedListener(new OnHomePressedListener() {
-//            @Override
-//            public void onHomePressed() {
-//                Toast.makeText(getApplicationContext(), "Home Clicked", Toast.LENGTH_SHORT).show();
-//            }
-//            @Override
-//            public void onHomeLongPressed() {
-//            }
-//        });
-//        mHomeWatcher.startWatch();
-
-        /*img_cross.setOnClickListener(this);
-        img_generate.setOnClickListener(this);
-        img_ungenerate.setOnClickListener(this);*/
-        //Tabcolorchange();
     }
 
     public void Initialize() {
-//        img_cross=findViewById(R.id.img_cross);
+        reqNo = findViewById(R.id.reqNo);
+        rcd_Date = findViewById(R.id.rcd_Date);
+        branchName_RCD = findViewById(R.id.branchName_RCD);
         scanQR = findViewById(R.id.scanQR);
         shipBtn = findViewById(R.id.shipBtn);
         img_back = findViewById(R.id.img_back);
+        languageChangeRCD = findViewById(R.id.languageChangeRCD);
         rcy_items = findViewById(R.id.rcy_items);
-//        img_generate = findViewById(R.id.img_generate);
-//        img_ungenerate = findViewById(R.id.img_ungenerate);
-        // viewpager_requestepager=findViewById(R.id.viewpager_requestepager);
-    }
-
-    public void Tabcolorchange() {
-        tabs_requesttab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                //tabs_requesttab.setBackgroundColor(getResources().getColor(R.color.red));
-                // tabs_requesttab.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.red)));
-                tabs_requesttab.setSelectedTabIndicatorColor(Color.parseColor("#289086"));
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                //tabs_requesttab.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                // tabs_requesttab.setTabTextColors(ColorStateList.valueOf(getResources().getColor(R.color.white)));
-                tabs_requesttab.setSelectedTabIndicatorColor(Color.parseColor("#289086"));
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-      /* viewpager_requestepager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-           @Override
-           public void onPageScrolled(int i, float v, int i1) {
-
-           }
-
-           @Override
-           public void onPageSelected(int position) {
-                for(int i= 0; i<tabs_requesttab.getTabCount();i++){
-                    if(i==position){
-                        tabs_requesttab.getTabAt(i).getCustomView().setBackgroundColor(R.color.red);
-                    }else{
-                        tabs_requesttab.getTabAt(i).getCustomView().setBackgroundColor(R.color.colorPrimary);
-                    }
-                }
-           }
-
-           @Override
-           public void onPageScrollStateChanged(int i) {
-
-           }
-       });*/
     }
 
     private void setupWindowAnimations() {
@@ -199,85 +133,23 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             case R.id.shipBtn:
                 transferOrderDialog();
                 break;
-//
-//               case R.id.img_generate:
-//                   Intent intent = new Intent(RequisitionControlDetails.this, GenerateList.class);
-//                   startActivity(intent);
-//                   img_ungenerate.setVisibility(View.GONE);
-//                   break;
-        }
-    }
-
-    private void rejectDialog() {
-        final Dialog dialog = new Dialog(this);
-        dialog.setCancelable(true);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.reject_dialog_layout);
-        // dialog.getWindow().getAttributes().windowAnimations=dialogAnimation;
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
-
-        dialog.getWindow().setAttributes(lp);
-        Button no = dialog.findViewById(R.id.button_no);
-        Button yes = dialog.findViewById(R.id.button_yes);
-
-        no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RequisitionControlDetails.this, dashboardInventoryRequisition.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        dialog.show();
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new RequestedItemsFragment(), "Requested Items");
-        adapter.addFragment(new SelectedItemsFragment(), "Selected Items");
-        viewPager.setAdapter(adapter);
-    }
+            case R.id.languageChangeRCD:
 
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+//                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//                MRN_Dashboard_AdapterDetails adapter = new MRN_Dashboard_AdapterDetails(MaterialReceivingDetails.this, listMRNDetailsList, languageChangeVisible);
+//                rcy_itemsMRD.setLayoutManager(layoutManager);
+//                rcy_itemsMRD.setAdapter(adapter);
+//                if (languageChangeVisible == 0) {
+//                    languageChangeVisible = 1;
+//                } else {
+//                    languageChangeVisible = 0;
+//                }
 
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
 
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
 
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+                break;
         }
     }
 
@@ -297,13 +169,20 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             @Override
             public void onResponse(Call<InventoryPendingModel> call, Response<InventoryPendingModel> response) {
                 progressDialog.dismiss();
-                if (response.body().getStatus().equals("Success")) {
-                    rcy_items.setLayoutManager(new LinearLayoutManager(RequisitionControlDetails.this, LinearLayoutManager.VERTICAL, false));
-                    rcy_items.setItemAnimator(new DefaultItemAnimator());
-                    requestControlDetailList adapter = new requestControlDetailList(RequisitionControlDetails.this, response.body().getDataList());
-                    rcy_items.setAdapter(adapter);
-                } else {
-                    Toast.makeText(RequisitionControlDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                try {
+                    if (response.body().getStatus().equals("Success")) {
+                        String[] Date = response.body().getDataList().get(0).getReqestDate().split("\\s+");
+                        rcd_Date.setText(Date[0]);
+                        branchName_RCD.setText(response.body().getDataList().get(0).getBranch());
+                        rcy_items.setLayoutManager(new LinearLayoutManager(RequisitionControlDetails.this, LinearLayoutManager.VERTICAL, false));
+                        rcy_items.setItemAnimator(new DefaultItemAnimator());
+                        requestControlDetailList adapter = new requestControlDetailList(RequisitionControlDetails.this, response.body().getDataList());
+                        rcy_items.setAdapter(adapter);
+                    } else {
+                        Toast.makeText(RequisitionControlDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(RequisitionControlDetails.this, "Service Unavailable.", Toast.LENGTH_SHORT).show();
                 }
             }
 

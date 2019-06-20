@@ -8,9 +8,12 @@ public class DataList {
 @SerializedName("RequisitionNo")
 @Expose
 private String requisitionNo;
-@SerializedName("Location")
+@SerializedName("LocationId")
 @Expose
 private String location;
+@SerializedName("WareHouseName")
+@Expose
+private String wareHouseName;
 
 public String getRequisitionNo() {
 return requisitionNo;
@@ -26,6 +29,14 @@ return location;
 
 public void setLocation(String location) {
 this.location = location;
+}
+
+public String getwareHouseName() {
+return wareHouseName;
+}
+
+public void setwareHouseName(String wareHouseName) {
+this.wareHouseName = wareHouseName;
 }
 
 }
