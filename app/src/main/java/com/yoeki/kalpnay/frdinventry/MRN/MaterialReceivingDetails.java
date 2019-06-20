@@ -26,7 +26,6 @@ import com.google.zxing.integration.android.IntentResult;
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
-import com.yoeki.kalpnay.frdinventry.HomeWatcher;
 import com.yoeki.kalpnay.frdinventry.MRN.Adapter.MRN_Dashboard_AdapterDetails;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.MRNDetailsList;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.MRNDetailsModel;
@@ -35,7 +34,6 @@ import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonRequest;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonResponse;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.StickerSeq;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.mrnNumberDetailsRequest;
-import com.yoeki.kalpnay.frdinventry.OnHomePressedListener;
 import com.yoeki.kalpnay.frdinventry.R;
 import com.yoeki.kalpnay.frdinventry.ScannigQR;
 
@@ -287,22 +285,27 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
         call.enqueue(new Callback<MrnNumberDetailResponse>() {
             @Override
             public void onResponse(Call<MrnNumberDetailResponse> call, Response<MrnNumberDetailResponse> response) {
-                progressDialog.dismiss();
-                if (response.body() != null) {
-                    if (response.body().getStatus().equals("Success")) {
-                        listMRNDetailsList = response.body().getMRNDetailsList();
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                        adapter = new MRN_Dashboard_AdapterDetails(MaterialReceivingDetails.this, listMRNDetailsList);
-                        rcy_itemsMRD.setLayoutManager(layoutManager);
-                        rcy_itemsMRD.setAdapter(adapter);
+                try {
+                    progressDialog.dismiss();
+                    if (response.body() != null) {
+                        if (response.body().getStatus().equals("Success")) {
+                            listMRNDetailsList = response.body().getMRNDetailsList();
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                            adapter = new MRN_Dashboard_AdapterDetails(MaterialReceivingDetails.this, listMRNDetailsList);
+                            rcy_itemsMRD.setLayoutManager(layoutManager);
+                            rcy_itemsMRD.setAdapter(adapter);
+                        } else {
+                            Toast.makeText(MaterialReceivingDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(MaterialReceivingDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MaterialReceivingDetails.this, "An Error has occured.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MRN_Dashboard.class);
+                        startActivity(intent);
+                        finish();
                     }
-                } else {
-                    Toast.makeText(MaterialReceivingDetails.this, "An Error has occured.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), MRN_Dashboard.class);
-                    startActivity(intent);
-                    finish();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(MaterialReceivingDetails.this, "Service Unavailable.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -424,14 +427,19 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
             call.enqueue(new Callback<PostingJsonResponse>() {
                 @Override
                 public void onResponse(Call<PostingJsonResponse> call, Response<PostingJsonResponse> response) {
-                    progressDialog.dismiss();
-                    if (response.body().getStatus().equals("Success")) {
-                        Toast.makeText(MaterialReceivingDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MRN_Dashboard.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(MaterialReceivingDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    try {
+                        progressDialog.dismiss();
+                        if (response.body().getStatus().equals("Success")) {
+                            Toast.makeText(MaterialReceivingDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MRN_Dashboard.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(MaterialReceivingDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(MaterialReceivingDetails.this, "Service Unavailable.", Toast.LENGTH_SHORT).show();
                     }
                 }
 

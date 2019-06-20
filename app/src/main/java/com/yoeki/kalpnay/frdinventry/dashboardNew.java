@@ -32,6 +32,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
     LinearLayout linearLayoutMaterialReciving, linearLayoutInventoryShipperPicker, linearLayoutBranchInventoryReciving, linearLayoutInventoryCounting, linearLayoutGlobalQrScan;
     AppCompatButton logOut;
     TextView MRNCount, shipperCount, birCount, inventoryCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         countingSet();
     }
 
-    public  void initialize(){
+    public void initialize() {
         linearLayoutMaterialReciving = findViewById(R.id.linearLayoutMaterialReciving);
         linearLayoutInventoryShipperPicker = findViewById(R.id.linearLayoutInventoryShipperPicker);
         linearLayoutBranchInventoryReciving = findViewById(R.id.linearLayoutBranchInventoryReciving);
@@ -60,7 +61,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         inventoryCount = findViewById(R.id.inventoryCount);
     }
 
-    public void countingSet(){
+    public void countingSet() {
         final ProgressDialog progressDialog = new ProgressDialog(dashboardNew.this);
         progressDialog.setMessage("Please Wait"); // set message
         progressDialog.show(); // show progress dialog
@@ -74,14 +75,20 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         call.enqueue(new Callback<CountResposeBocy>() {
             @Override
             public void onResponse(Call<CountResposeBocy> call, Response<CountResposeBocy> response) {
-                progressDialog.dismiss();
-                if(response.body().getStatus().equals("Success")){
+                try {
+                    progressDialog.dismiss();
 
-                    MRNCount.setText(response.body().getTotalMrn());
-                    shipperCount.setText(response.body().getTotalPending());
+                    if (response.body().getStatus().equals("Success")) {
 
-                }else{
-                    Toast.makeText(dashboardNew.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        MRNCount.setText(response.body().getTotalMrn());
+                        shipperCount.setText(response.body().getTotalPending());
+
+                    } else {
+                        Toast.makeText(dashboardNew.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(dashboardNew.this, "Service Unavailable.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -92,7 +99,6 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
 
 
     @Override
@@ -119,22 +125,22 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.logOut:
-                openLogOutDialog(R.style.DialogAnimation,"");
+                openLogOutDialog(R.style.DialogAnimation, "");
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        openLogOutDialog(R.style.DialogAnimation,"");
+        openLogOutDialog(R.style.DialogAnimation, "");
     }
 
     private void openLogOutDialog(int dialogAnimation, String s) {
-        final Dialog dialog=new Dialog(this);
+        final Dialog dialog = new Dialog(this);
         dialog.setCancelable(true);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_logout);
-        dialog.getWindow().getAttributes().windowAnimations=dialogAnimation;
+        dialog.getWindow().getAttributes().windowAnimations = dialogAnimation;
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
@@ -143,8 +149,8 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         lp.gravity = Gravity.CENTER;
         dialog.getWindow().setAttributes(lp);
 
-        AppCompatButton button_yes=dialog.findViewById(R.id.button_yes);
-        AppCompatButton button_no=dialog.findViewById(R.id.button_no);
+        AppCompatButton button_yes = dialog.findViewById(R.id.button_yes);
+        AppCompatButton button_no = dialog.findViewById(R.id.button_no);
 
         button_no.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +162,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         button_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openRef=new Intent(dashboardNew.this, LoginActivity.class);
+                Intent openRef = new Intent(dashboardNew.this, LoginActivity.class);
                 startActivity(openRef);
                 dialog.dismiss();
                 finish();
