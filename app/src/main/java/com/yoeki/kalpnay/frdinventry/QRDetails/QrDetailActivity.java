@@ -119,6 +119,7 @@ public class QrDetailActivity extends AppCompatActivity implements View.OnClickL
         call.enqueue(new Callback<ResponseBodyQRDetails>() {
             @Override
             public void onResponse(Call<ResponseBodyQRDetails> call, Response<ResponseBodyQRDetails> response) {
+                try{
                 progressDialog.dismiss();
                 if (response.body().getStatus().equals("Success")) {
                     qrDetails.setVisibility(View.VISIBLE);
@@ -136,6 +137,10 @@ public class QrDetailActivity extends AppCompatActivity implements View.OnClickL
                     edt_scanQR.setText("");
                 } else {
                     invalidItemDialog();
+                }
+                }catch(Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(QrDetailActivity.this, "Service Unavailable.", Toast.LENGTH_SHORT).show();
                 }
             }
 

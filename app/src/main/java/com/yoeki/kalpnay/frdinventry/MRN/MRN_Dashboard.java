@@ -75,7 +75,9 @@ public class MRN_Dashboard extends AppCompatActivity implements View.OnClickList
         call.enqueue(new Callback<GetMRNModels>() {
             @Override
             public void onResponse(Call<GetMRNModels> call, Response<GetMRNModels> response) {
-                progressDialog.dismiss();
+                try{
+                    progressDialog.dismiss();
+
                 if (response.body().getStatus().equals("Success")) {
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                     MRN_Dashboard_Adapter adapter = new MRN_Dashboard_Adapter(MRN_Dashboard.this, response.body().getMRNList());
@@ -83,6 +85,10 @@ public class MRN_Dashboard extends AppCompatActivity implements View.OnClickList
                     mrndash_recycler.setAdapter(adapter);
                 } else {
                     Toast.makeText(MRN_Dashboard.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                }catch(Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(MRN_Dashboard.this, "Service Unavailable.", Toast.LENGTH_SHORT).show();
                 }
             }
 
