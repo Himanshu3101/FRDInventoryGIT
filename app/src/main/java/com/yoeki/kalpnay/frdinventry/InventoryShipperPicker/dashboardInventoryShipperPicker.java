@@ -33,7 +33,7 @@ public class dashboardInventoryShipperPicker extends AppCompatActivity implement
         linearLayoutOrderCompleted.setOnClickListener(this);
         linearLayoutOrderPending.setOnClickListener(this);
         bck_orderProcessing.setOnClickListener(this);
-        countungSet();
+        countingSet();
     }
 
     public void initialize(){
@@ -73,7 +73,7 @@ public class dashboardInventoryShipperPicker extends AppCompatActivity implement
         finish();
     }
 
-    public void countungSet(){
+    public void countingSet(){
         final ProgressDialog progressDialog = new ProgressDialog(dashboardInventoryShipperPicker.this);
         progressDialog.setMessage("Please Wait"); // set message
         progressDialog.show(); // show progress dialog

@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-        hideKeyboard(findViewById(R.id.login_container));
+        //hideKeyboard(findViewById(R.id.login_container));
         activity = new Activity();
         initialize();
 
@@ -367,26 +367,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         myDialog.show();
     }
 
-    public void hideKeyboard(View parentView) {
-
-        // Set up touch listener for non-text box views to hide keyboard.
-        if (!(parentView instanceof EditText)) {
-            parentView.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    InputMethodManager inputMethodManager = (InputMethodManager) LoginActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(LoginActivity.this.getCurrentFocus().getWindowToken(), 0);
-                    return false;
-                }
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (parentView instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) parentView).getChildCount(); i++) {
-                View innerView = ((ViewGroup) parentView).getChildAt(i);
-                hideKeyboard(innerView);
-            }
-        }
-    }
+//    public void hideKeyboard(View parentView) {
+//
+//        // Set up touch listener for non-text box views to hide keyboard.
+//        if (!(parentView instanceof EditText)) {
+//            parentView.setOnTouchListener(new View.OnTouchListener() {
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    InputMethodManager inputMethodManager = (InputMethodManager) LoginActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+//                    inputMethodManager.hideSoftInputFromWindow(LoginActivity.this.getCurrentFocus().getWindowToken(), 0);
+//                    return false;
+//                }
+//            });
+//        }
+//
+//        //If a layout container, iterate over children and seed recursion.
+//        if (parentView instanceof ViewGroup) {
+//            for (int i = 0; i < ((ViewGroup) parentView).getChildCount(); i++) {
+//                View innerView = ((ViewGroup) parentView).getChildAt(i);
+//                hideKeyboard(innerView);
+//            }
+//        }
+//    }
 
 }
