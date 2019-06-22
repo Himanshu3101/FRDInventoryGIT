@@ -95,7 +95,7 @@ android:layout_marginBottom="6dp">
                         android:textStyle="bold"/>
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_remainingqty"
+                        android:id="@+id/configDialog"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rice"
@@ -134,7 +134,7 @@ android:layout_marginBottom="6dp">
 
                     <!--map_icon-->
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/nameArabicD"
+                        android:id="@+id/batchNoDialog"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="0041521"
@@ -182,7 +182,7 @@ android:layout_marginBottom="6dp">
                         android:textStyle="bold"/>
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/onHandD"
+                        android:id="@+id/expiry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="20/01/2014"
@@ -221,7 +221,7 @@ android:layout_marginBottom="6dp">
 
                     <!--map_icon-->
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/differenceD"
+                        android:id="@+id/pckdQty"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="20 kg"

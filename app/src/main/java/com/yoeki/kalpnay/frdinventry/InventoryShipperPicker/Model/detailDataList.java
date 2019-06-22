@@ -30,6 +30,24 @@ private String itemName;
 @SerializedName("ApprovedQty")
 @Expose
 private String approvedQty;
+@SerializedName("PickedQty")
+@Expose
+private String pickededQty;
+@SerializedName("RemainingQty")
+@Expose
+private String remainingQty;
+@SerializedName("Config")
+@Expose
+private String config;
+@SerializedName("BatchId")
+@Expose
+private String batchId;
+@SerializedName("Expdate")
+@Expose
+private String expdate;
+@SerializedName("Reason")
+@Expose
+private String reason;
 
 public String getRequisitionNo() {
 return requisitionNo;
@@ -95,5 +113,52 @@ public void setApprovedQty(String approvedQty) {
 this.approvedQty = approvedQty;
 }
 
+public String getConfig() {
+    return config;
+}
+
+public void setConfig(String config) {
+    this.config = config;
+}
+
+public String getBatchId() {
+    return batchId;
+}
+
+public void setBatchId(String batchId) {
+    this.batchId = batchId;
+}
+
+public String getExpdate() {
+    return expdate;
+}
+
+public void setExpdate(String expdate) {
+    this.expdate = expdate;
+}
+
+public String getpickededQty() {
+return pickededQty;
+}
+
+public void setpickededQty(String pickededQty) {
+this.pickededQty = pickededQty;
+}
+
+public String getremainingQty() {
+    return remainingQty;
+}
+
+public void setremainingQty(String remainingQty) {
+    this.remainingQty = remainingQty;
+}
+
+public String getReason() {
+return reason;
+}
+
+public void setReason(String reason) {
+    this.reason = reason;
+    }
 }
 

@@ -4,6 +4,8 @@ import com.yoeki.kalpnay.frdinventry.CountResposeBocy;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.GetRequisitionPending;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.InventoryPendingModel;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.ParticularRequisitionDetails;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.ResponseShippingDetails;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.RequestBodyShipDetails;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.UserIDModel;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.MrnNumberDetailResponse;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonRequest;
@@ -52,12 +54,9 @@ public interface ApiInterface {
 
    @POST("FRD/GetdataQRWise")
    Call<ResponseBodyQRDetails> QRWiseData(@Body RequestBodyQRDetails requestBodyQRDetails);
-   /*@POST("service1.svc/UploadImage")
-   Call<GetImagedata> uploadimage(@Body InsertImagedata uploadimagedata);
 
-   @POST("service1.svc/UploadImage")
-   Call<GetImagedata> uploadimageno(@Body Uploadwvalidation uploadimagedata);
+   @POST("FRD/Shiping")
+   Call<ResponseShippingDetails> redShipping(@Body RequestBodyShipDetails requestBodyShipDetails);
 
-   @POST("service1.svc/InsertDataNon")
-   Call<Getreferncedata> refdata(@Body Insertreferenceno insertrefrence);*/
+
 }

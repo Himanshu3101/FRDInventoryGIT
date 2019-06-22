@@ -44,7 +44,7 @@
                 android:textColor="@color/black"/>
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/pckd_qty"
+                android:id="@+id/to_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".1"
@@ -55,6 +55,28 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/footer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/ok_toNumbr"
+                android:text="@string/ok"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:textAllCaps="false"
+                android:background="@drawable/buttonshape_ship"
+                android:shadowColor="#A8A8A8"
+                android:shadowRadius="5"
+                />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
