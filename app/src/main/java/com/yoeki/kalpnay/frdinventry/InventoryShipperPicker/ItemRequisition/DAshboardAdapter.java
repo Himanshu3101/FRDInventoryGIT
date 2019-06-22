@@ -54,6 +54,7 @@ public class DAshboardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 Intent intent=new Intent(activity, RequisitionControlDetails.class);
                 intent.putExtra("RequisitionNo",(stringArrayList.get(position).getRequisitionNo()));
                 intent.putExtra("wareHouse",(stringArrayList.get(position).getwareHouseName()));
+                intent.putExtra("locationCode",(stringArrayList.get(position).getLocation()));
                 activity.startActivity(intent);
             }
         });
