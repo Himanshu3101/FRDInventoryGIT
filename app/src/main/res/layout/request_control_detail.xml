@@ -106,6 +106,14 @@
                 android:textColor="@color/black"
                 android:textSize="10sp"/>
 
+            <CheckBox
+                android:id="@+id/checkUpdateQty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:checked="false"/>
+
         </LinearLayout>
 
         <LinearLayout
