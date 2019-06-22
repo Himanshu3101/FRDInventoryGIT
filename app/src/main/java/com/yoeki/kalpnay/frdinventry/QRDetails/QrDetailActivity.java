@@ -56,7 +56,7 @@ public class QrDetailActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void afterTextChanged(Editable editable) {
                 String qrDetails = String.valueOf(editable);
-                if (qrDetails.length() >= 12) {
+                if (qrDetails.length() >= 10) {
                     try {
                         qrDetails();
                     }catch (Exception e){

@@ -44,61 +44,72 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
-                        <LinearLayout
-                            android:layout_width="match_parent"
+
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:background="@color/colorPrimary">
-                            <TextView
+
+                            <View android:id="@+id/strut"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_centerHorizontal="true"/>
+
+                            <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_itemno"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_alignRight="@id/strut"
+                                android:layout_alignParentLeft="true"
                                 android:text="Item no"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 android:gravity="center"
                                 android:padding="3dp"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
                                 android:textColor="@color/white"/>
-                            <TextView
+
+                            <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_itemnameinEnglish"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:text="Rice"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:layout_weight="1"
-                                android:padding="3dp"
-                                android:gravity="center"
-                                android:layout_gravity="center"
-                                android:textColor="@color/white"/>
-                            <TextView
-                                android:id="@+id/tv_nameinarabic"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_alignLeft="@id/strut"
+                                android:layout_alignParentRight="true"
                                 android:text="Item no"
                                 android:gravity="center"
                                 android:layout_gravity="center"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 android:padding="3dp"
-                                android:visibility="gone"
+                                android:layout_marginLeft="5dp"
+                                android:textColor="@color/white"
+                                android:visibility="gone"/>
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_nameinarabic"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignLeft="@id/strut"
+                                android:layout_alignParentRight="true"
+                                android:text="Item no"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:padding="3dp"
                                 android:layout_marginLeft="5dp"
                                 android:layout_weight="1"
-                                android:textColor="@color/white"/>
-                        </LinearLayout>
+                                android:textColor="@color/white"
+                                android:visibility="gone"/>
+
+                        </RelativeLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:orientation="horizontal">
-                            <!-- <LinearLayout
-                                 android:layout_width="match_parent"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"
-                                 android:orientation="horizontal">-->
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -113,7 +124,7 @@
                                 android:layout_weight=".13"
                                 android:gravity="start"
                                 android:layout_marginLeft="05dp"
-                                android:text="201"
+                                android:text="0"
                                 android:textSize="10dp"
                                 android:textColor="@color/textcolor"/>
                             <!-- </LinearLayout>
@@ -139,7 +150,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".1"
                                 android:gravity="start"
-                                android:text="20"
+                                android:text="0"
                                 android:textSize="10dp"
                                 android:textColor="@color/textcolor"/>
 
@@ -180,7 +191,7 @@
                                 android:layout_weight=".12"
                                 android:gravity="start"
                                 android:paddingLeft="02dp"
-                                android:text="201"
+                                android:text="0"
                                 android:textSize="10sp"
                                 android:textColor="@color/textcolor"/>
 
@@ -213,6 +224,79 @@
                                 android:orientation="horizontal">
                              </LinearLayout>-->
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:visibility="visible"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".1"
+                                android:gravity="start"
+                                android:layout_marginLeft="05dp"
+                                android:text="Config"
+                                android:textSize="10dp"
+                                android:textColor="@color/textcolor"/>
+
+                            <TextView
+                                android:id="@+id/tv_config"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".1"
+                                android:gravity="start"
+                                android:layout_marginLeft="05dp"
+                                android:text="0"
+                                android:textSize="10dp"
+                                android:textColor="@color/textcolor"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".1"
+                                android:gravity="start"
+                                android:layout_marginLeft="05dp"
+                                android:text="Batch"
+                                android:textSize="10dp"
+                                android:textColor="@color/textcolor"/>
+
+                            <TextView
+                                android:id="@+id/tv_batchid"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".1"
+                                android:gravity="start"
+                                android:text="0"
+                                android:textSize="10dp"
+                                android:textColor="@color/textcolor"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".1"
+                                android:gravity="start"
+                                android:layout_marginLeft="05dp"
+                                android:text="expiry"
+                                android:textSize="10dp"
+                                android:textColor="@color/textcolor"/>
+
+                            <TextView
+                                android:id="@+id/tv_expires"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".1"
+                                android:gravity="start"
+                                android:text="0"
+                                android:textSize="10dp"
+                                android:textColor="@color/textcolor"/>
+
+
+                        </LinearLayout>
+
+
 
                         <!-- <LinearLayout
                              android:layout_width="match_parent"

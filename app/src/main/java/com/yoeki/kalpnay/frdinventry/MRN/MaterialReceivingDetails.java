@@ -116,7 +116,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                 tempSeq = scanQRMRD.getText().toString();
                 String qty, newQty;
                 boolean isQrFound = false;
-                if (tempSeq.length() < 12) {
+                if (tempSeq.length() < 10) {
 
                 } else {
                     if (listMRNDetailsList.size() > 0) {
