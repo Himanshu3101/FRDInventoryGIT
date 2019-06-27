@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.yoeki.kalpnay.frdinventry.MRN.Model.StickerSeq;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +20,8 @@ public class Preference {
     private static final String PASSWORD = "password";
     private static final String CHANGEPASSWORD = "1";
     private static final String ReloadedDatabase = "reloadedDatabase";
+    private static final String TempSeqList = "tempSeqList";
+
 //    private static final String Bank_Details = "bank_detail";
 //    private static final String Count_Details = "count_details";
 //    private static final String Total_Validate_Account = "total_validate_accounts";
@@ -144,6 +150,23 @@ public class Preference {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         sharedPreferences.edit().clear().apply();
         Log.e("SharedPrefManager", "session cleared...");
+    }
+
+    public void saveTempSeqList(List<StickerSeq> tempSeqList) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String strJson = gson.toJson(tempSeqList);
+        editor.putString(TempSeqList, strJson);
+        editor.apply();
+    }
+
+    public ArrayList<StickerSeq> getTempSeqList() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(TempSeqList, null);
+        Type type = new TypeToken<List<StickerSeq>>() {}.getType();
+        return gson.fromJson(json, type);
     }
 
     /*public void totalValidateAccounts(ArrayList<TotalValidate> totalValidatesLS, String key) {

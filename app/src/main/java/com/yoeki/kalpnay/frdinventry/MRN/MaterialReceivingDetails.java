@@ -57,17 +57,18 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
     RecyclerView rcy_itemsMRD;
     String mrnNumber, activityNo;
     int languageChangeVisible = 1;
-    List<MRNDetailsList> listMRNDetailsList;
+    List<MRNDetailsList> listMRNDetailsList = new ArrayList<>();
     private IntentIntegrator qrScan;
 
     MRN_Dashboard_AdapterDetails adapter;
     List<StickerSeq> tempSeqList = new ArrayList<>();
+    boolean requiredBackDialog = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.material_receiving_details);
-        initialize();
+        initUi();
 
 //        mrn_dashboard_adapterDetails = new MRN_Dashboard_AdapterDetails(this);
         modelMRNDetails = new ArrayList<>();
@@ -80,6 +81,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
         mrnNumber = getIntent().getStringExtra("MRNNumber");
         activityNo = getIntent().getStringExtra("activityNo");
         mrnDetailsDashboardData();
+
 
 //        scanQR();
 
@@ -142,7 +144,10 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                                             }
                                         }
                                         if (!isSeqExistsInTempList) {
+                                            listMRNDetailsList.get(i).getStickerSeq().get(j).setMrnNo(mrnNumber);
                                             tempSeqList.add(listMRNDetailsList.get(i).getStickerSeq().get(j));
+
+                                            requiredBackDialog = true;
 
                                             newQty = listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerQty();
                                             if (listMRNDetailsList.get(i).getScanQty() == null) {
@@ -152,16 +157,22 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
 
                                             float numQty = Float.parseFloat(qty) + Float.parseFloat(newQty);
 
-                                            listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
+                                            float recQty = Float.parseFloat(listMRNDetailsList.get(i).getReceivedQuantity());
 
-                                            MRNDetailsList tempMrnDetail = new MRNDetailsList();
-                                            tempMrnDetail = listMRNDetailsList.get(i);
-                                            listMRNDetailsList.remove(i);
-                                            adapter.notifyItemRemoved(i);
-                                            listMRNDetailsList.add(0, tempMrnDetail);
-                                            adapter.notifyItemInserted(0);
-                                            rcy_itemsMRD.smoothScrollToPosition(0);
+                                            if (numQty > recQty) {
+                                                invalidItemDialog();
+                                            } else {
 
+                                                listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
+
+                                                MRNDetailsList tempMrnDetail = new MRNDetailsList();
+                                                tempMrnDetail = listMRNDetailsList.get(i);
+                                                listMRNDetailsList.remove(i);
+                                                adapter.notifyItemRemoved(i);
+                                                listMRNDetailsList.add(0, tempMrnDetail);
+                                                adapter.notifyItemInserted(0);
+                                                rcy_itemsMRD.smoothScrollToPosition(0);
+                                            }
                                             scanQRMRD.setText("");
 //                                    if (isRecQtyScanQtyMatched()) {
 //                                        postingBtn.setEnabled(true);
@@ -222,7 +233,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
 
     }
 
-    public void initialize() {
+    public void initUi() {
         rcy_itemsMRD = findViewById(R.id.rcy_itemsMRD);
         scanQRMRD = findViewById(R.id.scanQRMRD);
         postingBtn = findViewById(R.id.postingBtn);
@@ -237,7 +248,13 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_backMRNDetails:
-                onBackDialog();
+                if (requiredBackDialog) {
+                    onBackDialog();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), MRN_Dashboard.class);
+                    startActivity(intent);
+                    finish();
+                }
                 break;
             case R.id.languageChange:
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -261,7 +278,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                 }
                 break;
             case R.id.saveTempBtn:
-
+                saveTempSeqList();
                 break;
         }
     }
@@ -269,7 +286,13 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-        onBackDialog();
+        if (requiredBackDialog) {
+            onBackDialog();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), MRN_Dashboard.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void mrnDetailsDashboardData() {
@@ -290,10 +313,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                     if (response.body() != null) {
                         if (response.body().getStatus().equals("Success")) {
                             listMRNDetailsList = response.body().getMRNDetailsList();
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                            adapter = new MRN_Dashboard_AdapterDetails(MaterialReceivingDetails.this, listMRNDetailsList);
-                            rcy_itemsMRD.setLayoutManager(layoutManager);
-                            rcy_itemsMRD.setAdapter(adapter);
+                            initData();
                         } else {
                             Toast.makeText(MaterialReceivingDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -431,6 +451,8 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                         progressDialog.dismiss();
                         if (response.body().getStatus().equals("Success")) {
                             Toast.makeText(MaterialReceivingDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            deleteTempSeqData();
+                            requiredBackDialog = false;
                             Intent intent = new Intent(getApplicationContext(), MRN_Dashboard.class);
                             startActivity(intent);
                             finish();
@@ -518,5 +540,167 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd;
+    }
+
+
+//    void saveTempSeqList() {
+//        if (tempSeqList.size() < 1) {
+//            Toast.makeText(this, "Nothing scanned to save!", Toast.LENGTH_SHORT).show();
+//        } else {
+//            List<StickerSeq> prefTempSeqList = Preference.getInstance(getApplicationContext()).getTempSeqList();
+//            if (prefTempSeqList == null) {
+//                prefTempSeqList = new ArrayList<>();
+//            }
+//            prefTempSeqList.addAll(tempSeqList);
+//            Preference.getInstance(getApplicationContext()).saveTempSeqList(prefTempSeqList);
+//            requiredBackDialog = false;
+//            Toast.makeText(this, "Temporary data saved successfully", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(getApplicationContext(), MRN_Dashboard.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//    }w
+
+
+    void saveTempSeqList() {
+        boolean mrnAvailable = false;
+        for (int k = 0; k < tempSeqList.size(); k++) {
+            if (tempSeqList.get(k).getMrnNo().equals(mrnNumber)) ;
+            {
+                mrnAvailable = true;
+            }
+        }
+        if (mrnAvailable) {
+            Preference.getInstance(getApplicationContext()).saveTempSeqList(tempSeqList);
+            requiredBackDialog = false;
+            Toast.makeText(this, "Temporary data saved successfully", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), MRN_Dashboard.class);
+            startActivity(intent);
+            finish();
+
+        } else {
+            Toast.makeText(this, "No scanned item found!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+//    void initData() {
+//        List<StickerSeq> prefTempSeqList = Preference.getInstance(getApplicationContext()).getTempSeqList();
+//        if (prefTempSeqList != null) {
+//            if (prefTempSeqList.size() > 0) {
+//                for (int k = 0; k < prefTempSeqList.size(); k++) {
+//                    String tempSeq;
+//                    float newQty;
+//                    tempSeq = prefTempSeqList.get(k).getStickerSequence();
+//                    newQty = Float.parseFloat(prefTempSeqList.get(k).getStickerQty());
+//                    boolean breakFlag = false;
+//                    if (listMRNDetailsList.size() > 0) {
+//                        for (int i = 0; i < listMRNDetailsList.size(); i++) {
+//                            if (listMRNDetailsList.get(i).getStickerSeq() != null) {
+//                                for (int j = 0; j < listMRNDetailsList.get(i).getStickerSeq().size(); j++) {
+//                                    if (listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerSequence().equals(tempSeq)) {
+//                                        tempSeqList.add(prefTempSeqList.get(k));
+//                                        breakFlag = true;
+//                                        if (listMRNDetailsList.get(i).getScanQty() == null) {
+//                                            listMRNDetailsList.get(i).setScanQty("0");
+//                                        }
+//                                        String qty = listMRNDetailsList.get(i).getScanQty();
+//                                        float numQty = Float.parseFloat(qty) + newQty;
+//                                        listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
+//                                        MRNDetailsList tempMrnDetail = new MRNDetailsList();
+//                                        tempMrnDetail = listMRNDetailsList.get(i);
+//                                        listMRNDetailsList.remove(i);
+//                                        listMRNDetailsList.add(0, tempMrnDetail);
+//                                        rcy_itemsMRD.smoothScrollToPosition(0);
+//                                        break;
+//                                    }
+//                                }
+//                            }
+//                            if (breakFlag) {
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//
+//            }
+//        } else {
+//            tempSeqList = new ArrayList<>();
+//        }
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        adapter = new MRN_Dashboard_AdapterDetails(MaterialReceivingDetails.this, listMRNDetailsList);
+//        rcy_itemsMRD.setLayoutManager(layoutManager);
+//        rcy_itemsMRD.setAdapter(adapter);
+//    }
+
+
+    void initData() {
+        tempSeqList = Preference.getInstance(getApplicationContext()).getTempSeqList();
+        if (tempSeqList != null) {
+            if (tempSeqList.size() > 0) {
+                for (int k = 0; k < tempSeqList.size(); k++) {
+                    String tempSeq;
+                    float newQty;
+                    tempSeq = tempSeqList.get(k).getStickerSequence();
+                    newQty = Float.parseFloat(tempSeqList.get(k).getStickerQty());
+                    boolean breakFlag = false;
+                    if (listMRNDetailsList.size() > 0) {
+                        for (int i = 0; i < listMRNDetailsList.size(); i++) {
+                            if (listMRNDetailsList.get(i).getStickerSeq() != null) {
+                                for (int j = 0; j < listMRNDetailsList.get(i).getStickerSeq().size(); j++) {
+                                    if (listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerSequence().equals(tempSeq)) {
+                                        breakFlag = true;
+                                        if (listMRNDetailsList.get(i).getScanQty() == null) {
+                                            listMRNDetailsList.get(i).setScanQty("0");
+                                        }
+                                        String qty = listMRNDetailsList.get(i).getScanQty();
+                                        float numQty = Float.parseFloat(qty) + newQty;
+                                        listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
+                                        MRNDetailsList tempMrnDetail = new MRNDetailsList();
+                                        tempMrnDetail = listMRNDetailsList.get(i);
+                                        listMRNDetailsList.remove(i);
+                                        listMRNDetailsList.add(0, tempMrnDetail);
+                                        break;
+                                    }
+                                }
+                            }
+                            if (breakFlag) {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            }
+        } else {
+            tempSeqList = new ArrayList<>();
+        }
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        adapter = new MRN_Dashboard_AdapterDetails(MaterialReceivingDetails.this, listMRNDetailsList);
+        rcy_itemsMRD.setLayoutManager(layoutManager);
+        rcy_itemsMRD.setAdapter(adapter);
+    }
+
+
+//    void deleteTempSeqData() {
+//        tempSeqList = new ArrayList<>();
+//        List<StickerSeq> prefTempSeqList = Preference.getInstance(getApplicationContext()).getTempSeqList();
+//        for (int i = 0; i < prefTempSeqList.size(); i++){
+//            if(prefTempSeqList.get(i).getMrnNo().equals(mrnNumber)){
+//                prefTempSeqList.remove(i);
+//            }
+//        }
+//        Preference.getInstance(getApplicationContext()).saveTempSeqList(prefTempSeqList);
+//    }
+
+
+    void deleteTempSeqData() {
+        for (int i = 0; i < tempSeqList.size(); i++) {
+            if (tempSeqList.get(i).getMrnNo().equals(mrnNumber)) {
+                tempSeqList.remove(i);
+            }
+        }
+        Preference.getInstance(getApplicationContext()).saveTempSeqList(tempSeqList);
+        Toast.makeText(this, "Temp Data Deleted", Toast.LENGTH_SHORT).show();
+        adapter.notifyDataSetChanged();
     }
 }

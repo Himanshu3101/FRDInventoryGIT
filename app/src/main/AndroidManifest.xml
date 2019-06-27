@@ -18,9 +18,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".banchInventoryReceiving.InventoryControlDetail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".banchInventoryReceiving.CompletedReceiving"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".banchInventoryReceiving.BranchInventoryReceivingDashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".QRDetails.QrDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".GenerateListModels.GenerateList"
             android:theme="@style/AppTheme.NoActionBar" />

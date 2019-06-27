@@ -21,7 +21,7 @@ public class MRN_Dashboard_AdapterDetails extends RecyclerView.Adapter<RecyclerV
     private static final int TYPE_ITEM = 2;
     private List<MRNDetailsList> stringMRNArrayListDetails;
     private Activity activity;
-    int languageChangeVisible=0;
+    int languageChangeVisible = 0;
     private int lastPosition = -1;
 
     public MRN_Dashboard_AdapterDetails(Activity activity, List<MRNDetailsList> MRN_dashboardAdapterDetails) {
@@ -50,10 +50,10 @@ public class MRN_Dashboard_AdapterDetails extends RecyclerView.Adapter<RecyclerV
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
-        if(languageChangeVisible==0){
+        if (languageChangeVisible == 0) {
             itemViewHolder.tv_nameMRN.setVisibility(View.VISIBLE);
             itemViewHolder.tv_nameMRNArabic.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             itemViewHolder.tv_nameMRN.setVisibility(View.INVISIBLE);
             itemViewHolder.tv_nameMRNArabic.setVisibility(View.VISIBLE);
         }
@@ -69,7 +69,6 @@ public class MRN_Dashboard_AdapterDetails extends RecyclerView.Adapter<RecyclerV
         String[] split = stringMRNArrayListDetails.get(position).getExpiryDate().split("\\s+");
         itemViewHolder.tv_expiryDateMRN.setText(split[0]);
 //        itemViewHolder.tv_scanqty.setText(stringMRNArrayListDetails.get(position).getReceivedQuantity());
-        setAnimation(viewHolder.itemView, position);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class MRN_Dashboard_AdapterDetails extends RecyclerView.Adapter<RecyclerV
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        AppCompatTextView tv_itemnoMRN, tv_nameMRN, tv_nameMRNArabic,tv_batchNoMRN, tv_receivedqty, tv_expiryDateMRN, tv_scanqty, tv_configurationMRN;
+        AppCompatTextView tv_itemnoMRN, tv_nameMRN, tv_nameMRNArabic, tv_batchNoMRN, tv_receivedqty, tv_expiryDateMRN, tv_scanqty, tv_configurationMRN;
         LinearLayout linearLayoutMRNdetails;
 
         public ItemViewHolder(View itemView) {
@@ -93,16 +92,6 @@ public class MRN_Dashboard_AdapterDetails extends RecyclerView.Adapter<RecyclerV
             tv_scanqty = itemView.findViewById(R.id.tv_scanqty);
             tv_configurationMRN = itemView.findViewById(R.id.tv_configurationMRN);
             linearLayoutMRNdetails = itemView.findViewById(R.id.linearLayoutMRNdetails);
-        }
-    }
-
-    private void setAnimation(View viewToAnimate, int position)
-    {
-        if (position > lastPosition)
-        {
-            Animation animation = AnimationUtils.loadAnimation(activity, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
         }
     }
 }

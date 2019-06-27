@@ -7,10 +7,13 @@ import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -144,7 +147,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 onForgotPasswordInClick();
                 break;
             case R.id.buttonLogin:
-                loginWork();
+                if(isConnected()){
+                    loginWork();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "No internet available!", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -365,6 +373,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
+    }
+
+    boolean isConnected() {
+        ConnectivityManager cm =(ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return  activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
     }
 
 //    public void hideKeyboard(View parentView) {

@@ -57,8 +57,6 @@ public class MRN_Dashboard_Adapter extends RecyclerView.Adapter<RecyclerView.Vie
                 activity.finish();
             }
         });
-
-        setAnimation(holder.itemView, position);
     }
 
     @Override
@@ -83,14 +81,6 @@ public class MRN_Dashboard_Adapter extends RecyclerView.Adapter<RecyclerView.Vie
             activityNo = itemView.findViewById(R.id.activityNo);
             date = itemView.findViewById(R.id.date);
             linearLayoutMRN = itemView.findViewById(R.id.linearLayoutMRN);
-        }
-    }
-
-    private void setAnimation(View viewToAnimate, int position) {
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(activity, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
         }
     }
 }
