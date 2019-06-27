@@ -111,7 +111,12 @@ public class requestControlDetailList extends RecyclerView.Adapter<RecyclerView.
         itemViewHolder.cardview.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                recyclerViewDetailsDialog();
+                if(stringArrayList.get(position).getpickededQty()!=null){
+                    String[] date = stringArrayList.get(position).getExpdate().split("\\s+");
+                    recyclerViewDetailsDialog( stringArrayList.get(position).getConfig(), stringArrayList.get(position).getBatchId(),date[0],stringArrayList.get(position).getpickededQty());
+                }else{
+                    Toast.makeText(activity, "Firstly scan the items.", Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
         });
@@ -164,7 +169,7 @@ public class requestControlDetailList extends RecyclerView.Adapter<RecyclerView.
         }
     }
 
-    private void recyclerViewDetailsDialog() {
+    private void recyclerViewDetailsDialog(String config, String batchId, String expirydte, String getpickededQty) {
         final Dialog dialog = new Dialog(activity);
         dialog.setCancelable(true);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -179,44 +184,12 @@ public class requestControlDetailList extends RecyclerView.Adapter<RecyclerView.
         AppCompatTextView batchNoDialog = dialog.findViewById(R.id.batchNoDialog);
         AppCompatTextView expiry = dialog.findViewById(R.id.expiry);
         AppCompatTextView pckdQty = dialog.findViewById(R.id.pckdQty);
-
+        configDialog.setText(config);
+        batchNoDialog.setText(batchId);
+        expiry.setText(expirydte);
+        pckdQty.setText(getpickededQty);
         dialog.show();
     }
 
-    public void update_Qty(final int position, final View tv_pickedqty) {
-        final Dialog dialog = new Dialog(activity);
-        dialog.setCancelable(true);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.update_qty);
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        //lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
 
-        final AppCompatAutoCompleteTextView pckd_qty = dialog.findViewById(R.id.pckd_qty);
-        final AppCompatAutoCompleteTextView updte_qty = dialog.findViewById(R.id.updte_qty);
-        AppCompatButton submitBtn = dialog.findViewById(R.id.submitBtn);
-
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String packed = pckd_qty.getText().toString();
-                String update = updte_qty.getText().toString();
-                if (packed.equals("")) {
-                    Toast.makeText(activity, "Please Input Packed Quantity.", Toast.LENGTH_SHORT).show();
-                } else if (update.equals("")) {
-                    Toast.makeText(activity, "Please Input Update Quantity.", Toast.LENGTH_SHORT).show();
-                } else {
-                    String finalUpdate = String.valueOf(Integer.parseInt(packed) * Integer.parseInt(update));
-                    Toast.makeText(activity, "Updated Complete. " + finalUpdate, Toast.LENGTH_SHORT).show();
-                    TextView textView = (TextView) tv_pickedqty;
-                    textView.setText(finalUpdate);
-                    dialog.dismiss();
-                }
-            }
-        });
-        dialog.getWindow().setAttributes(lp);
-        dialog.show();
-    }
 }
