@@ -13,50 +13,52 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
-     <RelativeLayout
-        android:id="@+id/mainheader"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        tools:ignore="MissingConstraints"
-        android:background="@color/colorPrimary">
+        <RelativeLayout
+            android:id="@+id/mainheader"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/colorPrimary"
+            tools:ignore="MissingConstraints">
 
-         <FrameLayout android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-             <Button android:id="@+id/bck_shipperPicker"
-                 android:layout_width="50dp"
-                 android:layout_height="match_parent"
-                 android:background="@color/transparent"/>
+                <Button
+                    android:id="@+id/bck_shipperPicker"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent" />
 
-             <ImageView android:layout_width="20dp"
-                 android:layout_height="20dp"
-                 android:scaleType="fitXY"
-                 android:background="@mipmap/back"
-                 android:layout_gravity="center"/>
-         </FrameLayout>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/back"
+                    android:scaleType="fitXY" />
+            </FrameLayout>
 
 
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="Shipper/Picker"
-             android:textColor="@color/white"
-             android:layout_centerInParent="true"
-             android:textSize="15sp"
-             android:layout_gravity="center"
-             android:id="@+id/toolbar_title" />
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="Shipper/Picker"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rycdashboard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        tools:ignore="MissingConstraints">
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rycdashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            tools:ignore="MissingConstraints"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

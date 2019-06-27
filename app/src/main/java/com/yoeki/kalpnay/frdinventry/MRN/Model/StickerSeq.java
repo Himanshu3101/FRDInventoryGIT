@@ -12,6 +12,8 @@ public class StickerSeq {
     @Expose
     private String stickerQty;
 
+    private String mrnNo;
+
     public String getStickerSequence() {
         return stickerSequence;
     }
@@ -28,4 +30,11 @@ public class StickerSeq {
         this.stickerQty = stickerQty;
     }
 
+    public String getMrnNo() {
+        return mrnNo;
+    }
+
+    public void setMrnNo(String mrnNo) {
+        this.mrnNo = mrnNo;
+    }
 }
