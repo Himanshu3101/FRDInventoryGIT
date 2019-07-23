@@ -7,7 +7,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.ItemRequisition.DAshboardAdapter;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.ItemRequisition.DashboardModel;
 import com.yoeki.kalpnay.frdinventry.Login.LoginActivity;
 
@@ -146,7 +144,7 @@ public class dashboardInventoryRequisition extends AppCompatActivity implements 
 
         rycdashboard.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getApplicationContext());
-        DAshboardAdapter adapter=new DAshboardAdapter(dashboardInventoryRequisition.this,listdashboard*//*,layout*//*);
+        inventoryPendingAdapter adapter=new inventoryPendingAdapter(dashboardInventoryRequisition.this,listdashboard*//*,layout*//*);
         rycdashboard.setLayoutManager(layoutManager);
         rycdashboard.setAdapter(adapter);
       }*/

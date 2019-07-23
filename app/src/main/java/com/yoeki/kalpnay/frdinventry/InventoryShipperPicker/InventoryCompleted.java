@@ -38,7 +38,7 @@ public class InventoryCompleted extends AppCompatActivity implements View.OnClic
         initialize();
         listdashboard=new ArrayList<>();
         bck_shipperPicker.setOnClickListener(this);
-        dashboarddataComp();
+//        dashboarddataComp();
     }
 
     public void initialize(){
@@ -47,7 +47,7 @@ public class InventoryCompleted extends AppCompatActivity implements View.OnClic
         slidedown = (AnimatorSet) AnimatorInflater.loadAnimator(InventoryCompleted.this, R.animator.slide_down);
     }
 
-    public void dashboarddataComp(){
+   /* public void dashboarddataComp(){
 
         final ProgressDialog progressDialog = new ProgressDialog(InventoryCompleted.this);
         progressDialog.setMessage("Please Wait"); // set message
@@ -66,10 +66,10 @@ public class InventoryCompleted extends AppCompatActivity implements View.OnClic
                 progressDialog.dismiss();
                 if (response.body().getStatus().equals("Success")) {
 
-                    /*LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                    DAshboardAdapter adapter=new DAshboardAdapter(InventoryCompleted.this,response.body().getDataList());
+                    *//*LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                    inventoryPendingAdapter adapter=new inventoryPendingAdapter(InventoryCompleted.this,response.body().getDataList());
                     rycdashboard.setLayoutManager(layoutManager);
-                    rycdashboard.setAdapter(adapter);*/
+                    rycdashboard.setAdapter(adapter);*//*
 
                 } else {
                     Toast.makeText(InventoryCompleted.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -82,7 +82,7 @@ public class InventoryCompleted extends AppCompatActivity implements View.OnClic
                 Toast.makeText(InventoryCompleted.this, "Something problem occurred", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
 
     @Override

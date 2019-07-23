@@ -30,13 +30,13 @@
             android:name=".QRDetails.QrDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".GenerateListModels.GenerateList"
+            android:name=".QRDetailsQuantityUpdate.QrDetailQuantityUpdate"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".InventoryShipperPicker.RequisitionControlDetails"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".dashboardNew"
+            android:name=".Dashboard.dashboardNew"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MRN.MRN_Dashboard"
@@ -57,17 +57,17 @@
             android:name=".dashboardInventoryRequisition"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Dashboard.selectModule"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Dashboard.InventoryCounting.dashboardInventoryCount"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Dashboard.InventoryCounting.dataScanOnGrid"
+            android:name=".InventoryCounting.InventoryCountingScan"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ScannigQR"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InventoryCounting.inventory_Counting"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InventoryCounting.INVCountingTempDetail"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Login.LoginActivity"
             android:label="@string/app_name"
@@ -78,6 +78,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

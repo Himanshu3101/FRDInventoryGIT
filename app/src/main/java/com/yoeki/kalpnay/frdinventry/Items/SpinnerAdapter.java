@@ -1,6 +1,5 @@
 package com.yoeki.kalpnay.frdinventry.Items;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -13,6 +12,8 @@ import android.widget.TextView;
 
 import com.yoeki.kalpnay.frdinventry.R;
 
+import java.util.List;
+
 public class SpinnerAdapter extends ArrayAdapter<String>{
 
     private final LayoutInflater mInflater;
@@ -21,13 +22,13 @@ public class SpinnerAdapter extends ArrayAdapter<String>{
     private final int mResource;
 
     public SpinnerAdapter(@NonNull Context context, @LayoutRes int resource,
-                              @NonNull String [] objects) {
+                              @NonNull List<String> objects) {
         super(context, resource, 0, objects);
 
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mResource = resource;
-        items = objects;
+        items = objects.toArray(new String[0]);
     }
     @Override
     public View getDropDownView(int position, @Nullable View convertView,

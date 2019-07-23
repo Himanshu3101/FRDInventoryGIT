@@ -19,9 +19,8 @@ import android.widget.Toast;
 
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
-import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.InventoryPending;
 import com.yoeki.kalpnay.frdinventry.R;
-import com.yoeki.kalpnay.frdinventry.dashboardNew;
+import com.yoeki.kalpnay.frdinventry.Dashboard.dashboardNew;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +31,7 @@ public class QrDetailActivity extends AppCompatActivity implements View.OnClickL
     AppCompatButton img_backQrDetails;
     AppCompatAutoCompleteTextView edt_scanQR;
     AppCompatTextView detail_VendorNo, detail_VendorName, detail_po_no, detail_ItemnoMRN, detail_NameMRN, detail_NameMRNArabic,
-            detail_ConfigurationMRN, detail_BatchNoMRN, detail_Receivedqty, detail_ExpiryDateMRN;
+            detail_ConfigurationMRN, detail_BatchNoMRN, detail_Receivedqty, detail_ExpiryDateMRN,unitQr;
     LinearLayout qrDetails;
 
     @Override
@@ -82,6 +81,7 @@ public class QrDetailActivity extends AppCompatActivity implements View.OnClickL
         detail_BatchNoMRN = findViewById(R.id.detail_BatchNoMRN);
         detail_Receivedqty = findViewById(R.id.detail_Receivedqty);
         detail_ExpiryDateMRN = findViewById(R.id.detail_ExpiryDateMRN);
+        unitQr = findViewById(R.id.unitQr);
     }
 
     @Override
@@ -123,6 +123,7 @@ public class QrDetailActivity extends AppCompatActivity implements View.OnClickL
                 progressDialog.dismiss();
                 if (response.body().getStatus().equals("Success")) {
                     qrDetails.setVisibility(View.VISIBLE);
+                    unitQr.setText(response.body().getUnitId());
                     detail_VendorNo.setText(response.body().getVendorId());
                     detail_VendorName.setText(response.body().getVendorName());
                     detail_po_no.setText(response.body().getPONumber());

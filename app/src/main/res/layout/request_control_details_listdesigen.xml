@@ -111,38 +111,89 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/approved"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Approved qty:"
+                                android:text="Approved Qty:"
                                 android:textSize="12dp"
                                 android:layout_weight=".11"
+                                android:visibility="gone"
                                 android:textColor="@color/textcolor"/>
+
+                            <TextView
+                                android:id="@+id/shipped"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Shipped Qty:"
+                                android:textSize="12dp"
+                                android:layout_weight=".11"
+                                android:visibility="visible"
+                                android:textColor="@color/textcolor"/>
+
                             <TextView
                                 android:id="@+id/tv_approvedqty"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".13"
                                 android:gravity="start"
-                                android:layout_marginLeft="05dp"
                                 android:text="0"
                                 android:textSize="10dp"
                                 android:textColor="@color/textcolor"/>
-                            <!-- </LinearLayout>
-                             <LinearLayout
-                                 android:layout_width="match_parent"
-                                 android:layout_height="wrap_content"
-                                 android:layout_weight="1"
-                                 android:gravity="right"
-                                 android:layout_gravity="right"
-                                 android:orientation="horizontal">-->
+
+                           <!-- <TextView
+                                android:id="@+id/tv_remainingqty"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".12"
+                                android:gravity="start"
+                                android:paddingLeft="02dp"
+                                android:text="0"
+                                android:textSize="10sp"
+                                android:textColor="@color/textcolor"/>-->
+
+
+                            <!--<TextView-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:text="Return qty:"-->
+                                <!--android:textSize="12dp"-->
+                                <!--android:layout_marginLeft="09dp"-->
+                                <!--android:gravity="start"-->
+                                <!--android:layout_weight=".11"-->
+                                <!--android:textColor="@color/textcolor"/>-->
+
+                            <TextView
+                                android:id="@+id/tv_returnedqty"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".13"
+                                android:gravity="start"
+                                android:layout_marginLeft="05dp"
+                                android:visibility="gone"
+                                android:text="0"
+                                android:textSize="10dp"
+                                android:textColor="@color/textcolor"/>
+
+
+                            <TextView
+                                android:id="@+id/tv_TONumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".13"
+                                android:gravity="start"
+                                android:layout_marginLeft="05dp"
+                                android:visibility="gone"
+                                android:text="0"
+                                android:textSize="10dp"
+                                android:textColor="@color/textcolor"/>
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Picked qty:"
+                                android:text="Picked Qty:"
                                 android:textSize="12dp"
-                                android:layout_marginLeft="09dp"
                                 android:gravity="start"
-                                android:layout_weight=".11"
+                                android:layout_weight=".12"
                                 android:textColor="@color/textcolor"/>
                             <TextView
                                 android:id="@+id/tv_pickedqty"
@@ -177,9 +228,10 @@
                                  android:orientation="horizontal">-->
 
                             <TextView
+                                android:id="@+id/remaining"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Remaining qty:"
+                                android:text="Remaining Qty:"
                                 android:textSize="12sp"
                                 android:layout_weight=".1"
                                 android:textColor="@color/textcolor"/>
@@ -195,7 +247,11 @@
                                 android:textSize="10sp"
                                 android:textColor="@color/textcolor"/>
 
+
+
+                            <!--For Reasons-->
                             <TextView
+                                android:id="@+id/reasons"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Reason:"
@@ -204,17 +260,15 @@
                                 android:layout_marginTop="02dp"
                                 android:textColor="@color/textcolor"/>
 
-                            <!--android:background="@drawable/background_card"-->
-
                             <Spinner
-                                android:id="@+id/spinner_reason"
+                                android:id="@+id/spinner_reasonsed"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="-30dp"
                                 android:layout_weight=".1"
                                 android:padding="1dp"
                                 android:background="@drawable/background_card" />
-
+                            <!--For Reasons-->
 
                             <!--</LinearLayout>-->
                             <!-- <LinearLayout

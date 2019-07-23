@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".banchInventoryReceiving.CompletedReceiving">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:id="@+id/mainheader"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/colorPrimary"
+            tools:ignore="MissingConstraints">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/backInventoryCounting"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/back"
+                    android:scaleType="fitXY" />
+            </FrameLayout>
+
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="Inventory Counting"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--<android.support.v4.widget.SwipeRefreshLayout-->
+                <!--android:id="@+id/swipeToRefreshPickerDashboard"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginRight="5dp"-->
+                <!--android:layout_marginBottom="10dp">-->
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewInventoryReceivingTemp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layoutAnimation="@anim/layout_animation_down_to_up"
+                    tools:ignore="MissingConstraints"/>
+
+
+            <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/selectionWarehouse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/plus_icon"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="28dp"
+                android:layout_marginTop="380dp"
+                app:elevation="6dp"
+                app:pressedTranslationZ="12dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

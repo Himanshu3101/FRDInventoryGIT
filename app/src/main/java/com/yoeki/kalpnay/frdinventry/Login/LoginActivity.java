@@ -19,11 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.Html;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -33,15 +30,15 @@ import android.widget.Toast;
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
-import com.yoeki.kalpnay.frdinventry.Dashboard.InventoryCounting.dashboardInventoryCount;
 import com.yoeki.kalpnay.frdinventry.Model.ChangePaswd;
 import com.yoeki.kalpnay.frdinventry.Model.LoginUser;
 import com.yoeki.kalpnay.frdinventry.Model.changePswdResponse;
-import com.yoeki.kalpnay.frdinventry.Model.login.LoginResponse;
-import com.yoeki.kalpnay.frdinventry.Model.login.UserLoginResponse;
+import com.yoeki.kalpnay.frdinventry.Login.loginModel.LoginResponse;
+import com.yoeki.kalpnay.frdinventry.Login.loginModel.UserLoginResponse;
 import com.yoeki.kalpnay.frdinventry.R;
-import com.yoeki.kalpnay.frdinventry.dashboardNew;
+import com.yoeki.kalpnay.frdinventry.Dashboard.dashboardNew;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView textViewSignIn, textViewForgotPassword;
     String signInCLicked = "1";
     private boolean mIsBackVisible = false;
-    Button buttonLogin;
+    AppCompatButton buttonLogin;
     EditText edt_userId, edt_password;
     Activity activity;
 
@@ -185,27 +182,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         String userID = responseUserId.get(0).getUserId();
                         String message = responseLogin.getMessage();
                         String status = responseLogin.getStatus();
+                        List<String> stringList = new ArrayList<>();
+
 
                         if (status.equals("success")) {
                             progressDialog.dismiss();
                             Preference.getInstance(getApplicationContext()).saveuserId(userID);
-
-//                                String pswdChangeValue = Preference.getInstance(getApplicationContext()).getPswrdChange();
-//                                if(pswdChangeValue.equals("1")){
-////                                    Preference.getInstance(getApplicationContext()).setPswrdChange("2");
-//                                    try {
-//                                        dialogPasswordChange();
-//                                    }catch(Exception e){
-//                                        e.printStackTrace();
-//                                    }
-//                                }else{
-                                Intent intent = new Intent(getApplicationContext(), dashboardNew.class);
-                                startActivity(intent);
-                                finish();
-//                                }
-                            } else {
-                                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-                            }
+                            Preference.getInstance(getApplicationContext()).saveWareHouseDetails(responseLogin.getwareHouseResponse());
+                            Preference.getInstance(getApplicationContext()).saveAccessRight(responseLogin.getAccessRightList());
+                            Intent intent = new Intent(getApplicationContext(), dashboardNew.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                        }
                     }catch(Exception e){
                         e.printStackTrace();
                         Toast.makeText(LoginActivity.this, "Service Unavailable.", Toast.LENGTH_SHORT).show();
@@ -288,8 +278,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         inventoryCountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), dashboardInventoryCount.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), dashboardInventoryCount.class);
+//                startActivity(intent);
                 finish();
             }
         });
