@@ -16,6 +16,11 @@ import com.yoeki.kalpnay.frdinventry.MRN.MaterialReceivingDetails;
 import com.yoeki.kalpnay.frdinventry.Model.MRN.MRNList;
 import com.yoeki.kalpnay.frdinventry.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class MRN_Dashboard_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -27,6 +32,7 @@ public class MRN_Dashboard_Adapter extends RecyclerView.Adapter<RecyclerView.Vie
     public MRN_Dashboard_Adapter(Activity activity, List<MRNList> strings) {
         this.activity = activity;
         this.stringMRNArrayList = strings;
+        Collections.sort(this.stringMRNArrayList);
     }
 
     @NonNull

@@ -5,6 +5,7 @@ import android.animation.AnimatorSet;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,10 +16,11 @@ import android.widget.Toast;
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
-import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.ItemRequisition.DAshboardAdapter;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.ItemRequisition.inventoryPendingAdapter;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.ItemRequisition.DashboardModel;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.GetRequisitionPending;
 import com.yoeki.kalpnay.frdinventry.R;
+import com.yoeki.kalpnay.frdinventry.Dashboard.dashboardNew;
 
 import java.util.ArrayList;
 
@@ -32,13 +34,14 @@ public class InventoryPending extends AppCompatActivity implements View.OnClickL
     ArrayList<DashboardModel>listdashboard;
     AnimatorSet slidedown;
     Button bck_shipperPicker;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inventory_ship_pick_dashboard);
-        initialize();
         listdashboard=new ArrayList<>();
+        initialize();
         bck_shipperPicker.setOnClickListener(this);
         dashboarddata();
     }
@@ -47,6 +50,14 @@ public class InventoryPending extends AppCompatActivity implements View.OnClickL
         rycdashboard=findViewById(R.id.rycdashboard);
         bck_shipperPicker = findViewById(R.id.bck_shipperPicker);
         slidedown = (AnimatorSet) AnimatorInflater.loadAnimator(InventoryPending.this, R.animator.slide_down);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefreshPickerDashboard);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                dashboarddata();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     public void dashboarddata(){
@@ -68,11 +79,15 @@ public class InventoryPending extends AppCompatActivity implements View.OnClickL
                 progressDialog.dismiss();
                 if (response.body().getStatus().equals("Success")) {
 
+
+
+
+
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                    DAshboardAdapter adapter=new DAshboardAdapter(InventoryPending.this,response.body().getDataList());
+                    inventoryPendingAdapter adapter=new inventoryPendingAdapter(InventoryPending.this,response.body().getDataList(), "Pending");
                     rycdashboard.setLayoutManager(layoutManager);
                     rycdashboard.setAdapter(adapter);
-
+                    rycdashboard.scheduleLayoutAnimation();
                 } else {
                     Toast.makeText(InventoryPending.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -90,7 +105,7 @@ public class InventoryPending extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bck_shipperPicker:
-                Intent intent = new Intent(getApplicationContext(), dashboardInventoryShipperPicker.class);
+                Intent intent = new Intent(getApplicationContext(), dashboardNew.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -100,7 +115,7 @@ public class InventoryPending extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), dashboardInventoryShipperPicker.class);
+        Intent intent = new Intent(getApplicationContext(), dashboardNew.class);
         startActivity(intent);
         finish();
     }

@@ -3,7 +3,7 @@ package com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DataList {
+public class DataList implements Comparable<DataList> {
 
 @SerializedName("RequisitionNo")
 @Expose
@@ -39,6 +39,12 @@ public void setwareHouseName(String wareHouseName) {
 this.wareHouseName = wareHouseName;
 }
 
+    @Override
+    public int compareTo(DataList o) {
+        String[] oD1 = o.getRequisitionNo().split("-");
+        String[] oD2 = getRequisitionNo().split("-");
+        return (oD1[1].compareTo(oD2[1]));
+    }
 }
 
 

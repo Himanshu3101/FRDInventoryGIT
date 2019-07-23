@@ -13,9 +13,9 @@ import android.widget.Toast;
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
-import com.yoeki.kalpnay.frdinventry.CountResposeBocy;
+import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.R;
-import com.yoeki.kalpnay.frdinventry.dashboardNew;
+import com.yoeki.kalpnay.frdinventry.Dashboard.dashboardNew;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,10 +83,10 @@ public class dashboardInventoryShipperPicker extends AppCompatActivity implement
 
         UserIDModel detailsRequest = new UserIDModel(userId);
 
-        Call<CountResposeBocy> call = apiInterface.inventoryCounting(detailsRequest);
-        call.enqueue(new Callback<CountResposeBocy>() {
+        Call<ResponseBodyQRDetails> call = apiInterface.inventoryCounting(detailsRequest);
+        call.enqueue(new Callback<ResponseBodyQRDetails>() {
             @Override
-            public void onResponse(Call<CountResposeBocy> call, Response<CountResposeBocy> response) {
+            public void onResponse(Call<ResponseBodyQRDetails> call, Response<ResponseBodyQRDetails> response) {
                 progressDialog.dismiss();
                 if(response.body().getStatus().equals("Success")){
 
@@ -98,7 +98,7 @@ public class dashboardInventoryShipperPicker extends AppCompatActivity implement
             }
 
             @Override
-            public void onFailure(Call<CountResposeBocy> call, Throwable t) {
+            public void onFailure(Call<ResponseBodyQRDetails> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(dashboardInventoryShipperPicker.this, "Something problem occurred", Toast.LENGTH_SHORT).show();
             }

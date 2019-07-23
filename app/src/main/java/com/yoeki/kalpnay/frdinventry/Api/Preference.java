@@ -6,7 +6,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.yoeki.kalpnay.frdinventry.Dashboard.ReasonModule;
+import com.yoeki.kalpnay.frdinventry.Login.loginModel.AccessRight;
+import com.yoeki.kalpnay.frdinventry.Login.wareHouseResponse;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.StickerSeq;
+import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
+import com.yoeki.kalpnay.frdinventry.banchInventoryReceiving.model.SequenceQuanitiy;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -21,6 +26,12 @@ public class Preference {
     private static final String CHANGEPASSWORD = "1";
     private static final String ReloadedDatabase = "reloadedDatabase";
     private static final String TempSeqList = "tempSeqList";
+    private static final String wareHouse_Details = "wareHouse_Details";
+    private static final String saveAccessRightsHeader = "saveAccessRights";
+    private static final String inventoryCounting_Details = "inventoryCounting_Details";
+    private static final String QuantityUpdateTemp = "tempQuantityUpdate";
+    private static final String reasonList = "reasonList";
+    private static final String saveSequenceQty = "SequenceQty";
 
 //    private static final String Bank_Details = "bank_detail";
 //    private static final String Count_Details = "count_details";
@@ -66,6 +77,141 @@ public class Preference {
         return sharedPreferences.getString(USER_ID, "");
     }
 
+    public void saveTempSeqList(List<StickerSeq> tempSeqList) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String strJson = gson.toJson(tempSeqList);
+        editor.putString(TempSeqList, strJson);
+        editor.apply();
+    }
+
+    public ArrayList<StickerSeq> getTempSeqList() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(TempSeqList, null);
+        Type type = new TypeToken<List<StickerSeq>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public boolean saveWareHouseDetails(List<wareHouseResponse> wareHouseResponses) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(wareHouseResponses);
+        editor.putString(wareHouse_Details, json);
+        editor.apply();
+        return true;
+    }
+
+    public ArrayList<wareHouseResponse> getwareHouseResponse() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(wareHouse_Details, "");
+        Type type = new TypeToken<List<wareHouseResponse>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public boolean saveInvenrtoryCounting(List<ResponseBodyQRDetails> inventoryCountingList) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(inventoryCountingList);
+        editor.putString(inventoryCounting_Details, json);
+        editor.apply();
+        return true;
+    }
+
+    public ArrayList<ResponseBodyQRDetails> getInvenrtoryCounting() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(inventoryCounting_Details, "");
+        Type type = new TypeToken<List<ResponseBodyQRDetails>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public boolean saveTempQuantityUpdate(List<ResponseBodyQRDetails> tempQuantityUpdateList) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(tempQuantityUpdateList);
+        editor.putString(QuantityUpdateTemp, json);
+        editor.apply();
+        return true;
+    }
+
+    public ArrayList<ResponseBodyQRDetails> getTempQuantityUpdate() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(QuantityUpdateTemp, "");
+        Type type = new TypeToken<List<ResponseBodyQRDetails>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public boolean saveAccessRight(List<AccessRight> saveAccessRights) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(saveAccessRights);
+        editor.putString(saveAccessRightsHeader, json);
+        editor.apply();
+        return true;
+    }
+
+    public ArrayList<AccessRight> getAccessRight() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(saveAccessRightsHeader, "");
+        Type type = new TypeToken<List<AccessRight>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public boolean saveReasonList(List<ReasonModule> reasonModuleList) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(reasonModuleList);
+        editor.putString(reasonList, json);
+        editor.apply();
+        return true;
+    }
+
+    public ArrayList<ReasonModule> getReasonModule() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(reasonList, "");
+        Type type = new TypeToken<List<ReasonModule>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public boolean saveSequenceQuantity(List<SequenceQuanitiy> sequenceQuanitiys) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(sequenceQuanitiys);
+        editor.putString(saveSequenceQty, json);
+        editor.apply();
+        return true;
+    }
+
+    public ArrayList<SequenceQuanitiy> getSequenceQuantity() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(saveSequenceQty, "");
+        Type type = new TypeToken<List<SequenceQuanitiy>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+
+
+
+
     public boolean LogOut() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -97,7 +243,6 @@ public class Preference {
 
     }
 
-
     public String getPswd() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(PASSWORD, null);
@@ -111,17 +256,9 @@ public class Preference {
         return true;
     }
 
-   /* public boolean savebankDetails(List<Bank> bankdetails) {
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(bankdetails);
-        editor.putString(Count_Details, json);
-        editor.apply();
-        return true;
-    }
 
-    public void saveCounts(ArrayList<String> counts) {
+
+    /* public void saveCounts(ArrayList<String> counts) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
@@ -150,23 +287,6 @@ public class Preference {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         sharedPreferences.edit().clear().apply();
         Log.e("SharedPrefManager", "session cleared...");
-    }
-
-    public void saveTempSeqList(List<StickerSeq> tempSeqList) {
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String strJson = gson.toJson(tempSeqList);
-        editor.putString(TempSeqList, strJson);
-        editor.apply();
-    }
-
-    public ArrayList<StickerSeq> getTempSeqList() {
-        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(TempSeqList, null);
-        Type type = new TypeToken<List<StickerSeq>>() {}.getType();
-        return gson.fromJson(json, type);
     }
 
     /*public void totalValidateAccounts(ArrayList<TotalValidate> totalValidatesLS, String key) {

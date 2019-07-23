@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ly_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="QR Details"
+                android:textColor="@color/white"
+                android:textSize="12dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/qrDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:visibility="visible"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:elevation="3dp"
+                android:focusableInTouchMode="true"
+                card_view:cardBackgroundColor="@color/white"
+                card_view:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_card"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:layout_marginLeft="03dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:text="Item No :"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp" />
+
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_ItemnoDialogQRUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".05"
+                            android:text="0"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginStart="5dp"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:layout_marginLeft="03dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:text="Item Name :"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp" />
+
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_NameDialogQRUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".05"
+                            android:text="Item English"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginStart="5dp"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:layout_marginLeft="03dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:text="Item Name (A) :"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp" />
+
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_NameArabicDialogQRUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".05"
+                            android:text="Item Arabic"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginStart="5dp"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:layout_marginLeft="03dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:text="Configuration :"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_ConfigurationDialogQRUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".05"
+                            android:text="0"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginStart="5dp"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:layout_marginLeft="03dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:text="Batch No :"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_BatchNoDialogQRUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".05"
+                            android:text="0"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginStart="5dp"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:layout_marginLeft="03dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:text="Quantity :"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_ReceivedqtyDialogQRUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".05"
+                            android:text="0"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginStart="5dp"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:layout_marginLeft="03dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:text="Unit:"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/unitQuantityUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".05"
+                            android:text="0"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginStart="5dp"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:layout_marginLeft="03dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:text="Expiry Date :"
+                            android:textColor="@color/textcolor"
+                            android:textSize="14sp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/detail_ExpiryDateDialogQRUpdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".05"
+                            android:text="0"
+                            android:textColor="@color/textcolor"
+                            android:layout_marginStart="5dp"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <!--</LinearLayout>-->
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/manuallyUpdateQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="01dp"
+            android:paddingBottom="02dp"
+            android:paddingLeft="10dp"
+            android:hint="Used Quantity"
+            android:layout_margin="5dp"
+            android:inputType="number"
+            android:editable="true"
+            android:textSize="14sp"
+            android:layout_gravity="center"
+            android:textColor="@color/textcolor"
+            android:background="@drawable/background_card"/>
+
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="05dp">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/updateQty_QRDetailsQuantity"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:background="@drawable/buttonshape_ship"
+                android:shadowColor="#A8A8A8"
+                android:shadowRadius="5"
+                android:text="Update"
+                android:layout_marginRight="20dp"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/cancel_QRDetailsQuantity"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_toRightOf="@+id/updateQty_QRDetailsQuantity"
+                android:background="@drawable/buttonshape_ship"
+                android:shadowColor="#A8A8A8"
+                android:shadowRadius="5"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
