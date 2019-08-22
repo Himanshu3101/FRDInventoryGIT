@@ -10,7 +10,8 @@ public class Api {
 
 //    http://10.10.10.128:802//api/ActivityAdd/Login
 
-  public static final String BASE_URL = "http://10.10.10.128:802/api/"; //local url
+//  public static final String BASE_URL = "http://10.10.10.128:802/api/"; //local url
+  public static final String BASE_URL = "http://10.10.10.53:805/api/"; //local url
 
 
     private static Retrofit retrofit = null;

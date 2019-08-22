@@ -1,4 +1,4 @@
-package com.yoeki.kalpnay.frdinventry.Login;
+package com.yoeki.kalpnay.frdinventry.Login.loginModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

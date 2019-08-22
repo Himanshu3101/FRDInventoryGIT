@@ -22,7 +22,7 @@ import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.UserIDModel;
-import com.yoeki.kalpnay.frdinventry.Login.wareHouseResponse;
+import com.yoeki.kalpnay.frdinventry.Login.loginModel.wareHouseResponse;
 import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.R;
 import com.yoeki.kalpnay.frdinventry.Dashboard.dashboardNew;

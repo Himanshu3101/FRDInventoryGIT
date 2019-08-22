@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
 
@@ -176,7 +176,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="Vendor No.:"
+                                    android:text="Vendor No :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
@@ -203,7 +203,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="Vendor Name:"
+                                    android:text="Vendor Name :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
@@ -230,7 +230,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="P.O. No.:"
+                                    android:text="P.O. No :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
@@ -257,7 +257,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="Item No.:"
+                                    android:text="Item No :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
@@ -285,7 +285,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="Item Name:"
+                                    android:text="Item Name :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
@@ -313,7 +313,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="Item Name (A):"
+                                    android:text="Item Name (A) :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
@@ -341,7 +341,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="Configuration:"
+                                    android:text="Configuration :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
@@ -368,7 +368,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="Batch No.:"
+                                    android:text="Batch No :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
@@ -395,7 +395,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="Quantity:"
+                                    android:text="Quantity :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
@@ -423,12 +423,39 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".1"
-                                    android:text="Expiry Date:"
+                                    android:text="Expiry Date :"
                                     android:textColor="@color/textcolor"
                                     android:textSize="14sp" />
 
                                 <android.support.v7.widget.AppCompatTextView
                                     android:id="@+id/detail_ExpiryDateMRN"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".05"
+                                    android:text="201"
+                                    android:textColor="@color/textcolor"
+                                    android:layout_marginStart="5dp"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                android:layout_marginLeft="03dp">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".1"
+                                    android:text="Unit:"
+                                    android:textColor="@color/textcolor"
+                                    android:textSize="14sp" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/unitQr"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".05"

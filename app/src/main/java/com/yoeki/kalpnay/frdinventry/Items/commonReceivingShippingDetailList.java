@@ -2,7 +2,6 @@ package com.yoeki.kalpnay.frdinventry.Items;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -17,9 +16,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,10 +23,8 @@ import android.widget.Toast;
 
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
 import com.yoeki.kalpnay.frdinventry.Dashboard.ReasonModule;
-import com.yoeki.kalpnay.frdinventry.InventoryCounting.inventory_Counting;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.commonReceivingShippingDetailDataList;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.RequisitionControlDetails;
-import com.yoeki.kalpnay.frdinventry.Login.wareHouseResponse;
 import com.yoeki.kalpnay.frdinventry.R;
 import com.yoeki.kalpnay.frdinventry.banchInventoryReceiving.InventoryControlDetail;
 import com.yoeki.kalpnay.frdinventry.banchInventoryReceiving.model.SequenceQuanitiy;

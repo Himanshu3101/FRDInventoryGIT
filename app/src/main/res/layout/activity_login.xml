@@ -91,7 +91,7 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <com.yoeki.kalpnay.frdinventry.custom_control.Custom_Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonLogin"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
@@ -153,7 +153,7 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <com.yoeki.kalpnay.frdinventry.custom_control.Custom_Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonReset"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"

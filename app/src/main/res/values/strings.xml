@@ -42,4 +42,7 @@
     <string name="pending">Pending</string>
     <string name="onBack">Do you want to exit? All data will be lost.</string>
     <string name="cancel">Cancel</string>
+    <string name="jouranl">Journal No :</string>
+    <string name="warehouse">Warehouse :</string>
+    <string name="qrDetailQtyUpdte">Quantity Update Details</string>
 </resources>

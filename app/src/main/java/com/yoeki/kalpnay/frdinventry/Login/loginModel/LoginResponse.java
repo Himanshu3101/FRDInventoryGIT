@@ -5,7 +5,6 @@ package com.yoeki.kalpnay.frdinventry.Login.loginModel;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.yoeki.kalpnay.frdinventry.Login.wareHouseResponse;
 
 public class LoginResponse {
 

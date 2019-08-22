@@ -253,12 +253,13 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                                                 for (int k = 0; k < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); k++) {
                                                                     String configur = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getConfig();
                                                                     if (configur.equals(response.body().getConfig())) {
-                                                                        confB = true;
                                                                         String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchNo();
                                                                         if(batch.equals(confBatch)){
                                                                             float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchQty());
                                                                             float total = prevBatchQty + stickQty;
                                                                             commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).setBatchQty(String.valueOf(total));
+                                                                            confB = true;
+
                                                                         }
                                                                     }
                                                                 }
@@ -347,12 +348,12 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                                             for (int k = 0; k < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); k++) {
                                                                 String configur = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getConfig();
                                                                 if (configur.equals(response.body().getConfig())) {
-                                                                    confB = true;
                                                                     String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchNo();
                                                                     if(batch.equals(confBatch)){
                                                                         float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchQty());
                                                                         float total = prevBatchQty + stickQty;
                                                                         commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).setBatchQty(String.valueOf(total));
+                                                                        confB = true;
                                                                     }
                                                                 }
                                                             }
@@ -441,12 +442,12 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                                                 for (int k = 0; k < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); k++) {
                                                                     String configur = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getConfig();
                                                                     if (configur.equals(response.body().getConfig())) {
-                                                                        confB = true;
                                                                         String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchNo();
                                                                         if(batch.equals(confBatch)){
                                                                             float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchQty());
                                                                             float total = prevBatchQty + stickQty;
                                                                             commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).setBatchQty(String.valueOf(total));
+                                                                            confB = true;
                                                                         }
                                                                     }
                                                                 }

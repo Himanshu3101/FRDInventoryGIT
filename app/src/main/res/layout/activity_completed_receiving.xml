@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".banchInventoryReceiving.CompletedReceiving">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
@@ -16,56 +15,59 @@
             android:id="@+id/mainheader"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            tools:ignore="MissingConstraints"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            tools:ignore="MissingConstraints">
 
-            <FrameLayout android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <android.support.v7.widget.AppCompatButton android:id="@+id/bck_mrn"
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/backCompletedReceiving"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:background="@color/transparent"/>
+                    android:background="@color/transparent" />
 
-                <ImageView android:layout_width="20dp"
+                <ImageView
+                    android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:scaleType="fitXY"
+                    android:layout_gravity="center"
                     android:background="@mipmap/back"
-                    android:layout_gravity="center"/>
+                    android:scaleType="fitXY" />
             </FrameLayout>
 
 
             <TextView
+                android:id="@+id/toolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Material Receiving"
-                android:textColor="@color/white"
                 android:layout_centerInParent="true"
-                android:textSize="15sp"
                 android:layout_gravity="center"
-                android:id="@+id/toolbar_title" />
+                android:text="Inventory Receiving"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
         </RelativeLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeToRefreshMrnDashboard"
+            android:id="@+id/swipeToRefreshPickerDashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
             android:layout_marginBottom="10dp"
             android:layout_below="@+id/mainheader">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/mrndash_recycler"
+                android:id="@+id/recyclerViewCompletedReceiving"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layoutAnimation="@anim/layout_animation_down_to_up"
                 tools:ignore="MissingConstraints"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
