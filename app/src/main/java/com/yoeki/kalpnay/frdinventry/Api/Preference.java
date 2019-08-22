@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yoeki.kalpnay.frdinventry.Dashboard.ReasonModule;
 import com.yoeki.kalpnay.frdinventry.Login.loginModel.AccessRight;
-import com.yoeki.kalpnay.frdinventry.Login.wareHouseResponse;
+import com.yoeki.kalpnay.frdinventry.Login.loginModel.wareHouseResponse;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.StickerSeq;
 import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.banchInventoryReceiving.model.SequenceQuanitiy;

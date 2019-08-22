@@ -51,14 +51,23 @@
 
         </RelativeLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rycdashboard"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefreshPickerDashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="10dp"
-            tools:ignore="MissingConstraints"></android.support.v7.widget.RecyclerView>
+            android:layout_below="@+id/mainheader">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rycdashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutAnimation="@anim/layout_animation_down_to_up"
+                tools:ignore="MissingConstraints"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

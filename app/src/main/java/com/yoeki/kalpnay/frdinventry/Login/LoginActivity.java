@@ -31,7 +31,7 @@ import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
 import com.yoeki.kalpnay.frdinventry.Model.ChangePaswd;
-import com.yoeki.kalpnay.frdinventry.Model.LoginUser;
+import com.yoeki.kalpnay.frdinventry.Login.loginModel.LoginUser;
 import com.yoeki.kalpnay.frdinventry.Model.changePswdResponse;
 import com.yoeki.kalpnay.frdinventry.Login.loginModel.LoginResponse;
 import com.yoeki.kalpnay.frdinventry.Login.loginModel.UserLoginResponse;
@@ -83,76 +83,76 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin.setOnClickListener(this);
     }
 
-    private void changeCameraDistance(View linearLayoutSignIn, View linearLayoutForgotPassword) {
-        int distance = 8000;
-        float scale = getResources().getDisplayMetrics().density * distance;
-        linearLayoutSignIn.setCameraDistance(scale);
-        linearLayoutForgotPassword.setCameraDistance(scale);
-    }
+        private void changeCameraDistance(View linearLayoutSignIn, View linearLayoutForgotPassword) {
+            int distance = 8000;
+            float scale = getResources().getDisplayMetrics().density * distance;
+            linearLayoutSignIn.setCameraDistance(scale);
+            linearLayoutForgotPassword.setCameraDistance(scale);
+        }
 
-    private void loadAnimations() {
+        private void loadAnimations() {
 
-        mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.out_animation);
-        mSetRightOut.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
+            mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.out_animation);
+            mSetRightOut.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
 
+                }
+            });
+            mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.in_animation);
+
+        }
+
+        public void initialize() {
+            linearLayoutSignIn = findViewById(R.id.linearLayoutSignIn);
+            linearLayoutForgotPassword = findViewById(R.id.linearLayoutForgotPassword);
+            textViewSignIn = findViewById(R.id.textViewSignIn);
+            textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
+            buttonLogin = findViewById(R.id.buttonLogin);
+            edt_userId = findViewById(R.id.editTextUserPin);
+            edt_password = findViewById(R.id.editTextUserPassword);
+
+            buttonLogin.requestFocus();
+        }
+
+        public void flipCard() {
+
+            if (!mIsBackVisible) {
+                linearLayoutForgotPassword.setVisibility(View.VISIBLE);
+                mSetRightOut.setTarget(linearLayoutSignIn);
+                mSetLeftIn.setTarget(linearLayoutForgotPassword);
+                mSetRightOut.start();
+                mSetLeftIn.start();
+                mIsBackVisible = true;
+            } else {
+                linearLayoutSignIn.setVisibility(View.VISIBLE);
+                mSetRightOut.setTarget(linearLayoutForgotPassword);
+                mSetLeftIn.setTarget(linearLayoutSignIn);
+                mSetRightOut.start();
+                mSetLeftIn.start();
+                mIsBackVisible = false;
             }
-        });
-        mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.in_animation);
-
-    }
-
-    public void initialize() {
-        linearLayoutSignIn = findViewById(R.id.linearLayoutSignIn);
-        linearLayoutForgotPassword = findViewById(R.id.linearLayoutForgotPassword);
-        textViewSignIn = findViewById(R.id.textViewSignIn);
-        textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
-        buttonLogin = findViewById(R.id.buttonLogin);
-        edt_userId = findViewById(R.id.editTextUserPin);
-        edt_password = findViewById(R.id.editTextUserPassword);
-
-        buttonLogin.requestFocus();
-    }
-
-    public void flipCard() {
-
-        if (!mIsBackVisible) {
-            linearLayoutForgotPassword.setVisibility(View.VISIBLE);
-            mSetRightOut.setTarget(linearLayoutSignIn);
-            mSetLeftIn.setTarget(linearLayoutForgotPassword);
-            mSetRightOut.start();
-            mSetLeftIn.start();
-            mIsBackVisible = true;
-        } else {
-            linearLayoutSignIn.setVisibility(View.VISIBLE);
-            mSetRightOut.setTarget(linearLayoutForgotPassword);
-            mSetLeftIn.setTarget(linearLayoutSignIn);
-            mSetRightOut.start();
-            mSetLeftIn.start();
-            mIsBackVisible = false;
         }
-    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.textViewSignIn:
-                onSignInClick();
-                break;
-            case R.id.textViewForgotPassword:
-                onForgotPasswordInClick();
-                break;
-            case R.id.buttonLogin:
-                if(isConnected()){
-                    loginWork();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "No internet available!", Toast.LENGTH_SHORT).show();
-                }
-                break;
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.textViewSignIn:
+                    onSignInClick();
+                    break;
+                case R.id.textViewForgotPassword:
+                    onForgotPasswordInClick();
+                    break;
+                case R.id.buttonLogin:
+                    if(isConnected()){
+                        loginWork();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "No internet available!", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
         }
-    }
     
     public void loginWork(){
         String userPin=edt_userId.getText().toString();
@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         LoginResponse responseLogin = response.body();
 
                         List<UserLoginResponse> responseUserId = responseLogin.getUserLoginResponse();
-                        String userID = responseUserId.get(0).getUserId();
+                        String userID = responseUserId.get(0).  getUserId();
                         String message = responseLogin.getMessage();
                         String status = responseLogin.getStatus();
                         List<String> stringList = new ArrayList<>();

@@ -13,7 +13,7 @@ import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonRequest;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonResponse;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.mrnNumberDetailsRequest;
 import com.yoeki.kalpnay.frdinventry.Model.ChangePaswd;
-import com.yoeki.kalpnay.frdinventry.Model.LoginUser;
+import com.yoeki.kalpnay.frdinventry.Login.loginModel.LoginUser;
 import com.yoeki.kalpnay.frdinventry.Model.MRN.GetMRNModels;
 import com.yoeki.kalpnay.frdinventry.Model.changePswdResponse;
 import com.yoeki.kalpnay.frdinventry.Login.loginModel.LoginResponse;
@@ -21,8 +21,6 @@ import com.yoeki.kalpnay.frdinventry.QRDetails.RequestBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.QRDetailsQuantityUpdate.UpdateRequestDetails;
 import com.yoeki.kalpnay.frdinventry.banchInventoryReceiving.RequestBodyReceiveDetails;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

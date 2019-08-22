@@ -37,23 +37,79 @@ android:layout_marginBottom="6dp">
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="10dp">
 
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/previous"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@color/transparent" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="08dp"
+                        android:background="@mipmap/ic_ab_back_holo_light_am"
+                        android:scaleType="fitXY" />
+                </FrameLayout>
+
                 <android.support.v7.widget.AppCompatImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginLeft="05dp"
                     android:background="@drawable/title_icon"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/numberD"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Configuration wise detail"
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="08dp"
+                    android:layout_marginRight="05dp"
                     android:fontFamily="@font/opensans_bold"
                     android:textSize="12dp"
                     android:textColor="#096a75"
                     android:inputType="textCapSentences"/>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/after"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@color/transparent" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="07dp"
+                        android:background="@mipmap/ic_ab_after_holo_light_am"
+                        android:scaleType="fitXY" />
+                </FrameLayout>
+                <!--<FrameLayout android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/after"
+                        android:layout_width="50dp"
+                        android:layout_height="30dp"
+                        android:background="@color/transparent"/>
+
+                    <ImageView android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:background="@mipmap/ic_ab_after_holo_light_am"
+                        android:layout_gravity="center"/>
+                </FrameLayout>-->
+
 
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -124,7 +180,7 @@ android:layout_marginBottom="6dp">
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:text="Batch no.          :"
+                        android:text="Batch No.          :"
                         android:textColor="@color/forHeading"
                         android:textSize="12sp"
                         android:layout_marginLeft="05dp"
@@ -174,7 +230,7 @@ android:layout_marginBottom="6dp">
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:text="Expiry date       :"
+                        android:text="Expiry Date       :"
                         android:textColor="@color/forHeading"
                         android:textSize="12sp"
                         android:fontFamily="@font/opensans_light"
@@ -186,6 +242,82 @@ android:layout_marginBottom="6dp">
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="20/01/2014"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/opensans_light"
+                        android:textSize="10dp"
+                        android:textStyle="bold"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:id="@+id/shippedLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:layout_weight=".1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="Shipped qty      :"
+                        android:layout_marginLeft="05dp"
+                        android:textColor="@color/forHeading"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensans_light"
+                        android:editable="false"
+                        android:textStyle="bold"/>
+
+                    <!--map_icon-->
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/shippedQtyDataText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="20 kg"
+                        android:textAlignment="viewStart"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/opensans_light"
+                        android:textSize="10dp"
+                        android:textStyle="bold"/>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight=".1"
+                    android:gravity="start">
+
+                    <!--<android.support.v7.widget.AppCompatImageView-->
+                    <!--android:layout_width="13dp"-->
+                    <!--android:layout_height="13dp"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--android:background="@drawable/hand_icon"/>-->
+
+                    <TextView
+                        android:id="@+id/textviewPickedReturn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:text="Return Qty        :"
+                        android:layout_marginLeft="05dp"
+                        android:textColor="@color/forHeading"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensans_light"
+                        android:editable="false"
+                        android:textStyle="bold"/>
+
+                    <!--map_icon-->
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/pckdQty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="20 kg"
+                        android:textAlignment="viewStart"
                         android:layout_marginLeft="10dp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/opensans_light"
@@ -211,7 +343,7 @@ android:layout_marginBottom="6dp">
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:text="Picked qty         :"
+                        android:text="Unit                  :"
                         android:layout_marginLeft="05dp"
                         android:textColor="@color/forHeading"
                         android:textSize="12sp"
@@ -221,7 +353,7 @@ android:layout_marginBottom="6dp">
 
                     <!--map_icon-->
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/pckdQty"
+                            android:id="@+id/unit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="20 kg"
@@ -234,11 +366,65 @@ android:layout_marginBottom="6dp">
 
                 </android.support.v7.widget.LinearLayoutCompat>
 
-
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/manuallyReturnQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="01dp"
+                    android:paddingBottom="02dp"
+                    android:paddingLeft="10dp"
+                    android:hint="Return Quantity"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:inputType="numberDecimal"
+                    android:visibility="gone"
+                    android:editable="true"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/textcolor"
+                    android:background="@drawable/background_card"/>
 
             </android.support.v7.widget.LinearLayoutCompat>
 
+            <LinearLayout
+                android:id="@+id/footerBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:layout_marginBottom="05dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="10dp">
 
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/returnQty_OK"
+                    android:layout_width="70dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/buttonshape_ship"
+                    android:shadowColor="#A8A8A8"
+                    android:shadowRadius="5"
+                    android:text="Ok"
+                    android:layout_marginRight="20dp"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/returnQty_Cancel"
+                    android:layout_width="70dp"
+                    android:layout_height="25dp"
+                    android:layout_toRightOf="@+id/updateQty_QRDetailsQuantity"
+                    android:background="@drawable/buttonshape_ship"
+                    android:shadowColor="#A8A8A8"
+                    android:shadowRadius="5"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
 
         </android.support.v7.widget.LinearLayoutCompat>

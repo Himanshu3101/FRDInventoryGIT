@@ -1,4 +1,4 @@
-package com.yoeki.kalpnay.frdinventry.Model;
+package com.yoeki.kalpnay.frdinventry.Login.loginModel;
 
 public class LoginUser {
 
