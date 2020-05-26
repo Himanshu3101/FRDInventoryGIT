@@ -289,7 +289,7 @@
             android:paddingLeft="10dp"
             android:hint="Used Quantity"
             android:layout_margin="5dp"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:editable="true"
             android:textSize="14sp"
             android:layout_gravity="center"

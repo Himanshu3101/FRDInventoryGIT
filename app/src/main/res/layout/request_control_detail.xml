@@ -112,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
+                android:visibility="gone"
                 android:checked="false"/>
 
         </LinearLayout>

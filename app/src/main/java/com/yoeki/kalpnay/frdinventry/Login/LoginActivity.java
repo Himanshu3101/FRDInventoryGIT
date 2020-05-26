@@ -179,7 +179,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         LoginResponse responseLogin = response.body();
 
                         List<UserLoginResponse> responseUserId = responseLogin.getUserLoginResponse();
-                        String userID = responseUserId.get(0).  getUserId();
+                        String userID = responseUserId.get(0).getUserId();
+                        String roleID = responseUserId.get(0).getUserRole();
                         String message = responseLogin.getMessage();
                         String status = responseLogin.getStatus();
                         List<String> stringList = new ArrayList<>();
@@ -188,8 +189,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (status.equals("success")) {
                             progressDialog.dismiss();
                             Preference.getInstance(getApplicationContext()).saveuserId(userID);
+                            Preference.getInstance(getApplicationContext()).setRoleId(roleID);
                             Preference.getInstance(getApplicationContext()).saveWareHouseDetails(responseLogin.getwareHouseResponse());
                             Preference.getInstance(getApplicationContext()).saveAccessRight(responseLogin.getAccessRightList());
+//                            dialogPasswordChange();
                             Intent intent = new Intent(getApplicationContext(), dashboardNew.class);
                             startActivity(intent);
                             finish();
@@ -336,13 +339,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             changePswdResponse changePaswordResponse = response.body();
 
                             try {
-                                String userId = String.valueOf(changePaswordResponse.getUserId());
-                                String pin = String.valueOf(changePaswordResponse.getUserPin());
+//                                String userId = String.valueOf(changePaswordResponse.getUserId());
+//                                String pin = String.valueOf(changePaswordResponse.getUserPin());
                                 String description = changePaswordResponse.getResDescription();
                                 String status = changePaswordResponse.getStatus();
                                 if (status.equals("success")) {
                                     progressDialog.dismiss();
-                                    moduleSelection();
+//                                    moduleSelection();
+                                    Intent intent = new Intent(getApplicationContext(), dashboardNew.class);
+                                    startActivity(intent);
+                                    finish();
                                 } else {
                                     Toast.makeText(LoginActivity.this, description, Toast.LENGTH_SHORT).show();
                                 }

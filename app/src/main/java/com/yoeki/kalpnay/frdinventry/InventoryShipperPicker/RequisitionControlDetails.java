@@ -58,7 +58,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
     commonReceivingShippingDetailList adapter;
     int languageChangeVisible = 1;
     List<StickerList> sequenceQRNumber = new ArrayList<>();
-    String reqNmbr = "", locationId, wareHouse, valueElseRem = "", valueRem = "", qrDetails;
+    String reqNmbr = "", locationId, wareHouse, valueElseRem = "", valueRem = "", qrDetails, roleID;
     int batchListSize = 0;
 
 
@@ -144,6 +144,11 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         scanQR.addTextChangedListener(textWatcher);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        roleID = Preference.getInstance(getApplicationContext()).getRole();
+        if(roleID.equals("1")||roleID.equals("2")){
+            shipBtn.setVisibility(View.GONE);
+        }
     }
 
     public void qrRCDDetailsWithoutCheckBox() {
@@ -383,9 +388,6 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                                         forRefreshList(position);
                                                         break;
                                                     }
-
-
-
                                                 }
                                             }
                                             forRefreshList(position);
@@ -432,9 +434,6 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                                     boolean confB = false;
                                                     if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList() != null) {
 
-
-
-
                                                         for (int j = 0; j < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); j++) {
                                                             String batch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(j).getBatchNo();
                                                             if (batchNo.equals(batch)) {
@@ -477,16 +476,6 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                                             forRefreshList(position);
                                                             break;
                                                         }
-
-
-
-
-
-
-
-
-
-
                                                     }
                                                 }
                                                 forRefreshList(position);
@@ -502,14 +491,14 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                         }
                         if (itemMatchedOrNot == false) {
                             Toast.makeText(RequisitionControlDetails.this, "QR is not matched", Toast.LENGTH_SHORT).show();
-                            scanQR.setText("");
                             evergreenLoop();
+                            scanQR.setText("");
                         }
 
                     } else {
                         Toast.makeText(RequisitionControlDetails.this, "QR is not available", Toast.LENGTH_SHORT).show();
-                        scanQR.setText("");
                         evergreenLoop();
+                        scanQR.setText("");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -519,8 +508,8 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             @Override
             public void onFailure(Call<ResponseBodyQRDetails> call, Throwable t) {
                 progressDialog.dismiss();
-                scanQR.setText("");
                 evergreenLoop();
+                scanQR.setText("");
                 Toast.makeText(RequisitionControlDetails.this, "Something problem occurred", Toast.LENGTH_SHORT).show();
             }
         });
@@ -668,8 +657,8 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                scanQR.setText("");
                 evergreenLoop();
+                scanQR.setText("");
             }
         });
 
@@ -744,7 +733,8 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         if (loc[0].equals("RM")) {
             finalLoc = "MWH";
         } else {
-            finalLoc = "CK";
+//            finalLoc = "CK";          remove by satyendar on 31 oct 19
+            finalLoc = "Cen-Kitc";
         }
         String userId = Preference.getInstance(getApplicationContext()).getUserId();
 
@@ -804,8 +794,8 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                scanQR.setText("");
                 evergreenLoop();
+                scanQR.setText("");
             }
         });
 
@@ -1096,15 +1086,15 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                         }
                         if (itemMatchedOrNot == false) {
                             Toast.makeText(RequisitionControlDetails.this, "QR is not matched", Toast.LENGTH_SHORT).show();
-                            scanQR.setText("");
                             evergreenLoop();
+                            scanQR.setText("");
                         }
 
 
                     } else {
                         Toast.makeText(RequisitionControlDetails.this, "QR is not available", Toast.LENGTH_SHORT).show();
-                        scanQR.setText("");
                         evergreenLoop();
+                        scanQR.setText("");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1114,8 +1104,8 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             @Override
             public void onFailure(Call<ResponseBodyQRDetails> call, Throwable t) {
                 progressDialog.dismiss();
-                scanQR.setText("");
                 evergreenLoop();
+                scanQR.setText("");
                 Toast.makeText(RequisitionControlDetails.this, "Something problem occurred", Toast.LENGTH_SHORT).show();
             }
         });

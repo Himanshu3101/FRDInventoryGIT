@@ -24,6 +24,7 @@ public class Preference {
     private static final String USER_NAME = "user_name";
     private static final String PASSWORD = "password";
     private static final String CHANGEPASSWORD = "1";
+    private static final String ROLEID = "roleID";
     private static final String ReloadedDatabase = "reloadedDatabase";
     private static final String TempSeqList = "tempSeqList";
     private static final String wareHouse_Details = "wareHouse_Details";
@@ -254,6 +255,19 @@ public class Preference {
         editor.putString(USER_NAME, username);
         editor.apply();
         return true;
+    }
+
+    public boolean setRoleId(String roleID) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ROLEID, roleID);
+        editor.apply();
+        return true;
+    }
+
+    public String getRole() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(ROLEID, "");
     }
 
 

@@ -1,5 +1,6 @@
 package com.yoeki.kalpnay.frdinventry.Api;
 
+import com.yoeki.kalpnay.frdinventry.Dashboard.UserProfile;
 import com.yoeki.kalpnay.frdinventry.InventoryCounting.JiournalResponse;
 import com.yoeki.kalpnay.frdinventry.InventoryCounting.RequestBodyIVCDetails;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.GetRequisitionPending;
@@ -40,6 +41,9 @@ public interface ApiInterface {
     @POST("FRD/GetMrn")
     Call<GetMRNModels> getMRNDataModels();
 
+    @POST("FRD/UserProfile")
+    Call<UserProfile> getUserProfile(@Body UserIDModel userIDModel);
+
     @POST("FRD/GetMrnDetails")
     Call<MrnNumberDetailResponse> getMRNDetails(@Body mrnNumberDetailsRequest user);
 
@@ -63,7 +67,6 @@ public interface ApiInterface {
 
     @POST("FRD/GetCompleteRequestNo")
     Call<GetRequisitionPending> completeRequestNumber(@Body UserIDModel userIDModel);
-
 
     @POST("FRD/Receiving")
     Call<PostingJsonResponse> forBranchInventoryReceiving(@Body RequestBodyReceiveDetails requestBodyReceiveDetails);

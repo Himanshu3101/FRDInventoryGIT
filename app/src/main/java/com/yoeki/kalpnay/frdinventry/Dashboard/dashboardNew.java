@@ -9,7 +9,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -46,9 +50,10 @@ import retrofit2.Response;
 public class dashboardNew extends AppCompatActivity implements View.OnClickListener {
     LinearLayout linearLayoutMaterialReciving, linearLayoutInventoryShipperPicker, linearLayoutBranchInventoryReciving, linearLayoutInventoryCounting, linearLayoutGlobalQrScan,
             linearLayoutQuantityUpdate;
-    AppCompatButton logOut;
     SwipeRefreshLayout mSwipeRefreshLayout;
     TextView MRNCount, shipperCount, birCount/*, inventoryCount*/;
+    Toolbar toolbar_top;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +90,32 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         if (accessRightsList.get(0).getShipperList().equals("True")) {
             linearLayoutInventoryShipperPicker.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark));
         }
-        logOut.setOnClickListener(this);
         countingSet();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.user_details:
+                try {
+                    profileApi();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                return true;
+            case R.id.logout_menu:
+                openLogOutDialog(R.style.DialogAnimation, "");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void initialize() {
@@ -97,11 +126,13 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         linearLayoutGlobalQrScan = findViewById(R.id.linearLayoutGlobalQrScan);
         linearLayoutQuantityUpdate = findViewById(R.id.linearLayoutQuantityUpdate);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeToRefreshDashboard);
-        logOut = findViewById(R.id.logOut);
         MRNCount = findViewById(R.id.MRNCount);
         shipperCount = findViewById(R.id.shipperCount);
         birCount = findViewById(R.id.birCount);
-//        inventoryCount = findViewById(R.id.inventoryCount);
+
+        toolbar_top = findViewById(R.id.toolbar_top);
+        setSupportActionBar(toolbar_top);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -118,7 +149,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         progressDialog.show(); // show progress dialog
         progressDialog.setCancelable(false); // set cancelable to false
         ApiInterface apiInterface = Api.getClient().create(ApiInterface.class);
-        String userId = Preference.getInstance(getApplicationContext()).getUserId();
+        userId = Preference.getInstance(getApplicationContext()).getUserId();
 
         UserIDModel detailsRequest = new UserIDModel(userId);
 
@@ -222,7 +253,6 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -285,10 +315,8 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(this, "You are not Authorized Person.", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.logOut:
-                openLogOutDialog(R.style.DialogAnimation, "");
-                break;
         }
+
     }
 
     @Override
@@ -330,5 +358,57 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
             }
         });
         dialog.show();
+    }
+
+    public void profileApi() {
+        final ProgressDialog progressDialog = new ProgressDialog(dashboardNew.this);
+        progressDialog.setMessage("Please Wait"); // set message
+        progressDialog.show(); // show progress dialog
+        progressDialog.setCancelable(false); // set cancelable to false
+        ApiInterface apiInterface = Api.getClient().create(ApiInterface.class);
+
+        UserIDModel userIDModel = new UserIDModel(userId);
+        Call<UserProfile> call = apiInterface.getUserProfile(userIDModel);
+        call.enqueue(new Callback<UserProfile>() {
+
+            @Override
+            public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
+                progressDialog.dismiss();
+                if (response.body().getStatus().equals("Success")) {
+                    dialogProfile(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserProfile> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(dashboardNew.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void dialogProfile(Response<UserProfile> response){
+        final Dialog profileDialog = new Dialog(this);
+        profileDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        profileDialog.setContentView(getLayoutInflater().inflate(R.layout.profile_dialog, null));
+
+        AppCompatTextView Uname =  profileDialog.findViewById(R.id.Uname);
+        AppCompatTextView Pin =  profileDialog.findViewById(R.id.Pin);
+        AppCompatTextView email =  profileDialog.findViewById(R.id.email);
+        AppCompatTextView wareHouse =  profileDialog.findViewById(R.id.wareHouse);
+        AppCompatButton buttonOk = profileDialog.findViewById(R.id.buttonOk);
+        Uname.setText(response.body().getUserProfileResponse().get(0).getUserName());
+        Pin.setText(response.body().getUserProfileResponse().get(0).getUserPin());
+        email.setText(response.body().getUserProfileResponse().get(0).getEmailId());
+        wareHouse.setText(response.body().getUserProfileResponse().get(0).getWareHouse());
+
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                profileDialog.dismiss();
+            }
+        });
+
+        profileDialog.show();
     }
 }

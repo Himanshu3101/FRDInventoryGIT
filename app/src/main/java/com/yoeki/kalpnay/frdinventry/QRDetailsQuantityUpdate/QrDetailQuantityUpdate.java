@@ -52,7 +52,7 @@ public class QrDetailQuantityUpdate extends AppCompatActivity implements View.On
     List<String> sequenceList = new ArrayList<>();
     List<ResponseBodyQRDetails> saveInventoryCountingList;
     LinearLayoutManager layoutManager;
-    String qrDetails;
+    String qrDetails, roleID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +123,12 @@ public class QrDetailQuantityUpdate extends AppCompatActivity implements View.On
             }
         };
         edt_scanQR_QuantityUPdateDetails.addTextChangedListener(textWatcher);
+
+        roleID = Preference.getInstance(getApplicationContext()).getRole();
+        if(roleID.equals("1")||roleID.equals("2")){
+            saveTempBtn_qrQuantityUpdate.setVisibility(View.GONE);
+            update_QrQuantityUPdateDetails.setVisibility(View.GONE);
+        }
     }
 
     public void initUi() {
@@ -174,6 +180,8 @@ public class QrDetailQuantityUpdate extends AppCompatActivity implements View.On
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+
+
 //lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.CENTER;
         AppCompatTextView detail_ExpiryDateDialogQRUpdate = dialog.findViewById(R.id.detail_ExpiryDateDialogQRUpdate);
@@ -187,6 +195,11 @@ public class QrDetailQuantityUpdate extends AppCompatActivity implements View.On
         final EditText manuallyUpdateQuantity = dialog.findViewById(R.id.manuallyUpdateQuantity);
         AppCompatButton updateQty = dialog.findViewById(R.id.updateQty_QRDetailsQuantity);
         AppCompatButton cancel_QRDetailsQuantity = dialog.findViewById(R.id.cancel_QRDetailsQuantity);
+
+        if(roleID.equals("1")||roleID.equals("2")){
+            manuallyUpdateQuantity.setVisibility(View.GONE);
+            updateQty.setVisibility(View.GONE);
+        }
 
         unitQuantityUpdate.setText(response.getUnitId());
         detail_ExpiryDateDialogQRUpdate.setText(response.getExpdate());
@@ -229,13 +242,19 @@ public class QrDetailQuantityUpdate extends AppCompatActivity implements View.On
                         float remainingQty = stickerQty-update;
 
                         if(remainingQty < 0){
-
                             sequenceQRNumber.remove(qrDetails);
                             dialog.dismiss();
                             Toast.makeText(QrDetailQuantityUpdate.this, "Remaining Quantity not more then Sticker Quantity.", Toast.LENGTH_SHORT).show();
                             edt_scanQR_QuantityUPdateDetails.setText("");
                         }else{
-                            if(remainingQty<=stickerQty){
+                           /* if(remainingQty==0.0){
+                                response.setConsumeQty(String.valueOf(stickerQty));
+                                responseList.add(response);
+                                AdapterQrDetailQuantityUpdate adapterQrDetailQuantityUpdate = new AdapterQrDetailQuantityUpdate(QrDetailQuantityUpdate.this, responseList*//*,qrDetails*//*);
+                                rcy_QrQuantityUPdateDetails.setLayoutManager(layoutManager);
+                                rcy_QrQuantityUPdateDetails.setAdapter(adapterQrDetailQuantityUpdate);
+                                dialog.dismiss();
+                            }else*/ if(remainingQty<=stickerQty){
                                 response.setConsumeQty(String.valueOf(remainingQty));
                                 responseList.add(response);
                                 if(saveInventoryCountingList!=null && saveInventoryCountingList.size()!=0){
@@ -245,6 +264,7 @@ public class QrDetailQuantityUpdate extends AppCompatActivity implements View.On
                                     int size = tempList.size();
                                     tempList.add(size,response);
                                     Preference.getInstance(getApplicationContext()).saveTempQuantityUpdate(tempList);
+
                                     AdapterQrDetailQuantityUpdate adapterQrDetailQuantityUpdate = new AdapterQrDetailQuantityUpdate(QrDetailQuantityUpdate.this, tempList/*,qrDetails*/);
                                     rcy_QrQuantityUPdateDetails.setLayoutManager(layoutManager);
                                     rcy_QrQuantityUPdateDetails.setAdapter(adapterQrDetailQuantityUpdate);
@@ -264,18 +284,17 @@ public class QrDetailQuantityUpdate extends AppCompatActivity implements View.On
                                 Toast.makeText(QrDetailQuantityUpdate.this, "Remaining Quantity not more then Sticker Quantity.", Toast.LENGTH_SHORT).show();
                             }
 
+
+
+
+
+
+
                         }
                     }
 
 
                 }
-
-
-
-
-
-
-
             }
         });
         dialog.getWindow().setAttributes(lp);

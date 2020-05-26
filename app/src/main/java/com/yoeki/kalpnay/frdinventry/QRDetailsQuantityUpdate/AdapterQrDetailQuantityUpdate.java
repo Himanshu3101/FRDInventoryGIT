@@ -40,23 +40,21 @@ public class AdapterQrDetailQuantityUpdate extends RecyclerView.Adapter<Recycler
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
         
-       /* if (languageChangeVisible == 0) {
+        /*if (languageChangeVisible == 0) {
             itemViewHolder.tv_nameMRN.setVisibility(View.VISIBLE);
             itemViewHolder.tv_nameMRNArabic.setVisibility(View.INVISIBLE);
         } else {
             itemViewHolder.tv_nameMRN.setVisibility(View.INVISIBLE);
             itemViewHolder.tv_nameMRNArabic.setVisibility(View.VISIBLE);
         }*/
-       
+
         itemViewHolder.tv_batchNoQuantityUpdate.setText(responseDetails.get(position).getBatchId());
 //        itemViewHolder.tv_expiryDateQuantityUpdate.setText(responseDetails.get(position).getItemname());
         itemViewHolder.tv_configurationQuantityUpdate.setText(responseDetails.get(position).getConfig());
         itemViewHolder.tv_scanqtyQuantityUpdate.setText(responseDetails.get(position).getConsumeQty());
         itemViewHolder.tv_itemnoQuantityUpdate.setText(responseDetails.get(position).getItemId());
 //        itemViewHolder.sequenceNo_QuantityUpdate.setText(sequenceQR);
-
         itemViewHolder.tv_nameArabicQuantityUpdate.setText(responseDetails.get(position).getItemnameArabic());
-
         String[] split = responseDetails.get(position).getExpdate().split("\\s+");
         itemViewHolder.tv_expiryDateQuantityUpdate.setText(split[0]);
     }
