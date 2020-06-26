@@ -170,6 +170,9 @@ public class InventoryCountingScan extends AppCompatActivity implements View.OnC
                     submitIVCData();
                 }
                 break;
+            case R.id.img_backInventoryCountngScan:
+                onBackPressed();
+                break;
         }
     }
 

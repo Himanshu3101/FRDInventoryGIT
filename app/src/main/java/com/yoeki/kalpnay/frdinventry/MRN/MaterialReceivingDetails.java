@@ -52,13 +52,14 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
     AppCompatAutoCompleteTextView scanQRMRD;
     AppCompatButton postingBtn, saveTempBtn, img_backMRNDetails, languageChange;
     RecyclerView rcy_itemsMRD;
-    String mrnNumber, activityNo;
+    String mrnNumber, activityNo, roleID;
     int languageChangeVisible = 1;
     List<MRNDetailsList> listMRNDetailsList = new ArrayList<>();
     private IntentIntegrator qrScan;
     MRN_Dashboard_AdapterDetails adapter;
     List<StickerSeq> tempSeqList = new ArrayList<>();
     boolean requiredBackDialog = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +172,12 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
             }
         };
         scanQRMRD.addTextChangedListener(textWatcher);
+
+        roleID = Preference.getInstance(getApplicationContext()).getRole();
+        if(roleID.equals("1")||roleID.equals("2")){
+            saveTempBtn.setVisibility(View.GONE);
+            postingBtn.setVisibility(View.GONE);
+        }
     }
 
     public void initUi() {
@@ -322,6 +329,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Toast.makeText(MaterialReceivingDetails.this, "Something Problem Occur by Server.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -406,7 +414,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
         dialog.show();
     }
 
-    private static BigDecimal roundToPlaces(double value, int places) {
+    public static BigDecimal roundToPlaces(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);

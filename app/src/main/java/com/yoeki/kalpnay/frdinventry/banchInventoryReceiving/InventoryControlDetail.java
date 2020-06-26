@@ -10,6 +10,7 @@ import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.ParticularRequ
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.StickerList;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.commonReceivingShippingDetailDataList;
 import com.yoeki.kalpnay.frdinventry.Items.commonReceivingShippingDetailList;
+import com.yoeki.kalpnay.frdinventry.MRN.MaterialReceivingDetails;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.PostingJsonResponse;
 import com.yoeki.kalpnay.frdinventry.QRDetails.RequestBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
@@ -54,7 +55,7 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
     CheckBox checkUpdateQty;
     AppCompatTextView requisitionNo, date, receivedFromBranch;
     AppCompatButton receivedBtn, languageChange, backInventoryControl;
-    String reqNmbr = "", wareHouse, locationId, qrDetails;
+    String reqNmbr = "", wareHouse, locationId, qrDetails, roleID;
     int sequenceAddorNot = 0;
     commonReceivingShippingDetailList adapter;
     int languageChangeVisible = 1;
@@ -119,6 +120,11 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
             }
         };
         scanQR.addTextChangedListener(textWatcher);
+
+        roleID = Preference.getInstance(getApplicationContext()).getRole();
+        if(roleID.equals("1")||roleID.equals("2")){
+            receivedBtn.setVisibility(View.GONE);
+        }
     }
 
     public void initUi() {
@@ -580,8 +586,9 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
                                         float shippeddQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getShippedQty());
 
                                         if (shippeddQty == totalpickedQty) {
+                                            String stringTotalPickedQty = String.format("%.03f", totalpickedQty);
                                             commonReceivingShippingDetailDataLists.get(position).setremainingQty("0");
-                                            commonReceivingShippingDetailDataLists.get(position).setpickededQty(String.valueOf(totalpickedQty));
+                                            commonReceivingShippingDetailDataLists.get(position).setpickededQty(stringTotalPickedQty);
                                             commonReceivingShippingDetailDataLists.get(position).setReason("");
                                             commonReceivingShippingDetailDataLists.get(position).setUnitId(response.body().getUnitId());
 
@@ -670,8 +677,9 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
 
                                             commonReceivingShippingDetailDataLists.get(position).setUnitId(response.body().getUnitId());
                                             if (remqty >= 0) {
+                                                String stringTotalPickedQty = String.format("%.03f", totalpickedQty);
                                                 commonReceivingShippingDetailDataLists.get(position).setremainingQty(test);
-                                                commonReceivingShippingDetailDataLists.get(position).setpickededQty(String.valueOf(totalpickedQty));
+                                                commonReceivingShippingDetailDataLists.get(position).setpickededQty(stringTotalPickedQty);
 
                                                 if (remqty == 0.0) {
                                                     commonReceivingShippingDetailDataLists.get(position).setReason("");
@@ -719,8 +727,16 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
                                                                         String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchListReceiver().get(k).getBatchNo();
                                                                         if (batch.equals(confBatch)) {
                                                                             float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchListReceiver().get(k).getStickerQty());
-                                                                            float total = Float.parseFloat(prevBatchQty + stickerQty);
-                                                                            commonReceivingShippingDetailDataLists.get(position).getBatchListReceiver().get(k).setStickerQty(String.valueOf(total));
+                                                                            float stickersQty = Float.parseFloat(stickerQty);
+//                                                                            String prevBatchQtantity = String.format("%.03f", prevBatchQty);
+//
+//                                                                            double total = Float.parseFloat(prevBatchQtantity+ stickerQty);
+                                                                            float total = 0;
+                                                                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                                                                total = Float.sum(prevBatchQty,stickersQty);
+                                                                            }
+                                                                            String test1 = String.format("%.03f", total);
+                                                                            commonReceivingShippingDetailDataLists.get(position).getBatchListReceiver().get(k).setStickerQty(test1);
                                                                         }
                                                                     }
                                                                 }
@@ -784,8 +800,8 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
             @Override
             public void onFailure(Call<ResponseBodyQRDetails> call, Throwable t) {
                 progressDialog.dismiss();
-                scanQR.setText("");
                 sequenceQRNumber.remove(qrDetails);
+                scanQR.setText("");
                 Toast.makeText(InventoryControlDetail.this, "Something problem occurred", Toast.LENGTH_SHORT).show();
             }
         });

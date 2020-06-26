@@ -45,4 +45,7 @@
     <string name="jouranl">Journal No :</string>
     <string name="warehouse">Warehouse :</string>
     <string name="qrDetailQtyUpdte">Quantity Update Details</string>
+    <string name="user_info">User Info</string>
+    <string name="settings">Setting</string>
+    <string name="logout">Log Out</string>
 </resources>

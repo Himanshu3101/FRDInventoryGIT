@@ -1,5 +1,6 @@
 package com.yoeki.kalpnay.frdinventry.InventoryCounting;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -39,12 +40,13 @@ public class inventory_Counting extends AppCompatActivity implements View.OnClic
     List<String> listWareHouse;
     List<String> journalAndWarehouse;
     List<ResponseBodyQRDetails> saveInventoryCountingList;
-    String selectedWarehouse = "Select Reason", journal, warehouse ;
+    String selectedWarehouse = "Select Reason", journal, warehouse, roleID;
     List<String> journalList = new ArrayList<>();
     AppCompatButton backInventoryCounting;
     RecyclerView recyclerViewInventoryReceivingTemp;
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +74,6 @@ public class inventory_Counting extends AppCompatActivity implements View.OnClic
                             journalList.add(journal);
                         }
                     }
-
                 }
             }
         }catch(Exception e){
@@ -81,6 +82,7 @@ public class inventory_Counting extends AppCompatActivity implements View.OnClic
 
 
         if(journalAndWarehouse.size() != 0) {
+
             LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
             InventoryCountTemp inventoryCountTemp = new InventoryCountTemp(inventory_Counting.this, journalAndWarehouse);
             recyclerViewInventoryReceivingTemp.setLayoutManager(layoutManager);
@@ -88,6 +90,11 @@ public class inventory_Counting extends AppCompatActivity implements View.OnClic
         }
 
         backInventoryCounting.setOnClickListener(this);
+
+        roleID = Preference.getInstance(getApplicationContext()).getRole();
+        if(roleID.equals("1")||roleID.equals("2")){
+            selectionWarehouse.setVisibility(View.GONE);
+        }
     }
 
     public void init(){
