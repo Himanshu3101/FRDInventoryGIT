@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.Toolbar
+
+
+
+        android:id="@+id/toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize"
+        tools:ignore="MissingConstraints">
+        <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="User Profile"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_top"
+        android:padding="5dp"
+        android:layout_marginTop="5dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="User Name "
+            android:padding="5dp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/white"/>
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/Uname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:textSize="12dp"
+            android:background="@color/listbackground"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutUserPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayoutUserName"
+        android:padding="5dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="User Pin"
+            android:padding="5dp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/white"/>
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/Pin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:textSize="12dp"
+            android:background="@color/listbackground"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutUserEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayoutUserPin"
+        android:padding="5dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="User Email"
+            android:padding="5dp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/white"/>
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:textSize="12dp"
+            android:background="@color/listbackground"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutWarehouse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayoutUserEmail"
+        android:padding="5dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Warehouse"
+            android:padding="5dp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/white"/>
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/wareHouse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:padding="5dp"
+            android:textSize="12dp"
+            android:background="@color/listbackground"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/buttonOk"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@id/linearLayoutWarehouse"
+        android:layout_alignParentEnd="true"
+        android:padding="2dp"
+        android:text="Ok"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/white"
+        android:elevation="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>
