@@ -11,6 +11,9 @@ public class StickerSeq {
     @SerializedName("StickerQty")
     @Expose
     private String stickerQty;
+    @SerializedName("StickerSequenceId")
+    @Expose
+    private String stickerSequenceId;
 
     private String mrnNo;
 
@@ -36,5 +39,13 @@ public class StickerSeq {
 
     public void setMrnNo(String mrnNo) {
         this.mrnNo = mrnNo;
+    }
+
+    public String getStickerSequenceId() {
+        return stickerSequenceId;
+    }
+
+    public void setStickerSequenceId(String stickerSequenceId) {
+        this.stickerSequenceId = stickerSequenceId;
     }
 }

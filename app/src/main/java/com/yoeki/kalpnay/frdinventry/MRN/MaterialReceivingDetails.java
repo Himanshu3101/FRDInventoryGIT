@@ -18,8 +18,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
@@ -93,88 +96,139 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String tempSeq;
-                tempSeq = scanQRMRD.getText().toString();
-                String qty, newQty;
-                boolean isQrFound = false;
-                if (tempSeq.length() < 10) {
+                try {
+                    String tempSeq;
+                    tempSeq = scanQRMRD.getText().toString();
+                    String qty, newQty;
+                    boolean isQrFound = false;
+                    if (tempSeq.length() >= 8 && tempSeq.length() <= 18) {
+                        if (listMRNDetailsList.size() > 0) {
+                            for (int i = 0; i < listMRNDetailsList.size(); i++) {
+                                boolean breakFlag = false;
+                                boolean isSeqExistsInTempList = false;
 
-                } else {
-                    if (listMRNDetailsList.size() > 0) {
-                        for (int i = 0; i < listMRNDetailsList.size(); i++) {
-                            boolean breakFlag = false;
-                            boolean isSeqExistsInTempList = false;
-
-                            if (listMRNDetailsList.get(i).getStickerSeq() == null) {
-                            } else {
-                                for (int j = 0; j < listMRNDetailsList.get(i).getStickerSeq().size(); j++) {
-                                    if (listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerSequence().equals(tempSeq)) {
-                                        breakFlag = true;
-                                        for (int k = 0; k < tempSeqList.size(); k++) {
-                                            if (tempSeqList.get(k).getStickerSequence().equals(tempSeq)) {
-                                                isSeqExistsInTempList = true;
+                                if (listMRNDetailsList.get(i).getStickerSeq() == null) {
+                                } else {
+                                    for (int j = 0; j < listMRNDetailsList.get(i).getStickerSeq().size(); j++) {
+                                        if (listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerSequence().equals(tempSeq)) {
+                                            breakFlag = true;
+                                            for (int k = 0; k < tempSeqList.size(); k++) {
+                                                if (tempSeqList.get(k).getStickerSequence().equals(tempSeq)) {
+                                                    isSeqExistsInTempList = true;
+                                                }
                                             }
-                                        }
-                                        if (!isSeqExistsInTempList) {
-                                            listMRNDetailsList.get(i).getStickerSeq().get(j).setMrnNo(mrnNumber);
-                                            tempSeqList.add(listMRNDetailsList.get(i).getStickerSeq().get(j));
+                                            if (!isSeqExistsInTempList) {
+                                                listMRNDetailsList.get(i).getStickerSeq().get(j).setMrnNo(mrnNumber);
+                                                tempSeqList.add(listMRNDetailsList.get(i).getStickerSeq().get(j));
 
-                                            requiredBackDialog = true;
+                                                requiredBackDialog = true;
 
-                                            newQty = listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerQty();
-                                            if (listMRNDetailsList.get(i).getScanQty() == null) {
-                                                listMRNDetailsList.get(i).setScanQty("0");
-                                            }
-                                            qty = listMRNDetailsList.get(i).getScanQty();
+                                                newQty = listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerQty();
+                                                if (listMRNDetailsList.get(i).getScanQty() == null) {
+                                                    listMRNDetailsList.get(i).setScanQty("0");
+                                                }
+                                                qty = listMRNDetailsList.get(i).getScanQty();
 
-                                            float numQty = Float.parseFloat(qty) + Float.parseFloat(newQty);
+                                                float numQty = roundToPlaces(Float.parseFloat(qty) + Float.parseFloat(newQty), 3).floatValue();
 
-                                            float recQty = Float.parseFloat(listMRNDetailsList.get(i).getReceivedQuantity());
+                                                float recQty = Float.parseFloat(listMRNDetailsList.get(i).getReceivedQuantity());
 
-                                            if (numQty > recQty) {
-                                                Toast.makeText(MaterialReceivingDetails.this, "Scan Qty not be Greater then Received Qty.", Toast.LENGTH_SHORT).show();
+                                                if (numQty > recQty) {
+                                                    Toast.makeText(MaterialReceivingDetails.this, "Scan Qty not be Greater then Received Qty.", Toast.LENGTH_SHORT).show();
 //                                                invalidItemDialog();
+                                                } else {
+                                                    listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
+                                                    MRNDetailsList tempMrnDetail = new MRNDetailsList();
+                                                    tempMrnDetail = listMRNDetailsList.get(i);
+                                                    listMRNDetailsList.remove(i);
+                                                    adapter.notifyItemRemoved(i);
+                                                    listMRNDetailsList.add(0, tempMrnDetail);
+                                                    adapter.notifyItemInserted(0);
+                                                    rcy_itemsMRD.smoothScrollToPosition(0);
+                                                }
+                                                scanQRMRD.setText("");
                                             } else {
-                                                listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
-                                                MRNDetailsList tempMrnDetail = new MRNDetailsList();
-                                                tempMrnDetail = listMRNDetailsList.get(i);
-                                                listMRNDetailsList.remove(i);
-                                                adapter.notifyItemRemoved(i);
-                                                listMRNDetailsList.add(0, tempMrnDetail);
-                                                adapter.notifyItemInserted(0);
-                                                rcy_itemsMRD.smoothScrollToPosition(0);
+                                                Toast.makeText(MaterialReceivingDetails.this, "QR already scanned!", Toast.LENGTH_SHORT).show();
+                                                scanQRMRD.setText("");
                                             }
-                                            scanQRMRD.setText("");
+                                            isQrFound = true;
+                                            break;
+                                        } else if (listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerSequenceId() != null) {
+                                            if (listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerSequenceId().equals(tempSeq)) {
+                                                breakFlag = true;
+                                                for (int k = 0; k < tempSeqList.size(); k++) {
+                                                    if (tempSeqList.get(k).getStickerSequenceId() != null) {
+                                                        if (tempSeqList.get(k).getStickerSequenceId().equals(tempSeq)) {
+                                                            isSeqExistsInTempList = true;
+                                                        }
+                                                    }
+                                                }
+                                                if (!isSeqExistsInTempList) {
+                                                    listMRNDetailsList.get(i).getStickerSeq().get(j).setMrnNo(mrnNumber);
+                                                    tempSeqList.add(listMRNDetailsList.get(i).getStickerSeq().get(j));
+
+                                                    requiredBackDialog = true;
+
+                                                    newQty = listMRNDetailsList.get(i).getStickerSeq().get(j).getStickerQty();
+                                                    if (listMRNDetailsList.get(i).getScanQty() == null) {
+                                                        listMRNDetailsList.get(i).setScanQty("0");
+                                                    }
+                                                    qty = listMRNDetailsList.get(i).getScanQty();
+
+                                                    float numQty = roundToPlaces(Float.parseFloat(qty) + Float.parseFloat(newQty), 3).floatValue();
+
+                                                    float recQty = Float.parseFloat(listMRNDetailsList.get(i).getReceivedQuantity());
+
+                                                    if (numQty > recQty) {
+                                                        Toast.makeText(MaterialReceivingDetails.this, "Scan Qty not be Greater then Received Qty.", Toast.LENGTH_SHORT).show();
+//                                                invalidItemDialog();
+                                                    } else {
+                                                        listMRNDetailsList.get(i).setScanQty(roundToPlaces(numQty, 3) + "");
+                                                        MRNDetailsList tempMrnDetail = new MRNDetailsList();
+                                                        tempMrnDetail = listMRNDetailsList.get(i);
+                                                        listMRNDetailsList.remove(i);
+                                                        adapter.notifyItemRemoved(i);
+                                                        listMRNDetailsList.add(0, tempMrnDetail);
+                                                        adapter.notifyItemInserted(0);
+                                                        rcy_itemsMRD.smoothScrollToPosition(0);
+                                                    }
+                                                    scanQRMRD.setText("");
+                                                } else {
+                                                    Toast.makeText(MaterialReceivingDetails.this, "QR already scanned!", Toast.LENGTH_SHORT).show();
+                                                    scanQRMRD.setText("");
+                                                }
+                                                isQrFound = true;
+                                                break;
+                                            } else {
+                                                isQrFound = false;
+                                            }
                                         } else {
-                                            Toast.makeText(MaterialReceivingDetails.this, "QR already scanned!", Toast.LENGTH_SHORT).show();
-                                            scanQRMRD.setText("");
+                                            isQrFound = false;
                                         }
-                                        isQrFound = true;
-                                        break;
-                                    } else {
-                                        isQrFound = false;
                                     }
                                 }
+                                if (breakFlag) {
+                                    break;
+                                }
                             }
-                            if (breakFlag) {
-                                break;
+                        }
+                        if (!isQrFound) {
+                            if (scanQRMRD.getText().toString().equals("")) {
+                                //nothing do it
+                            } else {
+                                invalidItemDialog();
                             }
                         }
                     }
-                    if (!isQrFound) {
-                        if (scanQRMRD.getText().toString().equals("")) {
-                            //nothing do it
-                        } else {
-                            invalidItemDialog();
-                        }
-                    }
+                } catch (Exception e) {
+                    alertDialog(e.getMessage());
                 }
             }
         };
         scanQRMRD.addTextChangedListener(textWatcher);
 
         roleID = Preference.getInstance(getApplicationContext()).getRole();
-        if(roleID.equals("1")||roleID.equals("2")){
+        if (roleID.equals("1") || roleID.equals("2")) {
             saveTempBtn.setVisibility(View.GONE);
             postingBtn.setVisibility(View.GONE);
         }
@@ -257,6 +311,8 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                     if (response.body() != null) {
                         if (response.body().getStatus().equals("Success")) {
                             listMRNDetailsList = response.body().getMRNDetailsList();
+//                            String detail = new Gson().toJson(listMRNDetailsList);
+//                            showMrnDetails(detail);
                             initData();
                         } else {
                             Toast.makeText(MaterialReceivingDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -279,6 +335,27 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                 Toast.makeText(MaterialReceivingDetails.this, "Something problem occurred", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    void showMrnDetails(String detail) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Details");
+        final TextView quantity = new TextView(this);
+        quantity.setText(detail);
+        quantity.setTextSize(12);
+        ScrollView scrollView = new ScrollView(this);
+        scrollView.setPadding(5,0,5,0);
+        scrollView.addView(quantity);
+        builder.setView(scrollView);
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     boolean isRecQtyScanQtyMatched() {
@@ -345,7 +422,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
     }
 
     private void alertDialog(String message) {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage(message);
         dialog.setTitle("Error");
         dialog.setPositiveButton("OK",
@@ -354,7 +431,7 @@ public class MaterialReceivingDetails extends AppCompatActivity implements View.
                         dialog.dismiss();
                     }
                 });
-        AlertDialog alertDialog=dialog.create();
+        AlertDialog alertDialog = dialog.create();
         alertDialog.show();
     }
 

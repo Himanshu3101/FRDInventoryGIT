@@ -46,7 +46,7 @@
 
     <!--TextAppearance.Design.Hint-->
 
-    <style name="TextLabel" parent="TextAppearance.AppCompat">
+    <style name="TextLabel" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">12sp</item>
         <item name="android:textColorHint">@color/white</item>
         <!--<item name="colorAccent">@android:color/white</item>-->

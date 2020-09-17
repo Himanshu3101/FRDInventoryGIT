@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +24,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.yoeki.kalpnay.frdinventry.Api.Api;
 import com.yoeki.kalpnay.frdinventry.Api.ApiInterface;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
@@ -31,12 +33,15 @@ import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.InventoryPendi
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.ParticularRequisitionDetails;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.ResponseShippingDetails;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.StickerList;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.StickersDialogData;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.commonReceivingShippingDetailDataList;
 import com.yoeki.kalpnay.frdinventry.Items.commonReceivingShippingDetailList;
 import com.yoeki.kalpnay.frdinventry.QRDetails.RequestBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.R;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +53,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
 
     RecyclerView rcy_items;
     AppCompatTextView reqNo, rcd_Date, branchName_RCD;
-    AppCompatButton shipBtn, languageChangeRCD, img_back;
+    AppCompatButton shipBtn, languageChangeRCD, img_back/*, saveTempBtn*/;
     CheckBox checkUpdateQty;
     AppCompatAutoCompleteTextView scanQR;
     List<commonReceivingShippingDetailDataList> commonReceivingShippingDetailDataLists;
@@ -58,6 +63,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
     commonReceivingShippingDetailList adapter;
     int languageChangeVisible = 1;
     List<StickerList> sequenceQRNumber = new ArrayList<>();
+    public List<StickersDialogData> stickersDialogDataList = new ArrayList<>();
     String reqNmbr = "", locationId, wareHouse, valueElseRem = "", valueRem = "", qrDetails, roleID;
     int batchListSize = 0;
 
@@ -76,9 +82,11 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         addlistdata();
 
         sequenceQRNumber.clear();
+        stickersDialogDataList.clear();
 
         img_back.setOnClickListener(this);
         shipBtn.setOnClickListener(this);
+//        saveTempBtn.setOnClickListener(this);
         languageChangeRCD.setOnClickListener(this);
         checkUpdateQty.setOnCheckedChangeListener(this);
 
@@ -96,7 +104,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             @Override
             public void afterTextChanged(Editable editable) {
                 qrDetails = String.valueOf(editable);
-                if (qrDetails.length() >= 10) {
+                if (qrDetails.length() >= 8 && qrDetails.length() <= 18) {
 
                     if (sequenceQRNumber.size() == 0) {
                         StickerList stickerList = new StickerList();
@@ -146,7 +154,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         roleID = Preference.getInstance(getApplicationContext()).getRole();
-        if(roleID.equals("1")||roleID.equals("2")){
+        if (roleID.equals("1") || roleID.equals("2")) {
             shipBtn.setVisibility(View.GONE);
         }
     }
@@ -176,6 +184,9 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
 
                             if (responseItemID.equals(listRCDItemid)) {
                                 itemMatchedOrNot = true;
+
+                                stickersDialogDataList.add(new StickersDialogData(qrDetails,response.body().getBatchId(), commonReceivingShippingDetailDataLists.get(position).getItemId()));
+
                                 String qrDataStickerqty = response.body().getStickerQty();
                                 commonReceivingShippingDetailDataLists.get(position).setConfig(response.body().getConfig());
                                 String[] expdate = response.body().getExpdate().split("\\s+");
@@ -183,7 +194,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                 commonReceivingShippingDetailDataLists.get(position).setBatchId(response.body().getBatchId());
 
                                 if (checkUpdateQty.isChecked()) {
-                                    update_Qty(qrDataStickerqty, position,response);
+                                    update_Qty(qrDataStickerqty, position, response);
                                 } else {
                                     if (commonReceivingShippingDetailDataLists.get(position).getpickededQty() == null) {
                                         if (commonReceivingShippingDetailDataLists.get(position).getApprovedQty().equals(qrDataStickerqty)) {
@@ -210,8 +221,9 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
 
                                         } else {
                                             float appqty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getApprovedQty());
-                                            float qrDataQty = Float.parseFloat(qrDataStickerqty);
-                                            float remQty = appqty - qrDataQty;
+                                            float qrDataQtytemp = Float.parseFloat(qrDataStickerqty);
+                                            float qrDataQty = roundToPlaces(qrDataQtytemp, 3);
+                                            float remQty = roundToPlaces(appqty - qrDataQty, 3);
 
                                             String test = String.format("%.03f", remQty);
                                             commonReceivingShippingDetailDataLists.get(position).setUnitId(response.body().getUnitId());
@@ -259,7 +271,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                                                     String configur = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getConfig();
                                                                     if (configur.equals(response.body().getConfig())) {
                                                                         String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchNo();
-                                                                        if(batch.equals(confBatch)){
+                                                                        if (batch.equals(confBatch)) {
                                                                             float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchQty());
                                                                             float total = prevBatchQty + stickQty;
                                                                             commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).setBatchQty(String.valueOf(total));
@@ -308,12 +320,13 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                     } else {
                                         float prePickedQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getpickededQty());
                                         float QRDataStickerqty = Float.parseFloat(qrDataStickerqty);
-                                        float totalpickedQty = prePickedQty + QRDataStickerqty;
+                                        float totalpickedQty = roundToPlaces(prePickedQty + QRDataStickerqty, 3);
                                         float approvedQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getApprovedQty());
 
                                         if (approvedQty == totalpickedQty) {
                                             commonReceivingShippingDetailDataLists.get(position).setremainingQty("0");
-                                            commonReceivingShippingDetailDataLists.get(position).setpickededQty(String.valueOf(totalpickedQty));
+                                            String tempPickQty = String.format("%.03f", totalpickedQty);
+                                            commonReceivingShippingDetailDataLists.get(position).setpickededQty(tempPickQty);
                                             commonReceivingShippingDetailDataLists.get(position).setReason("");
                                             commonReceivingShippingDetailDataLists.get(position).setUnitId(response.body().getUnitId());
 //                                            spinner_reason.setEnabled(false);
@@ -354,7 +367,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                                                 String configur = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getConfig();
                                                                 if (configur.equals(response.body().getConfig())) {
                                                                     String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchNo();
-                                                                    if(batch.equals(confBatch)){
+                                                                    if (batch.equals(confBatch)) {
                                                                         float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchQty());
                                                                         float total = prevBatchQty + stickQty;
                                                                         commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).setBatchQty(String.valueOf(total));
@@ -400,7 +413,8 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                             commonReceivingShippingDetailDataLists.get(position).setUnitId(response.body().getUnitId());
                                             if (remqty >= 0) {
                                                 commonReceivingShippingDetailDataLists.get(position).setremainingQty(test);
-                                                commonReceivingShippingDetailDataLists.get(position).setpickededQty(String.valueOf(totalpickedQty));
+                                                String tempPickQty = String.format("%.03f", totalpickedQty);
+                                                commonReceivingShippingDetailDataLists.get(position).setpickededQty(tempPickQty);
 
                                                 if (remqty == 0.0) {
                                                     commonReceivingShippingDetailDataLists.get(position).setReason("");
@@ -442,7 +456,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                                                     String configur = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getConfig();
                                                                     if (configur.equals(response.body().getConfig())) {
                                                                         String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchNo();
-                                                                        if(batch.equals(confBatch)){
+                                                                        if (batch.equals(confBatch)) {
                                                                             float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchQty());
                                                                             float total = prevBatchQty + stickQty;
                                                                             commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).setBatchQty(String.valueOf(total));
@@ -523,6 +537,11 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                 sequenceQRNumber.remove(i);
             }
         }
+        for (int i = 0; i <= stickersDialogDataList.size() - 1; i++) {
+            if (qrDetails.equals(stickersDialogDataList.get(i).getStickerSeq())) {
+                stickersDialogDataList.remove(i);
+            }
+        }
     }
 
     public void forRefreshList(int position) {
@@ -542,6 +561,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         branchName_RCD = findViewById(R.id.branchName_RCD);
         scanQR = findViewById(R.id.scanQR);
         shipBtn = findViewById(R.id.shipBtn);
+//        saveTempBtn = findViewById(R.id.saveTempBtn);
         img_back = findViewById(R.id.img_back);
         languageChangeRCD = findViewById(R.id.languageChangeRCD);
         rcy_items = findViewById(R.id.rcy_items);
@@ -559,6 +579,9 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             case R.id.shipBtn:
                 shipping();
                 break;
+//            case R.id.saveTempBtn:
+//                saveTempData();
+//                break;
             case R.id.languageChangeRCD:
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 adapter = new commonReceivingShippingDetailList(RequisitionControlDetails.this, commonReceivingShippingDetailDataLists, languageChangeVisible);
@@ -619,7 +642,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
 
     public void transferOrderDialog(String toNumber) {
         final Dialog dialog = new Dialog(RequisitionControlDetails.this);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.transfer_order_detail);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -722,6 +745,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
     }
 
     public void serviceRunShip() {
+        shipBtn.setEnabled(false);
         final ProgressDialog progressDialog = new ProgressDialog(RequisitionControlDetails.this);
         progressDialog.setMessage("Please Wait"); // set message
         progressDialog.show(); // show progress dialog
@@ -739,11 +763,14 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         String userId = Preference.getInstance(getApplicationContext()).getUserId();
 
         RequestBodyShipDetails requestBodyShipDetails = new RequestBodyShipDetails(reqNmbr, finalLoc, locationId, userId, forShipping, sequenceQRNumber);
+        String json = new Gson().toJson(requestBodyShipDetails);
+        Log.d("json",json);
         Call<ResponseShippingDetails> call = apiInterface.redShipping(requestBodyShipDetails);
         call.enqueue(new Callback<ResponseShippingDetails>() {
             @Override
             public void onResponse(Call<ResponseShippingDetails> call, Response<ResponseShippingDetails> response) {
                 progressDialog.dismiss();
+                shipBtn.setEnabled(true);
                 if (response.body().getStatus().equals("success")) {
                     transferOrderDialog(response.body().getTONumber());
                 } else {
@@ -755,6 +782,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             @Override
             public void onFailure(Call<ResponseShippingDetails> call, Throwable t) {
                 progressDialog.dismiss();
+                shipBtn.setEnabled(true);
                 Toast.makeText(RequisitionControlDetails.this, "Time Out. Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -907,7 +935,6 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         dialog.getWindow().setAttributes(lp);
         dialog.show();
     }
-
 
 
     @Override
@@ -1110,4 +1137,40 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             }
         });
     }
+
+    public static float roundToPlaces(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.floatValue();
+    }
+
+//    private void saveTempData() {
+//        ArrayList<SaveDataTemp> reqCtrlData = Preference.getInstance(getApplicationContext()).getReqCtrlData();
+//
+//        boolean isReqFound = false;
+//
+//        if (reqCtrlData != null) {
+//            for (int i = 0; i < reqCtrlData.size(); i++) {
+//                if (reqCtrlData.get(i).getReqNmbr().equals(reqNmbr)) {
+//                    reqCtrlData.get(i).setCommonReceivingShippingDetailDataLists(commonReceivingShippingDetailDataLists);
+//                    reqCtrlData.get(i).setSequenceQRNumber(sequenceQRNumber);
+//                    isReqFound = true;
+//                    break;
+//                }
+//            }
+//            if (!isReqFound) {
+//                reqCtrlData.add(new SaveDataTemp(commonReceivingShippingDetailDataLists, reqNmbr, sequenceQRNumber));
+//            }
+//        } else{
+//            reqCtrlData = new ArrayList<>();
+//            reqCtrlData.add(new SaveDataTemp(commonReceivingShippingDetailDataLists, reqNmbr, sequenceQRNumber));
+//        }
+//
+//        Preference.getInstance(getApplicationContext()).saveReqCtrlData(reqCtrlData);
+//    }
+//
+//    private void getTempData(){
+//        ArrayList<SaveDataTemp> reqCtrlData = Preference.getInstance(getApplicationContext()).getReqCtrlData();
+//    }
 }

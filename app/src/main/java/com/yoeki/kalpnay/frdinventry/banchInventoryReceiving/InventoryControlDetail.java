@@ -8,6 +8,7 @@ import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.BatchNoList;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.InventoryPendingModel;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.ParticularRequisitionDetails;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.StickerList;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.StickersDialogData;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.commonReceivingShippingDetailDataList;
 import com.yoeki.kalpnay.frdinventry.Items.commonReceivingShippingDetailList;
 import com.yoeki.kalpnay.frdinventry.MRN.MaterialReceivingDetails;
@@ -60,6 +61,7 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
     commonReceivingShippingDetailList adapter;
     int languageChangeVisible = 1;
     ArrayList<StickerList> sequenceQRNumber = new ArrayList<>();
+    public List<StickersDialogData> stickersDialogDataList = new ArrayList<>();
     List<commonReceivingShippingDetailDataList> commonReceivingShippingDetailDataLists;
     ArrayList<commonReceivingShippingDetailDataList> forReceiving;
     List<SequenceQuanitiy> sequenceQuantityLists = new ArrayList<>();
@@ -82,6 +84,8 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
         receivedBtn.setOnClickListener(this);
         languageChange.setOnClickListener(this);
 
+        stickersDialogDataList.clear();
+
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -96,7 +100,7 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
             @Override
             public void afterTextChanged(Editable editable) {
                 qrDetails = String.valueOf(editable);
-                if (qrDetails.length() >= 10) {
+                if (qrDetails.length() >= 8 && qrDetails.length() <= 18) {
 
                     for (int i = 0; i <= sequenceQRNumber.size() - 1; i++) {
                         String qrNumber = sequenceQRNumber.get(i).getStickerSeq();
@@ -151,7 +155,7 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
                 break;
             case R.id.languageChange:
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                adapter = new commonReceivingShippingDetailList(InventoryControlDetail.this, commonReceivingShippingDetailDataLists, languageChangeVisible);
+                adapter = new commonReceivingShippingDetailList(InventoryControlDetail.this, commonReceivingShippingDetailDataLists, languageChangeVisible, "BIReceiving");
                 recyclerViewItems.setLayoutManager(layoutManager);
                 recyclerViewItems.setAdapter(adapter);
                 if (languageChangeVisible == 0) {
@@ -413,6 +417,7 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
         ApiInterface apiInterface = Api.getClient().create(ApiInterface.class);
 
         RequestBodyQRDetails requestBodyQRDetails = new RequestBodyQRDetails(qrDetails);
+        final String qr = qrDetails;
 
         Call<ResponseBodyQRDetails> call = apiInterface.QRWiseData(requestBodyQRDetails);
         call.enqueue(new Callback<ResponseBodyQRDetails>() {
@@ -443,6 +448,9 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
                             if (responseItemID.equals(listRCDItemid)) {
                                 itemMatchedOrNot = true;
                                 String qrDataStickerqty = response.body().getStickerQty();
+
+                                StickersDialogData stickersDialogData = new StickersDialogData(qr,response.body().getBatchId(), commonReceivingShippingDetailDataLists.get(position).getItemId());
+                                stickersDialogDataList.add(stickersDialogData);
 
                                 commonReceivingShippingDetailDataLists.get(position).setConfig(response.body().getConfig());
                                 String[] expdate = response.body().getExpdate().split("\\s+");
@@ -481,8 +489,9 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
                                             forRefreshList(position);
                                         } else {
                                             float shippqty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getShippedQty());
-                                            float qrDataQty = Float.parseFloat(qrDataStickerqty);
-                                            float remQty = shippqty - qrDataQty;
+                                            float qrDataQtytemp = Float.parseFloat(qrDataStickerqty);
+                                            float qrDataQty = roundToPlaces(qrDataQtytemp,3);
+                                            float remQty = roundToPlaces(shippqty - qrDataQty,3);
                                             String test = String.format("%.03f", remQty);
 
                                             commonReceivingShippingDetailDataLists.get(position).setUnitId(response.body().getUnitId());
@@ -582,7 +591,7 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
                                     } else {
                                         float prePickedQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getpickededQty());
                                         float QRDataStickerqty = Float.parseFloat(qrDataStickerqty);
-                                        float totalpickedQty = prePickedQty + QRDataStickerqty;
+                                        float totalpickedQty = roundToPlaces(prePickedQty + QRDataStickerqty,3);
                                         float shippeddQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getShippedQty());
 
                                         if (shippeddQty == totalpickedQty) {
@@ -807,11 +816,11 @@ public class InventoryControlDetail extends AppCompatActivity implements View.On
         });
     }
 
-    private static BigDecimal roundToPlaces(double value, int places) {
+    private static float roundToPlaces(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd;
+        return bd.floatValue();
     }
 
     public void forRefreshList(int position) {

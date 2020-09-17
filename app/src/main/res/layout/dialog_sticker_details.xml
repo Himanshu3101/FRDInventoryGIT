@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/background_card"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/opensans_bold"
+            android:text="Sticker Number"
+            android:textAlignment="center"
+            android:textColor="#096a75"
+            android:textSize="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/opensans_bold"
+            android:text="Batch Number"
+            android:textAlignment="center"
+            android:textColor="#096a75"
+            android:textSize="12dp" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <View
+        android:id="@+id/underline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/header"
+        android:layout_marginBottom="5dp"
+        android:background="#096a75" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcy_sticker_details"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/header"
+        android:layoutAnimation="@anim/layout_animation_down_to_up"
+        android:padding="5dp" />
+
+
+</RelativeLayout>
