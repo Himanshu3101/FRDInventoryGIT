@@ -8,6 +8,10 @@ public class StickerList {
     @Expose
     private String stickerSeq;
 
+    public StickerList(String stickerSeq) {
+        this.stickerSeq = stickerSeq;
+    }
+
     public String getStickerSeq() {
         return stickerSeq;
     }

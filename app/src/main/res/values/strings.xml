@@ -48,4 +48,5 @@
     <string name="user_info">User Info</string>
     <string name="settings">Setting</string>
     <string name="logout">Log Out</string>
+    <string name="sch_activity">Sch. Activity :</string>
 </resources>

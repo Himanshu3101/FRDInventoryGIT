@@ -27,6 +27,7 @@ import com.yoeki.kalpnay.frdinventry.Api.JournalList;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
 import com.yoeki.kalpnay.frdinventry.Api.UpdateJournalList;
 import com.yoeki.kalpnay.frdinventry.InventoryCounting.inventory_Counting;
+import com.yoeki.kalpnay.frdinventry.InventoryCountingNew.InventoryCountingNew;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.InventoryPending;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.UserIDModel;
 import com.yoeki.kalpnay.frdinventry.Login.LoginActivity;
@@ -295,8 +296,8 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
             case R.id.linearLayoutInventoryCounting:
                 int colorIC = ((ColorDrawable) v.getBackground()).getColor();
                 if (colorIC == -14118778) {
-                    Intent intent3 = new Intent(getApplicationContext(), inventory_Counting.class);
-                    startActivity(intent3);
+//                    startActivity(new Intent(getApplicationContext(), inventory_Counting.class));
+                    startActivity(new Intent(getApplicationContext(), InventoryCountingNew.class));
                     finish();
                 } else {
                     Toast.makeText(this, "You are not Authorized Person.", Toast.LENGTH_SHORT).show();

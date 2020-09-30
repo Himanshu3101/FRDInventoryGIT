@@ -37,6 +37,7 @@ import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.StickersDialog
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.commonReceivingShippingDetailDataList;
 import com.yoeki.kalpnay.frdinventry.Items.commonReceivingShippingDetailList;
 import com.yoeki.kalpnay.frdinventry.QRDetails.RequestBodyQRDetails;
+import com.yoeki.kalpnay.frdinventry.QRDetails.RequisitionWiseQRDetail;
 import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.R;
 
@@ -53,7 +54,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
 
     RecyclerView rcy_items;
     AppCompatTextView reqNo, rcd_Date, branchName_RCD;
-    AppCompatButton shipBtn, languageChangeRCD, img_back/*, saveTempBtn*/;
+    AppCompatButton shipBtn, languageChangeRCD, img_back, saveTempBtn;
     CheckBox checkUpdateQty;
     AppCompatAutoCompleteTextView scanQR;
     List<commonReceivingShippingDetailDataList> commonReceivingShippingDetailDataLists;
@@ -67,6 +68,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
     String reqNmbr = "", locationId, wareHouse, valueElseRem = "", valueRem = "", qrDetails, roleID;
     int batchListSize = 0;
 
+    ArrayList<ResponseBodyQRDetails> responses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +88,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
 
         img_back.setOnClickListener(this);
         shipBtn.setOnClickListener(this);
-//        saveTempBtn.setOnClickListener(this);
+        saveTempBtn.setOnClickListener(this);
         languageChangeRCD.setOnClickListener(this);
         checkUpdateQty.setOnCheckedChangeListener(this);
 
@@ -107,7 +109,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                 if (qrDetails.length() >= 8 && qrDetails.length() <= 18) {
 
                     if (sequenceQRNumber.size() == 0) {
-                        StickerList stickerList = new StickerList();
+                        StickerList stickerList = new StickerList("");
                         stickerList.setStickerSeq(qrDetails);
                         sequenceQRNumber.add(stickerList);
                         qrRCDDetailsWithoutCheckBox();
@@ -122,7 +124,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                             }
                         }
                         if (sequenceAddorNot == 0) {
-                            StickerList stickerList = new StickerList();
+                            StickerList stickerList = new StickerList("");
                             stickerList.setStickerSeq(qrDetails);
                             sequenceQRNumber.add(stickerList);
                             qrRCDDetailsWithoutCheckBox();
@@ -185,7 +187,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                             if (responseItemID.equals(listRCDItemid)) {
                                 itemMatchedOrNot = true;
 
-                                stickersDialogDataList.add(new StickersDialogData(qrDetails,response.body().getBatchId(), commonReceivingShippingDetailDataLists.get(position).getItemId()));
+                                stickersDialogDataList.add(new StickersDialogData(qrDetails, response.body().getBatchId(), commonReceivingShippingDetailDataLists.get(position).getItemId()));
 
                                 String qrDataStickerqty = response.body().getStickerQty();
                                 commonReceivingShippingDetailDataLists.get(position).setConfig(response.body().getConfig());
@@ -198,6 +200,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                 } else {
                                     if (commonReceivingShippingDetailDataLists.get(position).getpickededQty() == null) {
                                         if (commonReceivingShippingDetailDataLists.get(position).getApprovedQty().equals(qrDataStickerqty)) {
+                                            responses.add(response.body());
                                             commonReceivingShippingDetailDataLists.get(position).setremainingQty("0");
                                             commonReceivingShippingDetailDataLists.get(position).setpickededQty(qrDataStickerqty);
                                             commonReceivingShippingDetailDataLists.get(position).setReason("");
@@ -228,6 +231,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                             String test = String.format("%.03f", remQty);
                                             commonReceivingShippingDetailDataLists.get(position).setUnitId(response.body().getUnitId());
                                             if (remQty >= 0) {
+                                                responses.add(response.body());
                                                 commonReceivingShippingDetailDataLists.get(position).setremainingQty(test);
                                                 commonReceivingShippingDetailDataLists.get(position).setpickededQty(qrDataStickerqty);
                                                 if (remQty == 0) {
@@ -324,6 +328,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                         float approvedQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getApprovedQty());
 
                                         if (approvedQty == totalpickedQty) {
+                                            responses.add(response.body());
                                             commonReceivingShippingDetailDataLists.get(position).setremainingQty("0");
                                             String tempPickQty = String.format("%.03f", totalpickedQty);
                                             commonReceivingShippingDetailDataLists.get(position).setpickededQty(tempPickQty);
@@ -412,6 +417,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                                             float stickQty = Float.parseFloat(response.body().getStickerQty());
                                             commonReceivingShippingDetailDataLists.get(position).setUnitId(response.body().getUnitId());
                                             if (remqty >= 0) {
+                                                responses.add(response.body());
                                                 commonReceivingShippingDetailDataLists.get(position).setremainingQty(test);
                                                 String tempPickQty = String.format("%.03f", totalpickedQty);
                                                 commonReceivingShippingDetailDataLists.get(position).setpickededQty(tempPickQty);
@@ -561,7 +567,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         branchName_RCD = findViewById(R.id.branchName_RCD);
         scanQR = findViewById(R.id.scanQR);
         shipBtn = findViewById(R.id.shipBtn);
-//        saveTempBtn = findViewById(R.id.saveTempBtn);
+        saveTempBtn = findViewById(R.id.saveTempBtn);
         img_back = findViewById(R.id.img_back);
         languageChangeRCD = findViewById(R.id.languageChangeRCD);
         rcy_items = findViewById(R.id.rcy_items);
@@ -579,9 +585,9 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
             case R.id.shipBtn:
                 shipping();
                 break;
-//            case R.id.saveTempBtn:
-//                saveTempData();
-//                break;
+            case R.id.saveTempBtn:
+                saveTempData();
+                break;
             case R.id.languageChangeRCD:
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 adapter = new commonReceivingShippingDetailList(RequisitionControlDetails.this, commonReceivingShippingDetailDataLists, languageChangeVisible);
@@ -624,6 +630,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                         adapter = new commonReceivingShippingDetailList(RequisitionControlDetails.this, commonReceivingShippingDetailDataLists, "Shipper");
                         rcy_items.setAdapter(adapter);
                         rcy_items.scheduleLayoutAnimation();
+                        getTempData();
                     } else {
                         Toast.makeText(RequisitionControlDetails.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -764,7 +771,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
 
         RequestBodyShipDetails requestBodyShipDetails = new RequestBodyShipDetails(reqNmbr, finalLoc, locationId, userId, forShipping, sequenceQRNumber);
         String json = new Gson().toJson(requestBodyShipDetails);
-        Log.d("json",json);
+        Log.d("json", json);
         Call<ResponseShippingDetails> call = apiInterface.redShipping(requestBodyShipDetails);
         call.enqueue(new Callback<ResponseShippingDetails>() {
             @Override
@@ -773,6 +780,7 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
                 shipBtn.setEnabled(true);
                 if (response.body().getStatus().equals("success")) {
                     transferOrderDialog(response.body().getTONumber());
+                    deleteTempData();
                 } else {
                     alertDialog(response.body().getMessage());
                 }
@@ -1145,32 +1153,399 @@ public class RequisitionControlDetails extends AppCompatActivity implements View
         return bd.floatValue();
     }
 
-//    private void saveTempData() {
-//        ArrayList<SaveDataTemp> reqCtrlData = Preference.getInstance(getApplicationContext()).getReqCtrlData();
-//
-//        boolean isReqFound = false;
-//
-//        if (reqCtrlData != null) {
-//            for (int i = 0; i < reqCtrlData.size(); i++) {
-//                if (reqCtrlData.get(i).getReqNmbr().equals(reqNmbr)) {
+    private void saveTempData() {
+        ArrayList<RequisitionWiseQRDetail> reqCtrlData = Preference.getInstance(getApplicationContext()).getReqCtrlData();
+
+        boolean isReqFound = false;
+
+        if (!responses.isEmpty()) {
+            if (reqCtrlData != null) {
+                for (int i = 0; i < reqCtrlData.size(); i++) {
+                    if (reqCtrlData.get(i).getRequisitionNo().equals(reqNmbr)) {
 //                    reqCtrlData.get(i).setCommonReceivingShippingDetailDataLists(commonReceivingShippingDetailDataLists);
-//                    reqCtrlData.get(i).setSequenceQRNumber(sequenceQRNumber);
-//                    isReqFound = true;
-//                    break;
-//                }
-//            }
-//            if (!isReqFound) {
-//                reqCtrlData.add(new SaveDataTemp(commonReceivingShippingDetailDataLists, reqNmbr, sequenceQRNumber));
-//            }
-//        } else{
-//            reqCtrlData = new ArrayList<>();
-//            reqCtrlData.add(new SaveDataTemp(commonReceivingShippingDetailDataLists, reqNmbr, sequenceQRNumber));
-//        }
-//
-//        Preference.getInstance(getApplicationContext()).saveReqCtrlData(reqCtrlData);
-//    }
-//
-//    private void getTempData(){
-//        ArrayList<SaveDataTemp> reqCtrlData = Preference.getInstance(getApplicationContext()).getReqCtrlData();
-//    }
+                        isReqFound = true;
+                        reqCtrlData.get(i).setStickersDialogDataList(stickersDialogDataList);
+                        reqCtrlData.get(i).setSequenceQRNumber(sequenceQRNumber);
+                        reqCtrlData.get(i).setResponses(responses);
+                        break;
+                    }
+                }
+                if (!isReqFound) {
+                    reqCtrlData.add(new RequisitionWiseQRDetail(reqNmbr, responses, sequenceQRNumber, stickersDialogDataList));
+                }
+            } else {
+                reqCtrlData = new ArrayList<>();
+                reqCtrlData.add(new RequisitionWiseQRDetail(reqNmbr, responses, sequenceQRNumber, stickersDialogDataList));
+            }
+
+            Toast.makeText(this, "Temporary data saved successfully", Toast.LENGTH_SHORT).show();
+            Preference.getInstance(getApplicationContext()).saveReqCtrlData(reqCtrlData);
+        } else {
+            Toast.makeText(this, "Please pick some quantity first!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getTempData() {
+        ArrayList<RequisitionWiseQRDetail> reqCtrlData = Preference.getInstance(getApplicationContext()).getReqCtrlData();
+        if (reqCtrlData != null) {
+            for (int i = 0; i < reqCtrlData.size(); i++) {
+                if (reqCtrlData.get(i).getRequisitionNo().equals(reqNmbr)) {
+                    responses = reqCtrlData.get(i).getResponses();
+                    sequenceQRNumber = reqCtrlData.get(i).getSequenceQRNumber();
+                    stickersDialogDataList = reqCtrlData.get(i).getStickersDialogDataList();
+                    for (ResponseBodyQRDetails response : responses) {
+                        setTempData(response);
+                    }
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    void setTempData(ResponseBodyQRDetails response) {
+        String responseItemID = response.getItemId();
+        for (int position = 0; position < commonReceivingShippingDetailDataLists.size(); position++) {
+            String listRCDItemid = commonReceivingShippingDetailDataLists.get(position).getItemId();
+
+            if (responseItemID.equals(listRCDItemid)) {
+
+//                stickersDialogDataList.add(new StickersDialogData(qrDetails, response.getBatchId(), commonReceivingShippingDetailDataLists.get(position).getItemId()));
+
+                String qrDataStickerqty = response.getStickerQty();
+                commonReceivingShippingDetailDataLists.get(position).setConfig(response.getConfig());
+                String[] expdate = response.getExpdate().split("\\s+");
+                commonReceivingShippingDetailDataLists.get(position).setExpdate(expdate[0]);
+                commonReceivingShippingDetailDataLists.get(position).setBatchId(response.getBatchId());
+
+                if (commonReceivingShippingDetailDataLists.get(position).getpickededQty() == null) {
+                    if (commonReceivingShippingDetailDataLists.get(position).getApprovedQty().equals(qrDataStickerqty)) {
+                        commonReceivingShippingDetailDataLists.get(position).setremainingQty("0");
+                        commonReceivingShippingDetailDataLists.get(position).setpickededQty(qrDataStickerqty);
+                        commonReceivingShippingDetailDataLists.get(position).setReason("");
+                        commonReceivingShippingDetailDataLists.get(position).setUnitId(response.getUnitId());
+
+                        List<BatchNoList> batchNoLists = new ArrayList<>();
+                        String batchNo = commonReceivingShippingDetailDataLists.get(position).getBatchId();
+                        String batchQty = commonReceivingShippingDetailDataLists.get(position).getpickededQty();
+                        String config = commonReceivingShippingDetailDataLists.get(position).getConfig();
+                        if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList() == null) {
+                            BatchNoList batchNoList = new BatchNoList();
+                            batchNoList.setBatchNo(batchNo);
+                            batchNoList.setBatchQty(batchQty);
+                            batchNoList.setConfig(config);
+                            batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                            batchNoLists.add(batchNoList);
+                            commonReceivingShippingDetailDataLists.get(position).setBatchNoList(batchNoLists);
+                        }
+
+                        resetList(position);
+
+                    } else {
+                        float appqty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getApprovedQty());
+                        float qrDataQtytemp = Float.parseFloat(qrDataStickerqty);
+                        float qrDataQty = roundToPlaces(qrDataQtytemp, 3);
+                        float remQty = roundToPlaces(appqty - qrDataQty, 3);
+
+                        String test = String.format("%.03f", remQty);
+                        commonReceivingShippingDetailDataLists.get(position).setUnitId(response.getUnitId());
+                        if (remQty >= 0) {
+                            commonReceivingShippingDetailDataLists.get(position).setremainingQty(test);
+                            commonReceivingShippingDetailDataLists.get(position).setpickededQty(qrDataStickerqty);
+                            if (remQty == 0) {
+                                commonReceivingShippingDetailDataLists.get(position).setReason("");
+                            }
+
+                            String batchNo = commonReceivingShippingDetailDataLists.get(position).getBatchId();
+                            String batchQty = commonReceivingShippingDetailDataLists.get(position).getpickededQty();
+                            String config = commonReceivingShippingDetailDataLists.get(position).getConfig();
+                            float stickQty = Float.parseFloat(response.getStickerQty());
+                            List<BatchNoList> batchNoLists = new ArrayList<>();
+                            if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList() == null) {
+                                BatchNoList batchNoList = new BatchNoList();
+                                batchNoList.setBatchNo(batchNo);
+                                batchNoList.setBatchQty(batchQty);
+                                batchNoList.setConfig(config);
+                                batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                batchNoLists.add(batchNoList);
+                                commonReceivingShippingDetailDataLists.get(position).setBatchNoList(batchNoLists);
+
+                            } else if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size() == 0) {
+                                BatchNoList batchNoList = new BatchNoList();
+                                batchNoList.setBatchNo(batchNo);
+                                batchNoList.setBatchQty(batchQty);
+                                batchNoList.setConfig(config);
+                                batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                batchNoLists.add(batchNoList);
+                                commonReceivingShippingDetailDataLists.get(position).setBatchNoList(batchNoLists);
+
+                            } else {
+                                boolean batchB = false;
+                                boolean confB = false;
+                                if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList() != null) {
+
+
+                                    for (int j = 0; j < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); j++) {
+                                        String batch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(j).getBatchNo();
+                                        if (batchNo.equals(batch)) {
+                                            batchB = true;
+                                            for (int k = 0; k < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); k++) {
+                                                String configur = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getConfig();
+                                                if (configur.equals(response.getConfig())) {
+                                                    String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchNo();
+                                                    if (batch.equals(confBatch)) {
+                                                        float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchQty());
+                                                        float total = prevBatchQty + stickQty;
+                                                        commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).setBatchQty(String.valueOf(total));
+                                                        confB = true;
+
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (confB == false) {
+                                        BatchNoList batchNoList = new BatchNoList();
+                                        batchNoList.setBatchNo(batchNo);
+                                        batchNoList.setBatchQty(String.valueOf(stickQty));
+                                        batchNoList.setConfig(config);
+                                        batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                        batchNoLists.add(batchNoList);
+                                        commonReceivingShippingDetailDataLists.get(position).getBatchNoList().add(batchNoList);
+                                        resetList(position);
+                                        break;
+                                    }
+
+                                    if (batchB == false) {
+                                        BatchNoList batchNoList = new BatchNoList();
+                                        batchNoList.setBatchNo(batchNo);
+                                        batchNoList.setBatchQty(String.valueOf(stickQty));
+                                        batchNoList.setConfig(config);
+                                        batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                        batchNoLists.add(batchNoList);
+                                        commonReceivingShippingDetailDataLists.get(position).getBatchNoList().add(batchNoList);
+                                        resetList(position);
+                                        break;
+                                    }
+                                }
+                            }
+
+                            resetList(position);
+                        } else {
+                            Toast.makeText(RequisitionControlDetails.this, "Picked Qty. is not more then Approved Qty.", Toast.LENGTH_SHORT).show();
+                            evergreenLoop();
+                            scanQR.setText("");
+                        }
+
+                    }
+                } else {
+                    float prePickedQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getpickededQty());
+                    float QRDataStickerqty = Float.parseFloat(qrDataStickerqty);
+                    float totalpickedQty = roundToPlaces(prePickedQty + QRDataStickerqty, 3);
+                    float approvedQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getApprovedQty());
+
+                    if (approvedQty == totalpickedQty) {
+                        commonReceivingShippingDetailDataLists.get(position).setremainingQty("0");
+                        String tempPickQty = String.format("%.03f", totalpickedQty);
+                        commonReceivingShippingDetailDataLists.get(position).setpickededQty(tempPickQty);
+                        commonReceivingShippingDetailDataLists.get(position).setReason("");
+                        commonReceivingShippingDetailDataLists.get(position).setUnitId(response.getUnitId());
+//                                            spinner_reason.setEnabled(false);
+
+                        List<BatchNoList> batchNoLists = new ArrayList<>();
+                        String batchNo = commonReceivingShippingDetailDataLists.get(position).getBatchId();
+                        String batchQty = commonReceivingShippingDetailDataLists.get(position).getpickededQty();
+                        float stickQty = Float.parseFloat(response.getStickerQty());
+                        String config = commonReceivingShippingDetailDataLists.get(position).getConfig();
+                        if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList() == null) {
+                            BatchNoList batchNoList = new BatchNoList();
+                            batchNoList.setBatchNo(batchNo);
+                            batchNoList.setBatchQty(batchQty);
+                            batchNoList.setConfig(config);
+                            batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                            batchNoLists.add(batchNoList);
+                            commonReceivingShippingDetailDataLists.get(position).setBatchNoList(batchNoLists);
+
+                        } else if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size() == 0) {
+                            BatchNoList batchNoList = new BatchNoList();
+                            batchNoList.setBatchNo(batchNo);
+                            batchNoList.setBatchQty(batchQty);
+                            batchNoList.setConfig(config);
+                            batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                            batchNoLists.add(batchNoList);
+                            commonReceivingShippingDetailDataLists.get(position).setBatchNoList(batchNoLists);
+
+                        } else {
+                            boolean batchB = false;
+                            boolean confB = false;
+                            if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList() != null) {
+
+                                for (int j = 0; j < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); j++) {
+                                    String batch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(j).getBatchNo();
+                                    if (batchNo.equals(batch)) {
+                                        batchB = true;
+                                        for (int k = 0; k < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); k++) {
+                                            String configur = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getConfig();
+                                            if (configur.equals(response.getConfig())) {
+                                                String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchNo();
+                                                if (batch.equals(confBatch)) {
+                                                    float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchQty());
+                                                    float total = prevBatchQty + stickQty;
+                                                    commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).setBatchQty(String.valueOf(total));
+                                                    confB = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (confB == false) {
+                                    BatchNoList batchNoList = new BatchNoList();
+                                    batchNoList.setBatchNo(batchNo);
+                                    batchNoList.setBatchQty(String.valueOf(stickQty));
+                                    batchNoList.setConfig(config);
+                                    batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                    batchNoLists.add(batchNoList);
+                                    commonReceivingShippingDetailDataLists.get(position).getBatchNoList().add(batchNoList);
+                                    resetList(position);
+                                    break;
+                                }
+
+                                if (batchB == false) {
+                                    BatchNoList batchNoList = new BatchNoList();
+                                    batchNoList.setBatchNo(batchNo);
+                                    batchNoList.setBatchQty(String.valueOf(stickQty));
+                                    batchNoList.setConfig(config);
+                                    batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                    batchNoLists.add(batchNoList);
+                                    commonReceivingShippingDetailDataLists.get(position).getBatchNoList().add(batchNoList);
+                                    resetList(position);
+                                    break;
+                                }
+                            }
+                        }
+                        resetList(position);
+                    } else {
+                        float remqty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getApprovedQty()) - totalpickedQty;
+
+                        String test = String.format("%.03f", remqty);
+
+                        float stickQty = Float.parseFloat(response.getStickerQty());
+                        commonReceivingShippingDetailDataLists.get(position).setUnitId(response.getUnitId());
+                        if (remqty >= 0) {
+                            commonReceivingShippingDetailDataLists.get(position).setremainingQty(test);
+                            String tempPickQty = String.format("%.03f", totalpickedQty);
+                            commonReceivingShippingDetailDataLists.get(position).setpickededQty(tempPickQty);
+
+                            if (remqty == 0.0) {
+                                commonReceivingShippingDetailDataLists.get(position).setReason("");
+                            }
+
+                            List<BatchNoList> batchNoLists = new ArrayList<>();
+                            String batchNo = commonReceivingShippingDetailDataLists.get(position).getBatchId();
+                            String batchQty = commonReceivingShippingDetailDataLists.get(position).getpickededQty();
+                            String config = commonReceivingShippingDetailDataLists.get(position).getConfig();
+                            if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList() == null) {
+                                BatchNoList batchNoList = new BatchNoList();
+                                batchNoList.setBatchNo(batchNo);
+                                batchNoList.setBatchQty(batchQty);
+                                batchNoList.setConfig(config);
+                                batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                batchNoLists.add(batchNoList);
+                                commonReceivingShippingDetailDataLists.get(position).setBatchNoList(batchNoLists);
+
+                            } else if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size() == 0) {
+                                BatchNoList batchNoList = new BatchNoList();
+                                batchNoList.setBatchNo(batchNo);
+                                batchNoList.setBatchQty(batchQty);
+                                batchNoList.setConfig(config);
+                                batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                batchNoLists.add(batchNoList);
+                                commonReceivingShippingDetailDataLists.get(position).setBatchNoList(batchNoLists);
+
+                            } else {
+//                                                    boolean confBatchB = false;
+                                boolean batchB = false;
+                                boolean confB = false;
+                                if (commonReceivingShippingDetailDataLists.get(position).getBatchNoList() != null) {
+
+                                    for (int j = 0; j < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); j++) {
+                                        String batch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(j).getBatchNo();
+                                        if (batchNo.equals(batch)) {
+                                            batchB = true;
+                                            for (int k = 0; k < commonReceivingShippingDetailDataLists.get(position).getBatchNoList().size(); k++) {
+                                                String configur = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getConfig();
+                                                if (configur.equals(response.getConfig())) {
+                                                    String confBatch = commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchNo();
+                                                    if (batch.equals(confBatch)) {
+                                                        float prevBatchQty = Float.parseFloat(commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).getBatchQty());
+                                                        float total = prevBatchQty + stickQty;
+                                                        commonReceivingShippingDetailDataLists.get(position).getBatchNoList().get(k).setBatchQty(String.valueOf(total));
+                                                        confB = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if (confB == false) {
+                                        BatchNoList batchNoList = new BatchNoList();
+                                        batchNoList.setBatchNo(batchNo);
+                                        batchNoList.setBatchQty(String.valueOf(stickQty));
+                                        batchNoList.setConfig(config);
+                                        batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                        batchNoLists.add(batchNoList);
+                                        commonReceivingShippingDetailDataLists.get(position).getBatchNoList().add(batchNoList);
+                                        resetList(position);
+                                        break;
+                                    }
+
+                                    if (batchB == false) {
+                                        BatchNoList batchNoList = new BatchNoList();
+                                        batchNoList.setBatchNo(batchNo);
+                                        batchNoList.setBatchQty(String.valueOf(stickQty));
+                                        batchNoList.setConfig(config);
+                                        batchNoList.setBatchAutoIncreeId(response.getBatchAutoIncreeId());
+                                        batchNoLists.add(batchNoList);
+                                        commonReceivingShippingDetailDataLists.get(position).getBatchNoList().add(batchNoList);
+                                        resetList(position);
+                                        break;
+                                    }
+                                }
+                            }
+                            resetList(position);
+                        } else {
+                            Toast.makeText(RequisitionControlDetails.this, "Picked Qty. is not more then Approved Qty.", Toast.LENGTH_SHORT).show();
+                            evergreenLoop();
+                            scanQR.setText("");
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    void resetList(int position) {
+        commonReceivingShippingDetailDataList tempRcdDetail = new commonReceivingShippingDetailDataList();
+        tempRcdDetail = commonReceivingShippingDetailDataLists.get(position);
+        commonReceivingShippingDetailDataLists.remove(position);
+        commonReceivingShippingDetailDataLists.add(0, tempRcdDetail);
+        scanQR.setText("");
+    }
+
+    private void deleteTempData() {
+        ArrayList<RequisitionWiseQRDetail> reqCtrlData = Preference.getInstance(getApplicationContext()).getReqCtrlData();
+
+        if (reqCtrlData != null) {
+            for (int i = 0; i < reqCtrlData.size(); i++) {
+                if (reqCtrlData.get(i).getRequisitionNo().equals(reqNmbr)) {
+                    reqCtrlData.remove(i);
+                    break;
+                }
+            }
+        }
+        Preference.getInstance(getApplicationContext()).saveReqCtrlData(reqCtrlData);
+    }
+
 }

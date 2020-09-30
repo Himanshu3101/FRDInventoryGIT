@@ -1,4 +1,4 @@
-package com.yoeki.kalpnay.frdinventry.InventoryCounting;
+package com.yoeki.kalpnay.frdinventry.InventoryCountingNew.Adapter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -10,31 +10,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yoeki.kalpnay.frdinventry.InventoryCountingNew.InventoryCountingDetail;
-import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
+import com.yoeki.kalpnay.frdinventry.InventoryCountingNew.model.QrDetail;
 import com.yoeki.kalpnay.frdinventry.R;
 
 import java.util.List;
 
-public class AdapterINVCountingTempDetail extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class InventoryCountingDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Activity activity;
-    private List<ResponseBodyQRDetails> listMatched;
+    private List<QrDetail> listMatched;
     private String warehouseSelect;
     int languageChangeVisible = 0;
-    
-    public AdapterINVCountingTempDetail(INVCountingTempDetail activity, List<ResponseBodyQRDetails> listMatched, String warehouseSelect) {
-        this.activity = activity;
-        this.listMatched = listMatched;
-        this.warehouseSelect = warehouseSelect;
-    }
 
-    public AdapterINVCountingTempDetail(INVCountingTempDetail invCountingTempDetail, List<ResponseBodyQRDetails> listMatched, String warehouseSelect, int languageChangeVisible) {
-        this.activity = invCountingTempDetail;
-        this.listMatched = listMatched;
-        this.warehouseSelect = warehouseSelect;
-        this.languageChangeVisible = languageChangeVisible;
-    }
-
-    public AdapterINVCountingTempDetail(InventoryCountingDetail invCountingTempDetail, List<ResponseBodyQRDetails> listMatched, String warehouseSelect, int languageChangeVisible) {
+    public InventoryCountingDetailAdapter(InventoryCountingDetail invCountingTempDetail, List<QrDetail> listMatched, String warehouseSelect, int languageChangeVisible) {
         this.activity = invCountingTempDetail;
         this.listMatched = listMatched;
         this.warehouseSelect = warehouseSelect;

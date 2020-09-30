@@ -131,6 +131,7 @@
                                 android:textColor="@color/textcolor"/>
 
                             <TextView
+                                android:id="@+id/scanqtyIVCHead"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Scan Qty :"
