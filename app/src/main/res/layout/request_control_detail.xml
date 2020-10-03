@@ -339,14 +339,13 @@
         android:id="@+id/rcy_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_below="@+id/topItems"
         android:layout_marginLeft="3dp"
+        android:layout_marginTop="1dp"
         android:layout_marginRight="3dp"
         android:layout_marginBottom="40dp"
-        android:layout_below="@+id/topItems"
         android:layoutAnimation="@anim/layout_animation_down_to_up"
-        tools:ignore="MissingConstraints">
-    </android.support.v7.widget.RecyclerView>
+        tools:ignore="MissingConstraints"></android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
         android:id="@+id/footer"
@@ -357,10 +356,24 @@
         android:layout_margin="05dp">
 
         <android.support.v7.widget.AppCompatButton
+            android:id="@+id/saveTempBtn"
+            android:text="Save Temporary"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:textAllCaps="false"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/buttonshape_ship"
+            android:shadowColor="#A8A8A8"
+            android:shadowRadius="5"/>
+
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/shipBtn"
             android:text="Ship"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
+            android:layout_toRightOf="@+id/saveTempBtn"
             android:layout_width="70dp"
             android:layout_height="25dp"
             android:textAllCaps="false"

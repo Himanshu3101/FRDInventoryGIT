@@ -86,7 +86,7 @@ public class InventoryCountingScan extends AppCompatActivity implements View.OnC
             @Override
             public void afterTextChanged(Editable editable) {
                 qrScanningDetails = String.valueOf(editable);
-                if (qrScanningDetails.length() >= 12) {
+                if (qrScanningDetails.length() >= 8 && qrScanningDetails.length() <= 18) {
                     qrDetails();
                 }
             }

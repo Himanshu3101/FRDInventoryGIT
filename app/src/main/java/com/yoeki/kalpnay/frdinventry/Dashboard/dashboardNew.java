@@ -27,6 +27,7 @@ import com.yoeki.kalpnay.frdinventry.Api.JournalList;
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
 import com.yoeki.kalpnay.frdinventry.Api.UpdateJournalList;
 import com.yoeki.kalpnay.frdinventry.InventoryCounting.inventory_Counting;
+import com.yoeki.kalpnay.frdinventry.InventoryCountingNew.InventoryCountingNew;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.InventoryPending;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.UserIDModel;
 import com.yoeki.kalpnay.frdinventry.Login.LoginActivity;
@@ -102,11 +103,11 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.user_details:
                 try {
                     profileApi();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return true;
@@ -170,6 +171,8 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
 
                         if (responseINVTempList != null && responseINVTempList.size() != 0) {
                             deleteList.addAll(responseINVTempList);
+                        } else {
+                            responseINVTempList = new ArrayList<>();
                         }
                         if (response.body().getJounralNOList().size() != 0) {
                             for (int i = 0; i <= response.body().getJounralNOList().size() - 1; i++) {
@@ -206,7 +209,7 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
                         }
 
 
-                        if(response.body().getReasonList().size()!=0){
+                        if (response.body().getReasonList().size() != 0) {
                             Preference.getInstance(getApplicationContext()).saveReasonList(response.body().getReasonList());
                         }
 
@@ -239,10 +242,14 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         call.enqueue(new Callback<PostingJsonResponse>() {
             @Override
             public void onResponse(Call<PostingJsonResponse> call, Response<PostingJsonResponse> response) {
-                if (response.body().getStatus().equals("Success")) {
+                try {
+                    if (response.body().getStatus().equals("Success")) {
 //                    Preference.getInstance(getApplicationContext()).saveInvenrtoryCounting(fordeletion);
-                } else {
-                    deletedJournal(deleteList);
+                    } else {
+                        deletedJournal(deleteList);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -289,8 +296,8 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
             case R.id.linearLayoutInventoryCounting:
                 int colorIC = ((ColorDrawable) v.getBackground()).getColor();
                 if (colorIC == -14118778) {
-                    Intent intent3 = new Intent(getApplicationContext(), inventory_Counting.class);
-                    startActivity(intent3);
+//                    startActivity(new Intent(getApplicationContext(), inventory_Counting.class));
+                    startActivity(new Intent(getApplicationContext(), InventoryCountingNew.class));
                     finish();
                 } else {
                     Toast.makeText(this, "You are not Authorized Person.", Toast.LENGTH_SHORT).show();
@@ -387,15 +394,15 @@ public class dashboardNew extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    public void dialogProfile(Response<UserProfile> response){
+    public void dialogProfile(Response<UserProfile> response) {
         final Dialog profileDialog = new Dialog(this);
         profileDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         profileDialog.setContentView(getLayoutInflater().inflate(R.layout.profile_dialog, null));
 
-        AppCompatTextView Uname =  profileDialog.findViewById(R.id.Uname);
-        AppCompatTextView Pin =  profileDialog.findViewById(R.id.Pin);
-        AppCompatTextView email =  profileDialog.findViewById(R.id.email);
-        AppCompatTextView wareHouse =  profileDialog.findViewById(R.id.wareHouse);
+        AppCompatTextView Uname = profileDialog.findViewById(R.id.Uname);
+        AppCompatTextView Pin = profileDialog.findViewById(R.id.Pin);
+        AppCompatTextView email = profileDialog.findViewById(R.id.email);
+        AppCompatTextView wareHouse = profileDialog.findViewById(R.id.wareHouse);
         AppCompatButton buttonOk = profileDialog.findViewById(R.id.buttonOk);
         Uname.setText(response.body().getUserProfileResponse().get(0).getUserName());
         Pin.setText(response.body().getUserProfileResponse().get(0).getUserPin());

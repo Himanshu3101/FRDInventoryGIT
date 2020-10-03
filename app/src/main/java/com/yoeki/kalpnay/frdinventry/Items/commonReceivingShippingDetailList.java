@@ -1,12 +1,15 @@
 package com.yoeki.kalpnay.frdinventry.Items;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,8 +26,10 @@ import android.widget.Toast;
 
 import com.yoeki.kalpnay.frdinventry.Api.Preference;
 import com.yoeki.kalpnay.frdinventry.Dashboard.ReasonModule;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.StickersDialogData;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.commonReceivingShippingDetailDataList;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.RequisitionControlDetails;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.StickerDetailsAdapter;
 import com.yoeki.kalpnay.frdinventry.R;
 import com.yoeki.kalpnay.frdinventry.banchInventoryReceiving.InventoryControlDetail;
 import com.yoeki.kalpnay.frdinventry.banchInventoryReceiving.model.SequenceQuanitiy;
@@ -65,10 +70,11 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
         this.languageChangeVisible = languageChangeVisible;
     }
 
-    public commonReceivingShippingDetailList(InventoryControlDetail inventoryControlDetail, List<commonReceivingShippingDetailDataList> listRCDDetailsList, int languageChangeVisible) {
+    public commonReceivingShippingDetailList(InventoryControlDetail inventoryControlDetail, List<commonReceivingShippingDetailDataList> listRCDDetailsList, int languageChangeVisible, String cometoWhere) {
         this.activity = inventoryControlDetail;
         this.stringArrayList = listRCDDetailsList;
         this.languageChangeVisible = languageChangeVisible;
+        this.cometoWhere = cometoWhere;
     }
 
     public commonReceivingShippingDetailList() {
@@ -188,6 +194,8 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
                             float ApprovedQty = Float.parseFloat(stringArrayList.get(position).getApprovedQty());
                             if (pickedQty == ApprovedQty) {
                                 itemViewHolder.spinner_reason.setEnabled(false);
+                            } else {
+                                itemViewHolder.spinner_reason.setEnabled(true);
                             }
                         }
                     }
@@ -200,7 +208,7 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
 
         }
 
-            //For Reason
+        //For Reason
         ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(activity, R.layout.spinner_design, arrayreason);
         itemViewHolder.spinner_reason.setAdapter(adapterSpinner);
 
@@ -212,14 +220,12 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
                 stringArrayList.get(holder.getAdapterPosition()).setReason(selectedItem);
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-            //For Reason
-
-
-
+        //For Reason
 
 
         itemViewHolder.cardview.setOnLongClickListener(new View.OnLongClickListener() {
@@ -228,7 +234,8 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
                 int positions = itemViewHolder.getAdapterPosition();
                 if (stringArrayList.get(positions).getpickededQty() != null) {
                     String[] date = stringArrayList.get(positions).getExpdate().split("\\s+");
-                    recyclerViewDetailsDialog(stringArrayList.get(positions), cometoWhere, itemViewHolder, positions);
+//                    recyclerViewDetailsDialog(stringArrayList.get(positions), cometoWhere, itemViewHolder, positions);
+                    alertDialog(stringArrayList.get(positions), cometoWhere, itemViewHolder, positions);
 //                    recyclerViewDetailsDialog(stringArrayList.get(positions).getConfig(), stringArrayList.get(positions).getBatchId(), date[0], stringArrayList.get(positions).getpickededQty(),cometoWhere,itemViewHolder,positions);
                 } else {
                     Toast.makeText(activity, "Firstly scan the items.", Toast.LENGTH_SHORT).show();
@@ -275,6 +282,28 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
             shipped = itemView.findViewById(R.id.shipped);
             tv_returnedqty = itemView.findViewById(R.id.tv_returnedqty);
         }
+    }
+
+    private void alertDialog(final commonReceivingShippingDetailDataList commonReceivingShippingDetailDataList, final String cometoWhere, final ItemViewHolderRCD itemViewHolder, final int positions) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+        dialog.setMessage("What do you want to display?");
+        dialog.setPositiveButton("Configration Details",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        recyclerViewDetailsDialog(commonReceivingShippingDetailDataList, cometoWhere, itemViewHolder, positions);
+                        dialog.dismiss();
+                    }
+                });
+        dialog.setNegativeButton("Scanned Stickers",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showStillageDetails(commonReceivingShippingDetailDataList.getItemId());
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
     }
 
     private void recyclerViewDetailsDialog(final commonReceivingShippingDetailDataList commonReceivingShippingDetailDataList, final String cometoWhere, final ItemViewHolderRCD itemViewHolder, final int position) {
@@ -382,10 +411,10 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
                                             }
                                         }
 
-                                        if(batchBoolean==false){
+                                        if (batchBoolean == false) {
                                             Toast.makeText(activity, "Did not find any batch.", Toast.LENGTH_SHORT).show();
                                         }
-                                        if(qtyBoolean==false){
+                                        if (qtyBoolean == false) {
                                             Toast.makeText(activity, "Did not find these type Quantity.", Toast.LENGTH_SHORT).show();
                                         }
 
@@ -446,17 +475,16 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
                                             }
                                         }
 
-                                        if(batchBoolean==false){
+                                        if (batchBoolean == false) {
                                             Toast.makeText(activity, "Did not find any batch.", Toast.LENGTH_SHORT).show();
                                         }
-                                        if(qtyBoolean==false){
+                                        if (qtyBoolean == false) {
                                             Toast.makeText(activity, "Did not find these type Quantity.", Toast.LENGTH_SHORT).show();
                                         }
 
                                     } else {
                                         Toast.makeText(activity, "Return Quantity not more then Shipped Quantity.", Toast.LENGTH_SHORT).show();
                                     }
-
 
 
                                     //For Reason
@@ -519,7 +547,7 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
                 expiry.setText(commonReceivingShippingDetailDataList.getExpdate());
                 pckdQty.setText(commonReceivingShippingDetailDataList.getBatchNoList().get(getdataBySize).getBatchQty());
                 dialog.show();
-            }else if (commonReceivingShippingDetailDataList.getBatchNoList().size() == 1) {
+            } else if (commonReceivingShippingDetailDataList.getBatchNoList().size() == 1) {
                 configDialog.setText(commonReceivingShippingDetailDataList.getBatchNoList().get(getdataBySize).getConfig());
                 batchNoDialog.setText(commonReceivingShippingDetailDataList.getBatchNoList().get(getdataBySize).getBatchNo());
                 expiry.setText(commonReceivingShippingDetailDataList.getExpdate());
@@ -644,6 +672,42 @@ public class commonReceivingShippingDetailList extends RecyclerView.Adapter<Recy
             }
         });
 
+    }
+
+    private void showStillageDetails(String itemId) {
+        final Dialog dialog = new Dialog(activity);
+        dialog.setCancelable(true);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_sticker_details);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+        dialog.getWindow().setAttributes(lp);
+
+        List<StickersDialogData> stickersDialogDataList = new ArrayList<>();
+        if (activity instanceof RequisitionControlDetails) {
+            for (int i = 0; i < ((RequisitionControlDetails) activity).stickersDialogDataList.size(); i++) {
+                if (((RequisitionControlDetails) activity).stickersDialogDataList.get(i).getItemId().equals(itemId)) {
+                    stickersDialogDataList.add(((RequisitionControlDetails) activity).stickersDialogDataList.get(i));
+                }
+            }
+        } else if (activity instanceof InventoryControlDetail) {
+            for (int i = 0; i < ((InventoryControlDetail) activity).stickersDialogDataList.size(); i++) {
+                if (((InventoryControlDetail) activity).stickersDialogDataList.get(i).getItemId().equals(itemId)) {
+                    stickersDialogDataList.add(((InventoryControlDetail) activity).stickersDialogDataList.get(i));
+                }
+            }
+        }
+
+        final RecyclerView rcy_sticker_details = dialog.findViewById(R.id.rcy_sticker_details);
+
+        StickerDetailsAdapter stickerDetailsAdapter = new StickerDetailsAdapter(itemId, activity, stickersDialogDataList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        rcy_sticker_details.setLayoutManager(layoutManager);
+        rcy_sticker_details.setAdapter(stickerDetailsAdapter);
+
+        dialog.show();
     }
 
     public interface ActivityAdapterInterface {

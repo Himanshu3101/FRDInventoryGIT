@@ -7,9 +7,12 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yoeki.kalpnay.frdinventry.Dashboard.ReasonModule;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.commonReceivingShippingDetailDataList;
+import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.SaveDataTemp;
 import com.yoeki.kalpnay.frdinventry.Login.loginModel.AccessRight;
 import com.yoeki.kalpnay.frdinventry.Login.loginModel.wareHouseResponse;
 import com.yoeki.kalpnay.frdinventry.MRN.Model.StickerSeq;
+import com.yoeki.kalpnay.frdinventry.QRDetails.RequisitionWiseQRDetail;
 import com.yoeki.kalpnay.frdinventry.QRDetails.ResponseBodyQRDetails;
 import com.yoeki.kalpnay.frdinventry.banchInventoryReceiving.model.SequenceQuanitiy;
 
@@ -33,6 +36,8 @@ public class Preference {
     private static final String QuantityUpdateTemp = "tempQuantityUpdate";
     private static final String reasonList = "reasonList";
     private static final String saveSequenceQty = "SequenceQty";
+    private static final String reqCtrlData = "ReqCtrlData";
+    private static final String invtCtrlData = "InvtCtrlData";
 
 //    private static final String Bank_Details = "bank_detail";
 //    private static final String Count_Details = "count_details";
@@ -210,6 +215,43 @@ public class Preference {
     }
 
 
+    public boolean saveReqCtrlData(List<RequisitionWiseQRDetail> SaveDataTempList) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(SaveDataTempList);
+        editor.putString(reqCtrlData, json);
+        editor.apply();
+        return true;
+    }
+
+    public ArrayList<RequisitionWiseQRDetail> getReqCtrlData() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(reqCtrlData, "");
+        Type type = new TypeToken<List<RequisitionWiseQRDetail>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public boolean saveInvtCtrlData(List<RequisitionWiseQRDetail> SaveDataTempList) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(SaveDataTempList);
+        editor.putString(invtCtrlData, json);
+        editor.apply();
+        return true;
+    }
+
+    public ArrayList<RequisitionWiseQRDetail> getInvtCtrlData() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(invtCtrlData, "");
+        Type type = new TypeToken<List<RequisitionWiseQRDetail>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
 
 
 

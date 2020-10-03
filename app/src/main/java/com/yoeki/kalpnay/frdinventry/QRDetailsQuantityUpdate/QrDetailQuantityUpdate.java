@@ -90,7 +90,7 @@ public class QrDetailQuantityUpdate extends AppCompatActivity implements View.On
             @Override
             public void afterTextChanged(Editable editable) {
                 qrDetails = String.valueOf(editable);
-                if (qrDetails.length() >= 12) {
+                if (qrDetails.length() >= 8 && qrDetails.length() <= 18) {
 
 
 

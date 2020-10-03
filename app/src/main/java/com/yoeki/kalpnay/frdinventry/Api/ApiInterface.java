@@ -3,6 +3,10 @@ package com.yoeki.kalpnay.frdinventry.Api;
 import com.yoeki.kalpnay.frdinventry.Dashboard.UserProfile;
 import com.yoeki.kalpnay.frdinventry.InventoryCounting.JiournalResponse;
 import com.yoeki.kalpnay.frdinventry.InventoryCounting.RequestBodyIVCDetails;
+import com.yoeki.kalpnay.frdinventry.InventoryCountingNew.model.InventoryCountingData;
+import com.yoeki.kalpnay.frdinventry.InventoryCountingNew.model.QrScanResponse;
+import com.yoeki.kalpnay.frdinventry.InventoryCountingNew.model.ScanQrRequest;
+import com.yoeki.kalpnay.frdinventry.InventoryCountingNew.model.SubmitPauseRequest;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.GetRequisitionPending;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.InventoryPendingModel;
 import com.yoeki.kalpnay.frdinventry.InventoryShipperPicker.Model.ParticularRequisitionDetails;
@@ -84,5 +88,14 @@ public interface ApiInterface {
     @POST("FRD/DeleteJounralFromDevice")
 //   Call<PostingJsonResponse> deleteJournal(@Body List<ResponseBodyQRDetails> updateRequestDetails);
     Call<PostingJsonResponse> deleteJournal(@Body UpdateJournalList responseBodyQRDetails);
+
+    @POST("FRD/getCountingSchedules")
+    Call<InventoryCountingData> getCountingSchedules(@Body UserIDModel userIDModel);
+
+    @POST("FRD/ScheduleScanActivity")
+    Call<QrScanResponse> scheduleScanActivity(@Body ScanQrRequest scanQrRequest);
+
+    @POST("FRD/SchedulePauseSubmitActivity")
+    Call<PostingJsonResponse> submitPauseSchedule(@Body SubmitPauseRequest submitPauseRequest);
 
 }
